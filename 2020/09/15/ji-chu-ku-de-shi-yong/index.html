@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Markdown语法笔记, 0xahh的博客">
+    <meta name="keywords" content="基础库的使用, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Markdown语法笔记 | 0xahh的博客</title>
+    <title>基础库的使用 | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -286,12 +286,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Markdown语法笔记</h1>
+                    <h1 class="description center-align post-title">基础库的使用</h1>
                 </div>
             </div>
         </div>
@@ -408,14 +408,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/markdown/">
-                                <span class="chip bg-color">markdown</span>
+                            <a href="/tags/python/">
+                                <span class="chip bg-color">python</span>
+                            </a>
+                        
+                            <a href="/tags/%E7%88%AC%E8%99%AB/">
+                                <span class="chip bg-color">爬虫</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%88%AC%E8%99%AB/" class="post-category">
+                                爬虫
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -424,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-15
                 </div>
                 
 
@@ -433,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    649
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -455,153 +468,59 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>“#”用于标题，一个对应一级标题，两个对应二级标题，共六级</p>
-<h3 id="这是一个三级标题"><a href="#这是一个三级标题" class="headerlink" title="这是一个三级标题"></a>这是一个三级标题</h3><hr>
-<h4 id="字体以及段落"><a href="#字体以及段落" class="headerlink" title="字体以及段落"></a>字体以及段落</h4><p>“*”用于表示粗体，斜体，一对表示斜体，两对表示粗体，三对表示粗斜体，三个后回车是分隔线</p>
-<p><em>斜体</em>  <strong>粗体</strong> <strong><em>粗斜体</em></strong>  </p>
-<p>“~~”是删除线，括起来后是这样的  </p>
-<p><del>这是删除线</del> </p>
-<p>下划线使用html&lt;u&gt;,&lt;/u&gt;标签来进行使用，</p>
-<p><u>这是下划线</u></p>
-<p>脚注，是指当鼠标指向这里时会显示的标签[^]^后跟要注明的文本</p>
-<p>Markdown 支持有序列表和无序列表。</p>
-<p>无序列表使用星号(*<strong>**)、加号(</strong>+<strong>)或是减号(</strong>-**)作为列表标记，这些标记后面要添加一个空格，然后再填写内容：</p>
-<h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><ul>
-<li>这是一个无需列表</li>
-<li>这是第二列</li>
-</ul>
-<p>有序列表使用数字并加上 <strong>.</strong> 号来表示，</p>
-<ol>
-<li>这是第一</li>
-<li>这是第二</li>
-</ol>
-<p>列表嵌套只需在子列表中的选项前面添加四个空格即可：</p>
-<ol>
-<li>这是第一<ul>
-<li>这是子列表</li>
-<li>第二行</li>
-</ul>
-</li>
-<li>这是第二<ul>
-<li>我这里没有使用添加空格，直接删除出现的3.再加*就可以了<ul>
-<li>还可以继续往里<ol>
-<li>可以多重嵌套</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>区块，使用&gt;来区分，一个&gt;代表一个区块，也可以多重嵌套，注意要放在每行开头</p>
-<blockquote>
-<p>第一区块</p>
-<p>这是区块中的内容</p>
-<blockquote>
+                <h1 id="基础库使用"><a href="#基础库使用" class="headerlink" title="基础库使用"></a>基础库使用</h1><p>将对一些爬虫会使用到的基础库进行一定的记录</p>
+<h3 id="urllib"><a href="#urllib" class="headerlink" title="urllib"></a>urllib</h3><p>用于实现请求的发送</p>
+<p>一般有三个库被使用</p>
 <ul>
-<li>这是第二区块</li>
+<li>request：用于发送请求</li>
+<li>parse：用于URL的处理</li>
+<li>error：异常处理</li>
 </ul>
-</blockquote>
-</blockquote>
-<p>还可以在区块中使用列表</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>对于一个很短的代码片段，可以将其用两个“esc”下方键的·括起来，效果是这样的：<code>printf(&quot;helloworld/n&quot;);</code>这样的高亮进行标记</p>
-<p>也可以使用一个TAB键或者四个空格作为代码</p>
-<p>​    这是使用tab</p>
-<p>​    这是使用四个空格</p>
-<p>使用三对</p>
-<p>“esc”下方键包裹起来语句，就可以是一个代码块了，还可以指定语言</p>
-<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-<p>这就是一个代码块了</p>
-<h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>使用[     ]（  ），其中[   ]中是链接的名称(    )中是链接的地址</p>
-<p>或者&lt;   &gt;中直接输入链接地址</p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a> </p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a></p>
-<h4 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h4><p><img src="E:/From_C/桌面/tyoora/图片地址" alt="alt 属性文本"></p>
-<p>这是图片格式</p>
-<p>开头一个感叹号 !<br>接着一个方括号，里面放上图片的替代文字<br>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
-<p>使用实例：</p>
-<p><img src="http://static.runoob.com/images/runoob-logo.png" alt="RUNOOB 图标"></p>
-<pre><code>![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)</code></pre>
-<p>Markdown 还没有办法指定图片的高度与宽度，如果你需要的话，你可以使用普通的 <img> 标签。</p>
-<pre><code>&lt;img src=&quot;http://static.runoob.com/images/runoob-logo.png&quot; width=&quot;50%&quot;&gt;</code></pre>
-<img src="http://static.runoob.com/images/runoob-logo.png" width="50%">
-
-
-
-<p>注意，在typora中还可以直接将图片复制进来，很方便</p>
-<h4 id="列表-1"><a href="#列表-1" class="headerlink" title="列表"></a>列表</h4><p>Markdown 制作表格使用 <strong>|</strong> 来分隔不同的单元格，使用 <strong>-</strong> 来分隔表头和其他行。</p>
-<p>语法格式如下：</p>
-<pre><code>|  表头   | 表头  |
-|  ----  | ----  |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |</code></pre>
-<p>这就是一个列表的展示</p>
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-<tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-</tbody></table>
+<h4 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h4><p>​    urllib.request模块提供最基本构造HTTP请求功能</p>
 <ul>
-<li><strong>-:</strong> 设置内容和标题栏居右对齐。</li>
-<li><strong>:-</strong> 设置内容和标题栏居左对齐。</li>
-<li><strong>:-:</strong> 设置内容和标题栏居中对齐。</li>
+<li>urlopen</li>
 </ul>
-<pre><code>| 左对齐 | 右对齐 | 居中对齐 |
-| :-----| ----: | :----: |
-| 单元格 | 单元格 | 单元格 |
-| 单元格 | 单元格 | 单元格 |</code></pre>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="right">右对齐</th>
-<th align="center">居中对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-<tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-</tbody></table>
-<h4 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h4><p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。</p>
-<p>目前支持的 HTML 元素有：<code>&lt;kbd&gt; &lt;b&gt; &lt;i&gt; &lt;em&gt; &lt;sup&gt; &lt;sub&gt; &lt;br&gt;</code>等 ，</p>
-<p>Markdown 使用了很多特殊符号来表示特定的意义，如果需要显示特定的符号则需要使用转义字符，Markdown 使用反斜杠转义特殊字符：</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
-<pre><code>\   反斜线
-`   反引号
-*   星号
-_   下划线
-&amp;#123;&amp;#125;  花括号
-[]  方括号
-()  小括号
-#   井字号
-+   加号
--   减号
-.   英文句点
-!   感叹号</code></pre>
-<p>f8为专注模式，f9为打字机模式，可以让在编写的行永远在最中间</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+
+response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span><span class="token string">"http://119.23.18.158"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#使用urlopen来模拟打开网页</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出后可以看到该页面源码</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>getheader<span class="token punctuation">(</span><span class="token string">'server'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>version<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>debuglevel<span class="token punctuation">)</span></code></pre>
+<p>可以使用一些该类型对象的方法或者属性可以查看更多的信息</p>
+<p>如果想传递一些参数，可以查看urlopen的api，</p>
+<p>比如参数<strong>data</strong>可用于POST型的传递参数</p>
+<p>参数<strong>timeout</strong>用于响应时长（即多久没有得到服务器响应就报错）</p>
+<p>这里可以使用timeout以及error模块来进行报错处理</p>
+<ul>
+<li><p>Request</p>
+<p>URLopen可以简单的实现请求的发起，但如果要使用更复杂的请求就需要使用Request<strong>类</strong>（比如加入header）</p>
+<p>比如</p>
+<pre class=" language-python"><code class="language-python">request1<span class="token operator">=</span>urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span><span class="token string">'http://119.23.18.158'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#Request类的实例化</span>
+response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>request1<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#这样也就可以实现请求</span></code></pre>
+<p>看一下Request的构造方法：</p>
+<p><code>class urllib. request. Request ( url, data=None, headers=&#123;&#125;, origin_req_host=None, unverifiable=False, method=None)</code></p>
+<ul>
+<li><p>除了第一个url其它都是可选参数</p>
+</li>
+<li><p>第二个参数 data 如果要传，必须传 bytes（字节流）类型的 如果它是字典，可以先用<br>urllib.parse 模块里的 urlencode （）编码</p>
+</li>
+<li><p>第 个参数 headers 是一个字典，它就是请求头，我们可以在构造请求时通过 headers 参数直<br>接构造，也可以通过调用请求实例的 add_header （）方法添加</p>
+<p>添加请求头最常用的用法就是通过修改 User-Agent 来伪装浏览器，默认的 User-Agent 一－<br>Python-urllib ，我们可以通过修改它来伪装浏览器 比如要伪装火狐浏览器，你可以把它设 置为</p>
+<p>Mozilla/s.o (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11 </p>
+</li>
+<li><p>第四个参数 origin_req_host 指的是请求方的 host 名称或者 IP 地址</p>
+</li>
+<li><p>第五个参数 nveri iable 表示这个请求是否是无法验证的，默认是 False ，意思就是说用户没<br>有足够权限来选择接收这个请求的结果 例如，我们请求 HTML 文档中的图片，但是我<br>们没有向动抓取图像的权限，这时 unverifiable 的值就是 True</p>
+</li>
+<li><p>第六个参数 method 一个字符串 ，用来指示请求使用的方法，比如 GET POST PUT</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -617,7 +536,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">0xhowahh</a>
+                    <a href="/about" rel="external nofollow noreferrer">0xahh</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -627,7 +546,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/09/01/markdown/">http://119.23.18.158/2020/09/01/markdown/</a>
+                    <a href="http://119.23.18.158/2020/09/15/ji-chu-ku-de-shi-yong/">http://119.23.18.158/2020/09/15/ji-chu-ku-de-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,7 +559,7 @@ _   下划线
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">0xhowahh</a>
+                    <a href="/about" target="_blank">0xahh</a>
                     !
                 </span>
             </div>
@@ -665,8 +584,12 @@ _   下划线
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/markdown/">
-                                    <span class="chip bg-color">markdown</span>
+                                <a href="/tags/python/">
+                                    <span class="chip bg-color">python</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%88%AC%E8%99%AB/">
+                                    <span class="chip bg-color">爬虫</span>
                                 </a>
                             
                         </div>
@@ -838,6 +761,59 @@ _   下划线
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2020/09/22/sqlinjection/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SqlInjection">
+                        
+                        <span class="card-title">SqlInjection</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            sql手动注入原理记录
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2020/09/15/pa-chong-qian-zhi/">
                     <div class="card-image">
                         
@@ -854,9 +830,9 @@ _   下划线
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -878,51 +854,6 @@ _   下划线
                     
                     <a href="/tags/%E7%88%AC%E8%99%AB/">
                         <span class="chip bg-color">爬虫</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/08/31/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            第一篇博客，简要记录心路历程以及发布hexo博客的注意事项
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            0xhowahh
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/hexo/">
-                        <span class="chip bg-color">hexo</span>
                     </a>
                     
                 </div>

