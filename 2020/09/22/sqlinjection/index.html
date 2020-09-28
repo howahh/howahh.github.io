@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.8k
+                    7.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    30 分
+                    31 分
                 </div>
                 
 
@@ -754,6 +754,31 @@ Referer: 1        #这样才对
 <p>单引号前有一个反斜杠，我们的单引号被过滤掉了，下一行hint：The Query String you input in Hex becomes : 315c27，我们输入的id=1\‘的编码时这么多，我们知道，反斜杠的编码时%5c，如果我们在其之前加入另外的编码使其成为宽字节，就可以去掉反斜杠了，查询GBK的范围，选择一个，%df，这样df5c属于宽字节，加入%df后形成的新字节被MYSQL忽视，反斜杠也没了，这样我们的单引号就又起作用了，具体语法为<code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1%df&#39;</code></p>
 <p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=-1%df&#39; union select 1,2,database() %23</code></p>
 <p>这样已经成功注入了。后续不表</p>
+<hr>
+<p>最后简单记录一下sql注入防御手段，</p>
+<ul>
+<li>代码层<ul>
+<li>黑名单（某些字符进入黑名单）</li>
+<li>白名单（比黑名单好）</li>
+<li>敏感字符过滤</li>
+<li>使用框架安全查询</li>
+<li>规范输出</li>
+</ul>
+</li>
+<li>配置层<ul>
+<li>开启GPC</li>
+<li>使用UTF-8</li>
+</ul>
+</li>
+<li>物理层<ul>
+<li>WAF</li>
+<li>数据库审计</li>
+<li>云防护</li>
+<li>IPS（入侵防御系统）</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>小结一下，这些都只是最最基础的，在实际的题目中会有很多的骚操作，比如过滤掉逗号，过滤掉括号，需要大量的经验和骚操作，所以任重道远，需要未来更多的实践和学习，<del>这些是人学的东西，又多又杂，淦</del>比如过滤了逗号我们使用括号吧要用的括起来。</em></strong></p>
 
             </div>
             <hr/>
@@ -1295,7 +1320,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.2k</span>&nbsp;字
+                class="white-color">13.4k</span>&nbsp;字
             
             
             
