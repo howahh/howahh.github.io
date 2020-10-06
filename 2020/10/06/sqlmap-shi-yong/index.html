@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="test, 0xahh的博客">
+    <meta name="keywords" content="sqlmap使用, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>test | 0xahh的博客</title>
+    <title>sqlmap使用 | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -286,12 +286,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">test</h1>
+                    <h1 class="description center-align post-title">sqlmap使用</h1>
                 </div>
             </div>
         </div>
@@ -406,12 +406,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">web安全</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                web安全
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -420,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-05
+                    2020-10-06
                 </div>
                 
 
@@ -429,7 +446,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    421
                 </div>
                 
 
@@ -451,7 +468,23 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="/../images/image-20201006103709401.png" alt="image-20201006103709401"></p>
+                <h2 id="sqlmap"><a href="#sqlmap" class="headerlink" title="sqlmap"></a>sqlmap</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>sqlmap是一款开源的渗透测试工具，可以用来进行自动化检测，利用 SQL 注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎，针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。</p>
+<p>同时它也支持五种注入模式：</p>
+<ol>
+<li>基于布尔的盲注，即可以根据返回页面判断条件真假的注入；</li>
+<li>基于报错注入，即页面会返回错误信息，或者把注入的语句的结果直接返回在页面中；</li>
+<li>基于时间的盲注，即不能根据页面返回内容判断任何信息，用条件语句查看时间延迟语句是否执行（即页面返回时间是否增加）来判断；</li>
+<li>联合查询注入，可以使用 union 的情况下的注入；</li>
+<li>堆查询注入，可以同时执行多条语句的执行时的注入。</li>
+</ol>
+<p>支持多种数据库</p>
+<p>sqlmap支持的数据库有</p>
+<p>MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB</p>
+<p>很多时候使用sqlmap会使得sql注入变得更加的简单，高效，</p>
+<h3 id="使用初阶"><a href="#使用初阶" class="headerlink" title="使用初阶"></a>使用初阶</h3><p><strong>本篇博客基于windows环境进行操作</strong></p>
+<p>在安装sqlmap的文件夹下打开命令行，使用命令 </p>
+<pre><code>python sqlmap.py -u &quot;http://127.0.0.1:85/sqli-labs/Less-1/?id=1&quot; -v 3</code></pre>
+<p><strong><em>这里的-v 3是输出等级，3代表显示注入时使用的payload，便于加深理解</em></strong></p>
 
             </div>
             <hr/>
@@ -477,7 +510,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/10/05/test/">http://119.23.18.158/2020/10/05/test/</a>
+                    <a href="http://119.23.18.158/2020/10/06/sqlmap-shi-yong/">http://119.23.18.158/2020/10/06/sqlmap-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -514,7 +547,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">web安全</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -685,35 +726,50 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2020/10/05/test/">
+                <a href="/2020/10/06/sqlmap-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="test">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="sqlmap使用">
                         
-                        <span class="card-title">test</span>
+                        <span class="card-title">sqlmap使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-
+                            sqlmap的使用介绍及记录
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-06
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            0xahh
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -970,7 +1026,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.4k</span>&nbsp;字
+                class="white-color">14.1k</span>&nbsp;字
             
             
             

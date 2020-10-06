@@ -433,14 +433,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -588,6 +588,24 @@ tags:
   - Typora
   - Markdown
 ---</code></pre>
+<hr>
+<h3 id="解决图片上传问题"><a href="#解决图片上传问题" class="headerlink" title="解决图片上传问题"></a>解决图片上传问题</h3><p>解决了hexo图片上传的问题，之前的图片一直会挂掉，一直没有解决，找到了解决办法，没有使用图床和一些插件，因为我很多时候图片都是截图拉过来，感觉很麻烦，typora的设置就可以很简单的解决了，</p>
+<ol>
+<li><p>在hexo的source文件夹中新建images文件夹</p>
+</li>
+<li><p>在typora的图像设置中更改为自己的设置，插入图片时复制到相应路径，使用相对路径，使用../images这样无论是在本地还是在服务器上都可以找到我们的图片</p>
+</li>
+</ol>
+<p><img src="/../images/image-20201006114223108.png" alt="typora设置"></p>
+<ol start="3">
+<li>在每次新建博客文档的时候顶部配置项中加入一行</li>
+</ol>
+<pre><code>typora-root-url: ../</code></pre>
+<p>就可以了，更好的办法是直接在hexo的scaffolds文件夹中的post文件中加上这一行（也可以加上别的想要的，比如auther），这样以后new的时候会自动生成这些配置。</p>
+<ol start="4">
+<li>复制后的图片就可以直接Ctrl +c，Ctrl+v到typora中，在本地和远端都可以显示了</li>
+</ol>
+<p><strong><em>2020/10/6</em></strong></p>
 
             </div>
             <hr/>
@@ -1108,7 +1126,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.4k</span>&nbsp;字
+                class="white-color">14.1k</span>&nbsp;字
             
             
             
