@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    649
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
 
@@ -494,7 +494,8 @@ response <span class="token operator">=</span> urllib<span class="token punctuat
 <p>参数<strong>timeout</strong>用于响应时长（即多久没有得到服务器响应就报错）</p>
 <p>这里可以使用timeout以及error模块来进行报错处理</p>
 <ul>
-<li><p>Request</p>
+<li>Request</li>
+</ul>
 <p>URLopen可以简单的实现请求的发起，但如果要使用更复杂的请求就需要使用Request<strong>类</strong>（比如加入header）</p>
 <p>比如</p>
 <pre class=" language-python"><code class="language-python">request1<span class="token operator">=</span>urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span><span class="token string">'http://119.23.18.158'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#Request类的实例化</span>
@@ -508,7 +509,7 @@ response <span class="token operator">=</span> urllib<span class="token punctuat
 <li><p>第二个参数 data 如果要传，必须传 bytes（字节流）类型的 如果它是字典，可以先用<br>urllib.parse 模块里的 urlencode （）编码</p>
 </li>
 <li><p>第 个参数 headers 是一个字典，它就是请求头，我们可以在构造请求时通过 headers 参数直<br>接构造，也可以通过调用请求实例的 add_header （）方法添加</p>
-<p>添加请求头最常用的用法就是通过修改 User-Agent 来伪装浏览器，默认的 User-Agent 一－<br>Python-urllib ，我们可以通过修改它来伪装浏览器 比如要伪装火狐浏览器，你可以把它设 置为</p>
+<p>添加请求头最常用的用法就是通过修改 <strong>User-Agent</strong> 来伪装浏览器，默认的 User-Agent 一－<br>Python-urllib ，我们可以通过修改它来伪装浏览器 比如要伪装火狐浏览器，你可以把它设 置为</p>
 <p>Mozilla/s.o (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11 </p>
 </li>
 <li><p>第四个参数 origin_req_host 指的是请求方的 host 名称或者 IP 地址</p>
@@ -517,10 +518,93 @@ response <span class="token operator">=</span> urllib<span class="token punctuat
 </li>
 <li><p>第六个参数 method 一个字符串 ，用来指示请求使用的方法，比如 GET POST PUT</p>
 </li>
-<li></li>
 </ul>
-</li>
+<p>构建多个参数如下图所示</p>
+<p><img src="/images/image-20201006213955870.png" alt="多参数request"></p>
+<h4 id="handler"><a href="#handler" class="headerlink" title="handler"></a>handler</h4><p>一些高级请求如cookie请求的构造需要用到Handler了，handler是urllib中request模块中的一组类，BaseHandler是所有Handler的父类，其它的子类有其更细的公能：</p>
+<p><img src="/images/image-20201007222340342.png" alt="image-20201007222340342"></p>
+<p>这里还有一个OpenerDirector类比较重要，与之前的urlopen类似，而在这里我们用handler来构建opener</p>
+<ul>
+<li>有的时候我们会遇见用js写的验证，需要验证用户名和密码</li>
 </ul>
+<p><img src="/images/image-20201008132558790.png" alt="验证"></p>
+<p>使用HTTPBasicAuthHandler就可以完成</p>
+<p><img src="/images/image-20201008132730496.png" alt="HTTPBasicAuthHandler"></p>
+<p>填写username等信息后先初始化一个HTTPasswordMgrWithDefaultRealm对象，再实例化HTTPBasicAuthHandler对象，以之前的HTTPasswordMgrWithDefaultRealm对象为参数，这样就建立了一个处理验证的handler。</p>
+<p>接下来用这个handler使用build_opener来构造一个opener，再用opener调用open就可以打开链接完成验证了</p>
+<ul>
+<li>代理</li>
+</ul>
+<p><img src="/images/image-20201008140451321.png" alt="代理"></p>
+<ul>
+<li>cookie</li>
+</ul>
+<p>处理cookie的时候也会使用到handler</p>
+<p><img src="/images/image-20201008141131451.png" alt="cookie"></p>
+<p>如果想要将cookie储存为文本文件，只需要将CookieJar换为MozillarCookieJar（是CookieJar的子类）用来处理与cookie相关的文件相关事件</p>
+<p><img src="/images/image-20201008141331840.png" alt="image-20201008141331840"></p>
+<p>LWPCookieJar也可以保存读取cookie但格式为LWP，声明时按需选取即可</p>
+<p>当我们需要使用被存储的cookie时，</p>
+<p><img src="/images/image-20201008142622747.png" alt="取cookie"></p>
+<ul>
+<li>异常处理</li>
+</ul>
+<p>urllib 的error模块会处理由调用request模块产生的异常</p>
+<ol>
+<li>URLError</li>
+</ol>
+<p>由request调用产生的异常都可以使用URLError来解决</p>
+<ol start="2">
+<li>HTTPError</li>
+</ol>
+<p>是URLError的子类，专门处理http请求错误的error，比如认证请求失败，有三个属性</p>
+<p><img src="/images/image-20201008143421627.png" alt="HTTPError"></p>
+<p><img src="/images/image-20201008143502701.png" alt="实例1"></p>
+<p><img src="/images/image-20201008143534005.png" alt="实例2"></p>
+<h4 id="解析链接"><a href="#解析链接" class="headerlink" title="解析链接"></a>解析链接</h4><p>urllib库中的parse模块定义了处理URL的标准接口，可以实现URL的抽取合并以及链接转换</p>
+<ol>
+<li>urlparse</li>
+</ol>
+<p>可以实现url的识别和分段，下面看一段代码</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> urllib<span class="token punctuation">.</span>parse <span class="token keyword">import</span> urlparse
+
+result <span class="token operator">=</span> urlparse<span class="token punctuation">(</span><span class="token string">'https://www.baidu.com/index.html;user?id=4#comment'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span></code></pre>
+<p>可以看到结果</p>
+<pre><code>&lt;class &#39;urllib.parse.ParseResult&#39;&gt; ParseResult(scheme=&#39;https&#39;, netloc=&#39;www.baidu.com&#39;, path=&#39;/index.html&#39;, params=&#39;user&#39;, query=&#39;id=4&#39;, fragment=&#39;comment&#39;)</code></pre>
+<p><img src="/images/image-20201008150846179.png" alt="urlparse"></p>
+<p><img src="/images/image-20201008151833433.png" alt="参数"></p>
+<p><img src="/images/image-20201008151931365.png" alt="image-20201008151931365"></p>
+<ol start="2">
+<li>urlunparse</li>
+</ol>
+<p>与urlparse对应，参数是一个可迭代对象，长度必须为6，</p>
+<p><img src="/images/image-20201008152606176.png" alt="urlunparse"></p>
+<p>运行结果为</p>
+<pre><code>https://www.baidu.com/index.html;user?id=4#comment</code></pre>
+<ol start="3">
+<li>urlsplit</li>
+</ol>
+<p>和urlparse很类似，只是少了一个参数，不再单独解析params，放入了path中</p>
+<ol start="4">
+<li>urlunsplit</li>
+</ol>
+<p>类似urlunparse</p>
+<p><del><strong><em>记录到这里我有点迷茫，这些其实在真的爬虫中都是用不到的东西，urllib库里的东西基本都被requests库里的替代了，那我费这么长的时间学有啥用呢，我悟了，urllib看看就行，爬虫只是一个工具，不搞原理的东西了，能写出来就行,从这里停止记录</em></strong></del></p>
+<ol start="5">
+<li>用于get请求构造序列化以及反序列化的分别为：</li>
+</ol>
+<p>urlencode()</p>
+<p>parse_qs(),parse_qsl()</p>
+<p>具体不表</p>
+<ol start="6">
+<li>queote()</li>
+</ol>
+<p>将内容转换为url编码格式</p>
+<ol start="7">
+<li>unquote()</li>
+</ol>
+<p>URL格式解码</p>
 
             </div>
             <hr/>
@@ -1060,7 +1144,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.1k</span>&nbsp;字
+                class="white-color">15.9k</span>&nbsp;字
             
             
             

