@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    14 分
                 </div>
                 
 
@@ -605,7 +605,244 @@ result <span class="token operator">=</span> urlparse<span class="token punctuat
 <li>unquote()</li>
 </ol>
 <p>URL格式解码</p>
+<h4 id="robot协议"><a href="#robot协议" class="headerlink" title="robot协议"></a>robot协议</h4><ol>
+<li>robot协议决定了网站哪些页面允许爬虫爬取，哪些不允许，一般是由robot.txt文件来管理，放在网站根目录下或者和index页面放在一起，robot.txt一般写法如下：</li>
+</ol>
+<p><img src="/images/image-20201010164826608.png" alt="robot"></p>
+<p>这里的意思是所有都不允许，只允许/public/文件夹下的</p>
+<ol start="2">
+<li>urllib使用robotparser模块对robot.txt进行解析</li>
+</ol>
+<p>主要使用了RobotFileParser类，</p>
+<p><img src="/images/image-20201010165305904.png" alt="RobotFileParser"></p>
+<p><img src="/images/image-20201010165407373.png" alt="实例"></p>
+<h3 id="requests"><a href="#requests" class="headerlink" title="requests"></a>requests</h3><p>一般来说urllib使用并不多，而requests库的使用时很多的，这是一个强大的库，我们可以依靠他完成很多操作</p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><ol>
+<li>GET请求</li>
+</ol>
+<p>构建get请求:</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
 
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'https://www.baidu.com/'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>cookie<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span></code></pre>
+<p>通过get来发起get请求，获得了返回值r，可以对r进行一系列操作</p>
+<p><img src="/images/image-20201010175357068.png"></p>
+<pre class=" language-python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>相应结果为：</p>
+<pre><code>&amp;#123;
+  &quot;args&quot;: &amp;#123;&amp;#125;, 
+  &quot;headers&quot;: &amp;#123;
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
+    &quot;Host&quot;: &quot;www.httpbin.org&quot;, 
+    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f8184fe-31632cd76578202c2104fe09&quot;
+  &amp;#125;, 
+  &quot;origin&quot;: &quot;223.129.4.193&quot;, 
+  &quot;url&quot;: &quot;http://www.httpbin.org/get&quot;
+&amp;#125;</code></pre>
+<p>我们成功的发起请求返回的结果中包括请求头，URL，IP等信息</p>
+<p>当我们要在请求时增加参数时，使用下面的方法，我们使用一个字典来储存我要传递的参数，在get时添加就好</p>
+<pre class=" language-python"><code class="language-python">data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">'name'</span><span class="token punctuation">:</span><span class="token string">'aaa'</span><span class="token punctuation">,</span>
+    <span class="token string">'age'</span><span class="token punctuation">:</span><span class="token number">22</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">,</span>params<span class="token operator">=</span>data<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>传递后可以看到返回的时候多了两个参数</p>
+<pre><code>&amp;#123;
+  &quot;args&quot;: &amp;#123;
+    &quot;age&quot;: &quot;22&quot;, 
+    &quot;name&quot;: &quot;aaa&quot;
+  &amp;#125;, 
+  &quot;headers&quot;: &amp;#123;
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
+    &quot;Host&quot;: &quot;www.httpbin.org&quot;, 
+    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f81860b-27efd9e81e182e3166e8e817&quot;
+  &amp;#125;, 
+  &quot;origin&quot;: &quot;223.129.4.193&quot;, 
+  &quot;url&quot;: &quot;http://www.httpbin.org/get?name=aaa&amp;age=22&quot;
+&amp;#125;</code></pre>
+<p>也就是说我们传递的url被自动构造成了一个带有get请求的url</p>
+<p><img src="/images/image-20201010180105945.png"></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<pre><code>&lt;class &#39;str&#39;&gt;
+&amp;#123;&#39;args&#39;: &amp;#123;&amp;#125;, &#39;headers&#39;: &amp;#123;&#39;Accept&#39;: &#39;*/*&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;, &#39;Host&#39;: &#39;www.httpbin.org&#39;, &#39;User-Agent&#39;: &#39;python-requests/2.22.0&#39;, &#39;X-Amzn-Trace-Id&#39;: &#39;Root=1-5f8186e7-6fffeeeb0af3cfa32351c4ce&#39;&amp;#125;, &#39;origin&#39;: &#39;223.129.4.193&#39;, &#39;url&#39;: &#39;http://www.httpbin.org/get&#39;&amp;#125;
+&lt;class &#39;dict&#39;&gt;</code></pre>
+<p>可以看到格式变化</p>
+<ul>
+<li>抓取二进制数据</li>
+</ul>
+<p>当我们抓取网页的时候我们得到的返回是一个HTML文档，但当我们需要抓取图片，音乐等时，我们要知道，这些文件是二进制格式的</p>
+<p>这里给出一个抓取图片的实例：</p>
+<pre class=" language-python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://github.com/favicon.ico"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>content<span class="token punctuation">)</span></code></pre>
+<p>这是抓取github的站点图标</p>
+<p><img src="/images/image-20201010181453880.png"></p>
+<p>我们将其保存就可以在文件夹中看到图标</p>
+<p><img src="/images/image-20201010181554612.png"></p>
+<ul>
+<li>添加header</li>
+</ul>
+<p>使用header来传递头信息，比如我们防止反爬要更改User-Agent</p>
+<ol start="2">
+<li>POST请求</li>
+</ol>
+<p>和get方式很像，只是是通过post向服务器端传输数据</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+
+data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    name<span class="token operator">=</span><span class="token string">'hhh'</span>
+    age<span class="token operator">=</span><span class="token number">6</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">"http://httpbin.org/post"</span><span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>可以得到如下返回：</p>
+<pre><code>F:\python\python.exe F:/python_work_place/spider_test/forward_test.py
+&amp;#123;
+  &quot;args&quot;: &amp;#123;&amp;#125;, 
+  &quot;data&quot;: &quot;&quot;, 
+  &quot;files&quot;: &amp;#123;&amp;#125;, 
+  &quot;form&quot;: &amp;#123;
+    &quot;age&quot;: &quot;6&quot;, 
+    &quot;name&quot;: &quot;hhh&quot;
+  &amp;#125;, 
+  &quot;headers&quot;: &amp;#123;
+    &quot;Accept&quot;: &quot;*/*&quot;, 
+    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
+    &quot;Content-Length&quot;: &quot;14&quot;, 
+    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;, 
+    &quot;Host&quot;: &quot;httpbin.org&quot;, 
+    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f8810f4-71311a454c6c90486810fdfe&quot;
+  &amp;#125;, 
+  &quot;json&quot;: null, 
+  &quot;origin&quot;: &quot;223.129.4.231&quot;, 
+  &quot;url&quot;: &quot;http://httpbin.org/post&quot;
+&amp;#125;
+
+
+Process finished with exit code 0
+
+</code></pre>
+<p>可以看到我们使用form表单上传了我们的参数</p>
+<ol start="3">
+<li>响应</li>
+</ol>
+<p>在请求成功后得到了响应，我们可以使用.text,.content等来获取响应内容，也可以获得cookie或者头参数等，实例如下：</p>
+<p><img src="/images/image-20201015171728148.png"></p>
+<p><img src="/images/image-20201015171800177.png"></p>
+<h4 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h4><p>我们可以使用requests来模拟提交文件，比如</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+
+file<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'file':open('a.txt','rb')&amp;#125;    #上传的file的文件格式</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">"http://httpbin.org/post"</span><span class="token punctuation">,</span>files<span class="token operator">=</span>file<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>就可以实现自动上传文件</p>
+<p>同时还有对cookie的操作</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+
+headers<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">'Cookie'</span><span class="token punctuation">:</span><span class="token string">'_zap=fc99e39d-d13b-4839-8cf0-76ec70f3bc83; _xsrf=7XVuHOKM3FdxZfQNpIXA3R5gO884m8GN; d_c0="ALAsIZyEKRCPTjrPS9wsjOspI-w5ABEmkvA=|1570444133"; __utmv=51854390.100--|2=registration_date=20180614=1^3=entry_date=20180614=1; __utma=51854390.138991721.1572940125.1576250154.1576303660.7; _ga=GA1.2.138991721.1572940125; z_c0="2|1:0|10:1591710317|4:z_c0|92:Mi4xblNSTkNnQUFBQUFBc0N3aG5JUXBFQ1lBQUFCZ0FsVk5iT0RNWHdDbjlOVGMtTVo2bUxkSlJrZ2dyeW94ZkxkMFN3|9cab263c34306c8af64178b0d9c9330f9871c4d5e26a8a9093b293ba98bed6bd"; tst=r; q_c1=40bb646872384d60882f2072981be334|1600770724000|1572940120000; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1602345002,1602386153,1602467925,1602754438; SESSIONID=L40MZ7VrYxOQ4XYatS3x5LdGSxYLQSGAVv3KwP5QuFA; JOID=Wl0TBE7yjCkclRM2Yv28tZmR0Kd9s7sYU8IpYxGm-WVMo0ZiAHWZokyVHTRhx9EGtx0aSqDDvpjg5OZuY5JyOGU=; osd=VlkSAUr-iCgZkR8yY_i4uZ2Q1aNxt7odV84tYhSi9WFNpkJuBHScpkCRHDFly9UHshkWTqHGupTk5eNqb5ZzPWE=; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1602755346; KLBRSID=ed2ad9934af8a1f80db52dcb08d13344|1602755346|1602754433'</span><span class="token punctuation">,</span>
+    <span class="token string">'User-Agent'</span><span class="token punctuation">:</span><span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span class="token comment" spellcheck="true">#通过从浏览器中找到自己登陆后的cookie，复制到这里，同时修改user-agent就可以实现登陆知乎，如果没有User-Agent则会被反爬，得到400</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://www.zhihu.com"</span><span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">#可以看出是字典格式</span>
+<span class="token keyword">for</span> key<span class="token punctuation">,</span>value <span class="token keyword">in</span> r<span class="token punctuation">.</span>cookies<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>key<span class="token operator">+</span><span class="token string">'=='</span><span class="token operator">+</span>value<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<ol start="3">
+<li>会话维持</li>
+</ol>
+<p>session对象，让我们可以方便的维持一个会话，让我们对网站的后续操作更加便捷，使用session我们可以做到模拟同一个会话而不用考虑cookie问题，通常用于模拟登陆成功后的方便进行下一步操作</p>
+<p><img src="/images/image-20201015181419450.png"></p>
+<p><img src="/images/image-20201015181440585.png"></p>
+<p>这里我们可以看到，不能获取到我们想要的cookie数据，为空，这就是因为这其实是两个会话，第二个会话并不能访问到第一个会话的cookie</p>
+<p><img src="/images/image-20201015181618645.png"></p>
+<p>这就是使用session就可以维持会话，可以得到最开始设置的cookie</p>
+<ol start="4">
+<li>SSL证书验证</li>
+</ol>
+<p>当发送http请求时，会检查ssl证书，requests库使用verify参数来控制是否检查该证书，比如当我们访问12306时，因为其证书没有被认证，所以会返回一个非安全警告页面：**<em>现在验证12306并无证书问题，只是做一个例子**</em></p>
+<p><img src="/images/image-20201019204917986.png"></p>
+<p>要避免这个错误只需要在get请求中加上一个verify=False即可，</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>verify<span class="token operator">=</span>false<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>这样就可以输出正常状态码，但此时会有一个warning，我们可以屏蔽掉他</p>
+<p><img src="/images/image-20201019205719862.png"></p>
+<p><img src="/images/image-20201019205747410.png"></p>
+<ol start="5">
+<li>代理设置</li>
+</ol>
+<p>很多时候对于我们简单的测试内容可以很轻易的爬取，但当开始大规模数据采集的时候很容易被网站反爬虫策略所阻止，对于频繁的大规模请求，可能弹出验证码，跳转登录，或者直接封ip。所以我们需要设置代理</p>
+<p>对于requests库设置代理很简单，使用proxies参数设置代理，示例如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+proxies<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">"http"</span><span class="token punctuation">:</span><span class="token string">"http:127.0.0.1:1080"</span><span class="token punctuation">,</span>
+    <span class="token string">"https"</span><span class="token punctuation">:</span><span class="token string">"http:127.0.0.1:1000"</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>proxies<span class="token operator">=</span>proxies<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span></code></pre>
+<p>这样就设置了代理服务器，这里的设置的是本地服务器的不同端口作为代理，</p>
+<p>若代理要使用HTTP Basic Auth(http 基础认证)可以使用如下格式: <a href="http://user:password@host:port的格式如：">http://user:password@host:port的格式如：</a></p>
+<pre class=" language-python"><code class="language-python">proxies<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">"http"</span><span class="token punctuation">:</span><span class="token string">"http://admin:1232@127.0.0.1:1080"</span><span class="token punctuation">,</span>
+    <span class="token string">"https"</span><span class="token punctuation">:</span><span class="token string">"http://admin:1232@127.0.0.1:1000"</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span></code></pre>
+<p>requests也支持Sockts代理</p>
+<p><img src="/images/image-20201019213834845.png"></p>
+<ol start="6">
+<li>超时设置</li>
+</ol>
+<p>使用timeout参数，如果在规定时间内没有相应则报错，timeout是从发出请求开始计时，到响应返回服务器，</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#timeout为1s</span></code></pre>
+<p>默认为none，即没有超时限制</p>
+<ol start="7">
+<li>身份认证</li>
+</ol>
+<p><img src="/images/image-20201019214817506.png"></p>
+<p>有的时候会遇见这样的身份验证（http基础验证）</p>
+<p><img src="/images/image-20201019215014634.png"></p>
+<p><img src="/images/image-20201019215030603.png"></p>
+<p>注意传的是元组</p>
+<p><img src="/images/image-20201019215112039.png"></p>
+<ol start="8">
+<li>prepared request</li>
+</ol>
+<p>当我们需要传递很多歌参数时直接在请求中添加参数代码结构不雅观<del>其实我觉得没问题</del></p>
+<p>我们使用一个数据结构Prepared Request,将所有参数通过一个Request对象来表示。参考实例：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> requests <span class="token keyword">import</span> Request<span class="token punctuation">,</span>Session
+url<span class="token operator">=</span><span class="token string">"http://www.zhihu.com"</span>
+s<span class="token operator">=</span>Session<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#实例化session对象</span>
+data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">"name"</span><span class="token punctuation">:</span><span class="token string">"hhh"</span><span class="token punctuation">,</span>
+    <span class="token string">"age"</span><span class="token punctuation">:</span><span class="token number">12</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+headers<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+    <span class="token string">'User-Agent'</span><span class="token punctuation">:</span><span class="token string">"xxxxxxxxxxx"</span>
+<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+req<span class="token operator">=</span>Request<span class="token punctuation">(</span><span class="token string">'POST'</span><span class="token punctuation">,</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#实例化Requset对象req，用于储存参数</span>
+pre<span class="token operator">=</span>s<span class="token punctuation">.</span>prepare_request<span class="token punctuation">(</span>req<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#使用session的prepare_requests方法将其转化为一个prepare request对象</span>
+r<span class="token operator">=</span>s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>pre<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#调用send，发送数据即可</span></code></pre>
+<p><img src="/images/image-20201019222233440.png"></p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3>
             </div>
             <hr/>
 
@@ -1144,7 +1381,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.9k</span>&nbsp;字
+                class="white-color">19.2k</span>&nbsp;字
             
             
             
