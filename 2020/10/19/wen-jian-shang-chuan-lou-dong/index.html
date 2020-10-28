@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Markdown语法笔记, 0xahh的博客">
+    <meta name="keywords" content="文件上传漏洞, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Markdown语法笔记 | 0xahh的博客</title>
+    <title>文件上传漏洞 | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -286,12 +286,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Markdown语法笔记</h1>
+                    <h1 class="description center-align post-title">文件上传漏洞</h1>
                 </div>
             </div>
         </div>
@@ -408,14 +408,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/markdown/">
-                                <span class="chip bg-color">markdown</span>
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">web安全</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                web安全
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -424,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-01
+                    2020-10-19
                 </div>
                 
 
@@ -433,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    2.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    8 分
                 </div>
                 
 
@@ -455,153 +468,156 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>“#”用于标题，一个对应一级标题，两个对应二级标题，共六级</p>
-<h3 id="这是一个三级标题"><a href="#这是一个三级标题" class="headerlink" title="这是一个三级标题"></a>这是一个三级标题</h3><hr>
-<h4 id="字体以及段落"><a href="#字体以及段落" class="headerlink" title="字体以及段落"></a>字体以及段落</h4><p>“*”用于表示粗体，斜体，一对表示斜体，两对表示粗体，三对表示粗斜体，三个后回车是分隔线</p>
-<p><em>斜体</em>  <strong>粗体</strong> <strong><em>粗斜体</em></strong>  </p>
-<p>“~~”是删除线，括起来后是这样的  </p>
-<p><del>这是删除线</del> </p>
-<p>下划线使用html&lt;u&gt;,&lt;/u&gt;标签来进行使用，</p>
-<p><u>这是下划线</u></p>
-<p>脚注，是指当鼠标指向这里时会显示的标签[^]^后跟要注明的文本</p>
-<p>Markdown 支持有序列表和无序列表。</p>
-<p>无序列表使用星号(*<strong>**)、加号(</strong>+<strong>)或是减号(</strong>-**)作为列表标记，这些标记后面要添加一个空格，然后再填写内容：</p>
-<h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><ul>
-<li>这是一个无需列表</li>
-<li>这是第二列</li>
-</ul>
-<p>有序列表使用数字并加上 <strong>.</strong> 号来表示，</p>
-<ol>
-<li>这是第一</li>
-<li>这是第二</li>
-</ol>
-<p>列表嵌套只需在子列表中的选项前面添加四个空格即可：</p>
-<ol>
-<li>这是第一<ul>
-<li>这是子列表</li>
-<li>第二行</li>
-</ul>
-</li>
-<li>这是第二<ul>
-<li>我这里没有使用添加空格，直接删除出现的3.再加*就可以了<ul>
-<li>还可以继续往里<ol>
-<li>可以多重嵌套</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h4><p>区块，使用&gt;来区分，一个&gt;代表一个区块，也可以多重嵌套，注意要放在每行开头</p>
+                <h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>当文件上传点未对文件进行严格验证和过滤时容易造成任意文件上传，一些文件会导致风险，如PHP，JSP，ASP文件等，如果上传的目标目录没有限制执行权限，会导致文件上传漏洞</p>
+<p>文件上传的必要条件：</p>
 <blockquote>
-<p>第一区块</p>
-<p>这是区块中的内容</p>
-<blockquote>
-<ul>
-<li>这是第二区块</li>
-</ul>
+<p>存在上传点</p>
+<p>可以上传动态文件（绕过）</p>
+<p>上传文件有执行权限，并可以执行</p>
+<p>可以访问到上传的文件</p>
 </blockquote>
-</blockquote>
-<p>还可以在区块中使用列表</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>对于一个很短的代码片段，可以将其用两个“esc”下方键的·括起来，效果是这样的：<code>printf(&quot;helloworld/n&quot;);</code>这样的高亮进行标记</p>
-<p>也可以使用一个TAB键或者四个空格作为代码</p>
-<p>​    这是使用tab</p>
-<p>​    这是使用四个空格</p>
-<p>使用三对</p>
-<p>“esc”下方键包裹起来语句，就可以是一个代码块了，还可以指定语言</p>
-<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-<p>这就是一个代码块了</p>
-<h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>使用[     ]（  ），其中[   ]中是链接的名称(    )中是链接的地址</p>
-<p>或者&lt;   &gt;中直接输入链接地址</p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a> </p>
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a></p>
-<h4 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h4><p><img src="E:/From_C/桌面/tyoora/图片地址" alt="alt 属性文本"></p>
-<p>这是图片格式</p>
-<p>开头一个感叹号 !<br>接着一个方括号，里面放上图片的替代文字<br>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 ‘title’ 属性的文字。</p>
-<p>使用实例：</p>
-<p><img src="http://static.runoob.com/images/runoob-logo.png" alt="RUNOOB 图标"></p>
-<pre><code>![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)</code></pre>
-<p>Markdown 还没有办法指定图片的高度与宽度，如果你需要的话，你可以使用普通的 <img> 标签。</p>
-<pre><code>&lt;img src=&quot;http://static.runoob.com/images/runoob-logo.png&quot; width=&quot;50%&quot;&gt;</code></pre>
-<img src="http://static.runoob.com/images/runoob-logo.png" width="50%">
-
-
-
-<p>注意，在typora中还可以直接将图片复制进来，很方便</p>
-<h4 id="列表-1"><a href="#列表-1" class="headerlink" title="列表"></a>列表</h4><p>Markdown 制作表格使用 <strong>|</strong> 来分隔不同的单元格，使用 <strong>-</strong> 来分隔表头和其他行。</p>
-<p>语法格式如下：</p>
-<pre><code>|  表头   | 表头  |
-|  ----  | ----  |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |</code></pre>
-<p>这就是一个列表的展示</p>
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-<tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-</tbody></table>
-<ul>
-<li><strong>-:</strong> 设置内容和标题栏居右对齐。</li>
-<li><strong>:-</strong> 设置内容和标题栏居左对齐。</li>
-<li><strong>:-:</strong> 设置内容和标题栏居中对齐。</li>
-</ul>
-<pre><code>| 左对齐 | 右对齐 | 居中对齐 |
-| :-----| ----: | :----: |
-| 单元格 | 单元格 | 单元格 |
-| 单元格 | 单元格 | 单元格 |</code></pre>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="right">右对齐</th>
-<th align="center">居中对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-<tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-</tbody></table>
-<h4 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h4><p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。</p>
-<p>目前支持的 HTML 元素有：<code>&lt;kbd&gt; &lt;b&gt; &lt;i&gt; &lt;em&gt; &lt;sup&gt; &lt;sub&gt; &lt;br&gt;</code>等 ，</p>
-<p>Markdown 使用了很多特殊符号来表示特定的意义，如果需要显示特定的符号则需要使用转义字符，Markdown 使用反斜杠转义特殊字符：</p>
-<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
-<pre><code>\   反斜线
-`   反引号
-*   星号
-_   下划线
-&amp;#123;&amp;#125;  花括号
-[]  方括号
-()  小括号
-#   井字号
-+   加号
--   减号
-.   英文句点
-!   感叹号</code></pre>
-<p>f8为专注模式，f9为打字机模式，可以让在编写的行永远在最中间</p>
+<p>当文件上传使用前端检测的时候，我们通过抓包再修改即可以绕过大部分的限制，此处不表。</p>
+<p>一般来说后端检测一般是检测的三个点</p>
+<ol>
+<li>文件名（扩展名）<ol>
+<li>MIME/content type（浏览器自动生成）</li>
+</ol>
+</li>
+<li>文件内容</li>
+</ol>
+<h3 id="MIME类型检测绕过"><a href="#MIME类型检测绕过" class="headerlink" title="MIME类型检测绕过"></a>MIME类型检测绕过</h3><p>MIME是描述消息内容类型的因特网标准</p>
+<p>MIME消息能包含文本，图像，音频，视频以及其他应用程序专用数据</p>
+<p>浏览器会根据上传文件扩展名自动对应到相应的MIME类型上</p>
+<p><img src="/images/image-20201023102559754.png" alt="常见MIME TYPE白名单"></p>
+<p>所以也是在抓包后修改content type为白名单即可</p>
+<h3 id="文件内容检测绕过"><a href="#文件内容检测绕过" class="headerlink" title="文件内容检测绕过"></a>文件内容检测绕过</h3><ol>
+<li><p>检测文件头</p>
+<ol>
+<li>文件开头一部分数据承担了一定的任务数据，具有固定格式，文件头的开头一般标记文件类型，如gif类型的文件头为GIF89a或者GIF87a</li>
+<li>我们可以尝试在抓包或在所上传的文件中内容中加上指定的文件头格式即可完成绕过</li>
+</ol>
+</li>
+<li><p>完整文件结构检测</p>
+<ol>
+<li>通过调用图像函数等来检测上传文件是否为预定格式，需要文件内容保持相对完整，无法通过增加头头部起始字节的方式进行绕过</li>
+<li>针对这种检测，我们可以将图片与我们想要上传的文件进行合并来绕过检测（使用copy命令进行文件合并）</li>
+<li>合并后的文件只要没有经过清洗或者缩放等操作即可通过检测，并保持文件上传的完整性</li>
+<li>由于上传的图片在解析为php代码时会被解析为乱码，所以应当选择尽量小的图片（使用画板即可）进行合并,一下为一个copy命令实例：</li>
+</ol>
+<pre><code>copy /b 1.jpg+aaa.php 2.jpg</code></pre>
+<p>这样就将本目录下的1.jpg和aaa.php文件合并为了2.jpg文件</p>
+</li>
+<li><p>恶意文件内容检测</p>
+<ol>
+<li>检测上传内容中是否有webshell等数据    </li>
+<li>需要对常见语言的webshell有一定的认知，最后能知道是拦截了什么webshell，</li>
+<li>推荐使用kali中使用强混淆的weevely</li>
+</ol>
+<p><img src="/images/image-20201023112930431.png" alt="常见的恶意文件内容检测"></p>
+<p>逐渐尝试找到被拦截的关键字</p>
+</li>
+<li><p>文件上传绕过小技巧：</p>
+<ol>
+<li>文件参数多filename属性:上传过程中，如果waf拦截了一些扩展名，我们可以尝试多个filename属性，即在上传时我们可以构造两个filename参数，因为有的wafhi只对第一个（或最后一个）进行校验，而我们最后读取到的是最后一个（或第一个）文件，这样就可以实现绕过完成上传</li>
+<li>目录可控时可以尝试目录穿越的方法**(../)** ,有的时候我们上传文件成功后该目录下没有访问权限，比如过滤掉了php文件这种时候我们就可以尝试使用目录穿越的方法来回到上级目录，尝试是否能够将文件上传到上级目录并执行啊</li>
+<li>具体操作为在上传时使用burp抓包，在上传文件的参数中的<strong>file</strong> 出加上/../(这是返回一级)/../../(返回两级)，这是就可以实现上传了</li>
+<li>如果waf有过滤连续../时可以这样：/.././../  这样就可以了，因为./是本级目录的意思，这样也可以达到回到前两级目录的效果 </li>
+</ol>
+</li>
+<li><p>00截断检测</p>
+<ol>
+<li>00截断是存在于php较低版本（5.2之前？）中的一个漏洞，当我们使用%00时，可以恶意的截断路径，因为在url中%00表示ascll码中的0 ，而ascii中0作为特殊字符保留，表示字符串结束，所以当url中出现%00时就会认为读取已结束。</li>
+<li>比如我们上传文件时，想要上传c.php,被黑白名单拦截，要求上传jpg格式，我们可以选择上传c.php.jpg,在抓包后将其改为c.php%00.jpg，这样上传时被当做jpg没有被拦截，但是因为有%00，所以%00后的语句被截断了，所以可以认为我们是上传了一个php文件，这样就可以拿到webshell了</li>
+<li>在有的时候还可以用于上传文件目录中，以ctfhub中一道文件上传题目为例，需要使用两个截断，一个是将上传的一句话木马名称截断，一个是将设定的上传目录截断，以方便连接</li>
+</ol>
+<p><img src="/images/image-20201026200059746.png"></p>
+</li>
+</ol>
+<p><img src="/images/image-20201026200924910.png"></p>
+<p>这是这道题目给出的代码，可以看到，他会将上传的文件存储在一个该目录下的一个随机值加date下，这样我们无法找到并连接，所以我们需要将将上传的目录也进行00截断，这样后面的随机值就影响不到我们了，就可以上传一句话成功</p>
+<ol start="6">
+<li><p>.htaccess文件上传</p>
+<ol>
+<li><p>htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能，具体不表。</p>
+</li>
+<li><p>原理：上传覆盖.htaccess文件，重写解析规则，将上传的图片马以脚本方式解析</p>
+</li>
+<li><p>当用在文件上传中时，可以这样使用：</p>
+<pre><code>&lt;FilesMatch &quot;aaa.jpg&quot;&gt;
+ForceType application/x-httpd-php
+SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;</code></pre>
+<p>这里的意思是对于文件 aaa.jpg,在调用他时将其转换为php格式进行执行，这样我们就可以上传一个aaa.jpg,其中的内容为一句话木马，这样就可以获取webshell了</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h3><p>即服务器在访问静态文件时将其解析成了动态文件导致的解析错误漏洞</p>
+<ol>
+<li><p>IIS/Nginx+PHP fastcgi取值错误解析漏洞（配置错误）</p>
+<ol>
+<li><p>开启了cgi.fix_pathinfo，如果开启后所执行文件不存在，会继续查找上一级文件是否存在。并且未设置security.limit_extensions,该选项限制可以执行的文件类型</p>
+<p>示例： abcde.jpg/.php</p>
+<p>在这个目录下没有找到php文件，会返回到jpg的目录下，导致jpg文件被当做php执行</p>
+</li>
+</ol>
+</li>
+<li><p>Nginx文件名逻辑漏洞（CVE-201304547)上传一个以空格（%20）结尾 文件，例如”abcd.jpg  “当访问abcd.jpg%20%00.php时，会将刚刚上传的文件当做php执行（%00,%20可能需要解码）</p>
+</li>
+<li><p>Apache解析漏洞（配置错误）</p>
+<ol>
+<li><p>apache的conf文件有如下配置：AddHandler application/x-httpd-php .php</p>
+<p>则abcd.php.jpg会被当做php执行</p>
+</li>
+<li><p>如果在.htaccess中有如下配置，则可以将扩展名.xxx当做php执行：</p>
+<p>AddType application/x-httpd-php xxx</p>
+</li>
+</ol>
+</li>
+<li><p>IIS 5.x/6.0解析漏洞</p>
+<ol>
+<li>上传文件名： abcd.asp;.jpg服务器默认不解析;后的内容，所以文件被当做了asp文件解析</li>
+<li>向xxx.asp目录下上传文件都当做asp文件解析</li>
+</ol>
+</li>
+</ol>
+<h3 id="高级利用"><a href="#高级利用" class="headerlink" title="高级利用"></a>高级利用</h3><h4 id="重绘图"><a href="#重绘图" class="headerlink" title="重绘图"></a>重绘图</h4><p>后端调用了图片库对上传的文件进行了图像转换，所以即使将图片和文件合并也会将尾部换掉，无法使用前面所讲的图片合并绕过，无法上传webshell</p>
+<ol>
+<li><p>将正常图片用目标使用的图片库进行转换，</p>
+</li>
+<li><p>寻找转换前后两次未变的部分，</p>
+</li>
+<li><p>将未变部分替换为想上传的webshell</p>
+</li>
+<li><p>将替换后的文件进行图像转换，看是否转换后任存在替换后部分</p>
+<h4 id="PHPINFO与本地文件包含的利用"><a href="#PHPINFO与本地文件包含的利用" class="headerlink" title="PHPINFO与本地文件包含的利用"></a>PHPINFO与本地文件包含的利用</h4></li>
+</ol>
+<p>站点存在本地文件及包含phpinfo，可以利用其执行脚本</p>
+<ol>
+<li>PHP在解析multipart/form-data请求时，会创建临时文件，并写入上传内容，脚本执行结束或删除</li>
+<li>phpinfo可以输出$_FILES信息</li>
+<li>通过多种方式争取时间，在临时文件删除前进行执行包含<ol>
+<li>在数据报文中加入大量垃圾数据，让phpinfo页面过大，导致PHP输出进入流式输出，一次不能输出完毕</li>
+<li>通过大量请求来延迟PHP脚本的执行速度</li>
+</ol>
+</li>
+</ol>
+<h4 id="在线解压缩"><a href="#在线解压缩" class="headerlink" title="在线解压缩"></a>在线解压缩</h4><p>存在上传压缩包并解压的的上传点，可以如下利用：</p>
+<ol>
+<li><p>将webshell打包到压缩包中，</p>
+<ol>
+<li>模板上传处常用压缩包上传后进行自动解压</li>
+<li>部分此类有检测压缩包中的内容可以尝试建立目录进行压缩</li>
+<li>使用目录穿越（../）的方法向上一级目录进行上传</li>
+</ol>
+</li>
+<li><p>上传软链接</p>
+<ol>
+<li>文件软链接链接到/etc/passwd等文件夹，达到任意文件读取</li>
+<li>软链接类似windows的快捷方式</li>
+</ol>
+</li>
+</ol>
 
             </div>
             <hr/>
@@ -617,7 +633,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">0xhowahh</a>
+                    <a href="/about" rel="external nofollow noreferrer">0xahh</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -627,7 +643,7 @@ _   下划线
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/09/01/markdown/">http://119.23.18.158/2020/09/01/markdown/</a>
+                    <a href="http://119.23.18.158/2020/10/19/wen-jian-shang-chuan-lou-dong/">http://119.23.18.158/2020/10/19/wen-jian-shang-chuan-lou-dong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,7 +656,7 @@ _   下划线
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">0xhowahh</a>
+                    <a href="/about" target="_blank">0xahh</a>
                     !
                 </span>
             </div>
@@ -665,8 +681,12 @@ _   下划线
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/markdown/">
-                                    <span class="chip bg-color">markdown</span>
+                                <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">web安全</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
                                 </a>
                             
                         </div>
@@ -834,50 +854,52 @@ _   下划线
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/09/15/pa-chong-qian-zhi/">
+                <a href="/2020/10/19/wen-jian-shang-chuan-lou-dong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="爬虫前置">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="文件上传漏洞">
                         
-                        <span class="card-title">爬虫前置</span>
+                        <span class="card-title">文件上传漏洞</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            爬虫前置知识
+                            文件上传漏洞的学习
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%88%AC%E8%99%AB/" class="post-category">
-                                    爬虫
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
                     </a>
                     
-                    <a href="/tags/%E7%88%AC%E8%99%AB/">
-                        <span class="chip bg-color">爬虫</span>
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
                     </a>
                     
                 </div>
@@ -891,29 +913,33 @@ _   下划线
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/31/hello-world/">
+                <a href="/2020/10/09/xss/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="xss">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">xss</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            第一篇博客，简要记录心路历程以及发布hexo博客的注意事项
+                            xss跨站脚本攻击学习
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-09
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            0xhowahh
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -921,8 +947,12 @@ _   下划线
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/hexo/">
-                        <span class="chip bg-color">hexo</span>
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
                     </a>
                     
                 </div>

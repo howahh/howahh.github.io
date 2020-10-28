@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    3.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    16 分
                 </div>
                 
 
@@ -842,7 +842,35 @@ req<span class="token operator">=</span>Request<span class="token punctuation">(
 pre<span class="token operator">=</span>s<span class="token punctuation">.</span>prepare_request<span class="token punctuation">(</span>req<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#使用session的prepare_requests方法将其转化为一个prepare request对象</span>
 r<span class="token operator">=</span>s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>pre<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#调用send，发送数据即可</span></code></pre>
 <p><img src="/images/image-20201019222233440.png"></p>
-<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>正则表达式是用于处理字符串的一系列特定语法，在爬虫以及其他领域有着很重要的作用</p>
+<p>常用匹配规则：</p>
+<blockquote>
+<p>\w    匹配字母，数字以及下划线</p>
+<p>\W    匹配不是字母，数字以及下划线的字符</p>
+<p>\s        匹配任意空白字符串，等价于[\t\n\r\f]</p>
+<p>\S        匹配任意非空字符串</p>
+<p>\d        匹配任意数字，等价于[0-9]</p>
+<p>\D        匹配任何非数字字符</p>
+<p>\A        匹配字符串开头</p>
+<p>\Z        匹配字符串结尾，如果存在换行则只匹配到换行前的结束字符串</p>
+<p>\z        匹配字符串结尾，如果存在换行，同时还会匹配换行符</p>
+<p>\G        匹配最后匹配完成的位置</p>
+<p>\n        匹配一个换行符</p>
+<p>\t        匹配一个制表符</p>
+<p>^        匹配一行字符串的开头</p>
+<p>$        匹配一行字符串的结尾</p>
+<p>.        匹配任意字符串，除换行符，当re.DOTALL标记被指定，则可以匹配包括换行符的任意字符</p>
+<p>[…]    用来表示一组字符，单独列出，比如[ahb]匹配a,m或者k</p>
+<p>[^…]    不在[]中的字符，如[ ^a,b,c]匹配除a,b,c以外的字符</p>
+<p>*         匹配0个或者多个表达式，</p>
+<p>+        匹配1个前面或多个表达式</p>
+<p>?        匹配0或1个前面的正则表达式定义的片段，非贪婪方式</p>
+<p>{n}        精确匹配到n个前面的表达式</p>
+<p>{n,m}    匹配n到m次由前面正则表达式定义的方式，贪婪方式</p>
+<p>a|b        匹配a或b</p>
+<p>( )        匹配括号内的表达式，也表示一个组</p>
+</blockquote>
+
             </div>
             <hr/>
 
@@ -1381,7 +1409,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">19.2k</span>&nbsp;字
+                class="white-color">22k</span>&nbsp;字
             
             
             
