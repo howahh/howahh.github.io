@@ -446,14 +446,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.9k
+                    4.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    17 分
                 </div>
                 
 
@@ -870,6 +870,20 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
 <p>a|b        匹配a或b</p>
 <p>( )        匹配括号内的表达式，也表示一个组</p>
 </blockquote>
+<p>对于re库来说有几个常用于正则表达式匹配的函数</p>
+<h4 id="match"><a href="#match" class="headerlink" title="match"></a>match</h4><ul>
+<li><p>第一个参数是正则表达字符串，第二个参数是需要匹配的字符串，从初始位置匹配，</p>
+</li>
+<li><p>当匹配成功后返回的对象一般调用两个方法，一个是group，会返回匹配到的字符串，如果在匹配的正则表达式中使用了()则小括号中匹配到的可以使用group(1),group(2)来表示，另一个方法是span，会表达出匹配到的字符串长度</p>
+</li>
+<li><p>要注意两个地方，当我们使用任意匹配时，有贪婪匹配和非贪婪匹配，</p>
+<ul>
+<li>贪婪:<code>.*</code>这里的.代表匹配任意字符一次，<em>代表匹配匹配前面的字符无限次，组合在一起就可以匹配任意多个字符了，这是一种贪婪匹配，意思是比如一个字符串：aaa 123a,我们想要匹配到他，使用.\</em>,^aaa/s.*(\d+)a$这里的想法是group(1)中能匹配到所有的数字，但最后发现只能匹配到一个3，就是因为是贪婪匹配，.*会尽可能多的匹配，1,2都在其中，只留了3给(\d),</li>
+<li>非贪婪匹配就是<code>.*?</code>,这样匹配对上述的字符串就能匹配到想要的123，因为只要遇见了后面所需要的\d就停止匹配</li>
+</ul>
+</li>
+<li></li>
+</ul>
 
             </div>
             <hr/>
@@ -1409,7 +1423,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">23.1k</span>&nbsp;字
+                class="white-color">29.2k</span>&nbsp;字
             
             
             
