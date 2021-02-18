@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.0.2"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+
 
 
 <body>
@@ -111,6 +113,17 @@
       <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
       <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
     </a>
     
   </li>
@@ -203,6 +216,17 @@
 			    <i class="fa-fw fas fa-comments"></i>
 			
 			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
 		</a>
           
         </li>
@@ -334,8 +358,7 @@
     }
 
     .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
+        padding: 35px 0 15px 17px;
         font-size: 1.5rem;
         font-weight: bold;
         line-height: 1.5rem;
@@ -347,7 +370,7 @@
     }
 
     #toc-content {
-        height: calc(100vh - 250px);
+        padding-bottom: 30px;
         overflow: auto;
     }
 
@@ -442,6 +465,11 @@
                 
 
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-02-18
+                </div>
+                
 
                 
                 <div class="info-break-policy">
@@ -466,6 +494,14 @@
             </div>
         </div>
         <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="爬虫基础库使用"><a href="#爬虫基础库使用" class="headerlink" title="爬虫基础库使用"></a>爬虫基础库使用</h1><p>将对一些爬虫会使用到的基础库进行一定的记录</p>
@@ -480,14 +516,15 @@
 <ul>
 <li>urlopen</li>
 </ul>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
 
-response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span><span class="token string">"http://119.23.18.158"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#使用urlopen来模拟打开网页</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#输出后可以看到该页面源码</span>
+response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span><span class="token string">"http://119.23.18.158"</span><span class="token punctuation">)</span><span class="token comment">#使用urlopen来模拟打开网页</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">#输出后可以看到该页面源码</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>getheader<span class="token punctuation">(</span><span class="token string">'server'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>version<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>debuglevel<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>debuglevel<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以使用一些该类型对象的方法或者属性可以查看更多的信息</p>
 <p>如果想传递一些参数，可以查看urlopen的api，</p>
 <p>比如参数<strong>data</strong>可用于POST型的传递参数</p>
@@ -498,9 +535,10 @@ response <span class="token operator">=</span> urllib<span class="token punctuat
 </ul>
 <p>URLopen可以简单的实现请求的发起，但如果要使用更复杂的请求就需要使用Request<strong>类</strong>（比如加入header）</p>
 <p>比如</p>
-<pre class=" language-python"><code class="language-python">request1<span class="token operator">=</span>urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span><span class="token string">'http://119.23.18.158'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#Request类的实例化</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">request1<span class="token operator">=</span>urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span><span class="token string">'http://119.23.18.158'</span><span class="token punctuation">)</span><span class="token comment">#Request类的实例化</span>
 response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>request1<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#这样也就可以实现请求</span></code></pre>
+<span class="token comment">#这样也就可以实现请求</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>看一下Request的构造方法：</p>
 <p><code>class urllib. request. Request ( url, data=None, headers=&#123;&#125;, origin_req_host=None, unverifiable=False, method=None)</code></p>
 <ul>
@@ -566,12 +604,14 @@ response <span class="token operator">=</span> urllib<span class="token punctuat
 <li>urlparse</li>
 </ol>
 <p>可以实现url的识别和分段，下面看一段代码</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> urllib<span class="token punctuation">.</span>parse <span class="token keyword">import</span> urlparse
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> urllib<span class="token punctuation">.</span>parse <span class="token keyword">import</span> urlparse
 
 result <span class="token operator">=</span> urlparse<span class="token punctuation">(</span><span class="token string">'https://www.baidu.com/index.html;user?id=4#comment'</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到结果</p>
-<pre><code>&lt;class &#39;urllib.parse.ParseResult&#39;&gt; ParseResult(scheme=&#39;https&#39;, netloc=&#39;www.baidu.com&#39;, path=&#39;/index.html&#39;, params=&#39;user&#39;, query=&#39;id=4&#39;, fragment=&#39;comment&#39;)</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">&lt;class &#39;urllib.parse.ParseResult&#39;&gt; ParseResult(scheme&#x3D;&#39;https&#39;, netloc&#x3D;&#39;www.baidu.com&#39;, path&#x3D;&#39;&#x2F;index.html&#39;, params&#x3D;&#39;user&#39;, query&#x3D;&#39;id&#x3D;4&#39;, fragment&#x3D;&#39;comment&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p><img src="/images/image-20201008150846179.png" alt="urlparse"></p>
 <p><img src="/images/image-20201008151833433.png" alt="参数"></p>
 <p><img src="/images/image-20201008151931365.png" alt="image-20201008151931365"></p>
@@ -581,7 +621,8 @@ result <span class="token operator">=</span> urlparse<span class="token punctuat
 <p>与urlparse对应，参数是一个可迭代对象，长度必须为6，</p>
 <p><img src="/images/image-20201008152606176.png" alt="urlunparse"></p>
 <p>运行结果为</p>
-<pre><code>https://www.baidu.com/index.html;user?id=4#comment</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;www.baidu.com&#x2F;index.html;user?id&#x3D;4#comment<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <ol start="3">
 <li>urlsplit</li>
 </ol>
@@ -621,72 +662,80 @@ result <span class="token operator">=</span> urlparse<span class="token punctuat
 <li>GET请求</li>
 </ol>
 <p>构建get请求:</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'https://www.baidu.com/'</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>cookie<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>通过get来发起get请求，获得了返回值r，可以对r进行一系列操作</p>
 <p><img src="/images/image-20201010175357068.png"></p>
-<pre class=" language-python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>相应结果为：</p>
-<pre><code>&amp;#123;
-  &quot;args&quot;: &amp;#123;&amp;#125;, 
-  &quot;headers&quot;: &amp;#123;
-    &quot;Accept&quot;: &quot;*/*&quot;, 
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;args&quot;: &#123;&#125;, 
+  &quot;headers&quot;: &#123;
+    &quot;Accept&quot;: &quot;*&#x2F;*&quot;, 
     &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
     &quot;Host&quot;: &quot;www.httpbin.org&quot;, 
-    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f8184fe-31632cd76578202c2104fe09&quot;
-  &amp;#125;, 
+    &quot;User-Agent&quot;: &quot;python-requests&#x2F;2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root&#x3D;1-5f8184fe-31632cd76578202c2104fe09&quot;
+  &#125;, 
   &quot;origin&quot;: &quot;223.129.4.193&quot;, 
-  &quot;url&quot;: &quot;http://www.httpbin.org/get&quot;
-&amp;#125;</code></pre>
+  &quot;url&quot;: &quot;http:&#x2F;&#x2F;www.httpbin.org&#x2F;get&quot;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>我们成功的发起请求返回的结果中包括请求头，URL，IP等信息</p>
 <p>当我们要在请求时增加参数时，使用下面的方法，我们使用一个字典来储存我要传递的参数，在get时添加就好</p>
-<pre class=" language-python"><code class="language-python">data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">'name'</span><span class="token punctuation">:</span><span class="token string">'aaa'</span><span class="token punctuation">,</span>
     <span class="token string">'age'</span><span class="token punctuation">:</span><span class="token number">22</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span class="token punctuation">&#125;</span>
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">,</span>params<span class="token operator">=</span>data<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>传递后可以看到返回的时候多了两个参数</p>
-<pre><code>&amp;#123;
-  &quot;args&quot;: &amp;#123;
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;args&quot;: &#123;
     &quot;age&quot;: &quot;22&quot;, 
     &quot;name&quot;: &quot;aaa&quot;
-  &amp;#125;, 
-  &quot;headers&quot;: &amp;#123;
-    &quot;Accept&quot;: &quot;*/*&quot;, 
+  &#125;, 
+  &quot;headers&quot;: &#123;
+    &quot;Accept&quot;: &quot;*&#x2F;*&quot;, 
     &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
     &quot;Host&quot;: &quot;www.httpbin.org&quot;, 
-    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f81860b-27efd9e81e182e3166e8e817&quot;
-  &amp;#125;, 
+    &quot;User-Agent&quot;: &quot;python-requests&#x2F;2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root&#x3D;1-5f81860b-27efd9e81e182e3166e8e817&quot;
+  &#125;, 
   &quot;origin&quot;: &quot;223.129.4.193&quot;, 
-  &quot;url&quot;: &quot;http://www.httpbin.org/get?name=aaa&amp;age=22&quot;
-&amp;#125;</code></pre>
+  &quot;url&quot;: &quot;http:&#x2F;&#x2F;www.httpbin.org&#x2F;get?name&#x3D;aaa&amp;age&#x3D;22&quot;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>也就是说我们传递的url被自动构造成了一个带有get请求的url</p>
 <p><img src="/images/image-20201010180105945.png"></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'http://www.httpbin.org/get'</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>type<span class="token punctuation">(</span>r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
-<pre><code>&lt;class &#39;str&#39;&gt;
-&amp;#123;&#39;args&#39;: &amp;#123;&amp;#125;, &#39;headers&#39;: &amp;#123;&#39;Accept&#39;: &#39;*/*&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;, &#39;Host&#39;: &#39;www.httpbin.org&#39;, &#39;User-Agent&#39;: &#39;python-requests/2.22.0&#39;, &#39;X-Amzn-Trace-Id&#39;: &#39;Root=1-5f8186e7-6fffeeeb0af3cfa32351c4ce&#39;&amp;#125;, &#39;origin&#39;: &#39;223.129.4.193&#39;, &#39;url&#39;: &#39;http://www.httpbin.org/get&#39;&amp;#125;
-&lt;class &#39;dict&#39;&gt;</code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&lt;class &#39;str&#39;&gt;
+&#123;&#39;args&#39;: &#123;&#125;, &#39;headers&#39;: &#123;&#39;Accept&#39;: &#39;*&#x2F;*&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;, &#39;Host&#39;: &#39;www.httpbin.org&#39;, &#39;User-Agent&#39;: &#39;python-requests&#x2F;2.22.0&#39;, &#39;X-Amzn-Trace-Id&#39;: &#39;Root&#x3D;1-5f8186e7-6fffeeeb0af3cfa32351c4ce&#39;&#125;, &#39;origin&#39;: &#39;223.129.4.193&#39;, &#39;url&#39;: &#39;http:&#x2F;&#x2F;www.httpbin.org&#x2F;get&#39;&#125;
+&lt;class &#39;dict&#39;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到格式变化</p>
 <ul>
 <li>抓取二进制数据</li>
 </ul>
 <p>当我们抓取网页的时候我们得到的返回是一个HTML文档，但当我们需要抓取图片，音乐等时，我们要知道，这些文件是二进制格式的</p>
 <p>这里给出一个抓取图片的实例：</p>
-<pre class=" language-python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://github.com/favicon.ico"</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://github.com/favicon.ico"</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>content<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>这是抓取github的站点图标</p>
 <p><img src="/images/image-20201010181453880.png"></p>
 <p>我们将其保存就可以在文件夹中看到图标</p>
@@ -699,42 +748,44 @@ r<span class="token operator">=</span>requests<span class="token punctuation">.<
 <li>POST请求</li>
 </ol>
 <p>和get方式很像，只是是通过post向服务器端传输数据</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 
-data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+data<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     name<span class="token operator">=</span><span class="token string">'hhh'</span>
     age<span class="token operator">=</span><span class="token number">6</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span class="token punctuation">&#125;</span>
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">"http://httpbin.org/post"</span><span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以得到如下返回：</p>
-<pre><code>F:\python\python.exe F:/python_work_place/spider_test/forward_test.py
-&amp;#123;
-  &quot;args&quot;: &amp;#123;&amp;#125;, 
+<pre class="line-numbers language-none"><code class="language-none">F:\python\python.exe F:&#x2F;python_work_place&#x2F;spider_test&#x2F;forward_test.py
+&#123;
+  &quot;args&quot;: &#123;&#125;, 
   &quot;data&quot;: &quot;&quot;, 
-  &quot;files&quot;: &amp;#123;&amp;#125;, 
-  &quot;form&quot;: &amp;#123;
+  &quot;files&quot;: &#123;&#125;, 
+  &quot;form&quot;: &#123;
     &quot;age&quot;: &quot;6&quot;, 
     &quot;name&quot;: &quot;hhh&quot;
-  &amp;#125;, 
-  &quot;headers&quot;: &amp;#123;
-    &quot;Accept&quot;: &quot;*/*&quot;, 
+  &#125;, 
+  &quot;headers&quot;: &#123;
+    &quot;Accept&quot;: &quot;*&#x2F;*&quot;, 
     &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, 
     &quot;Content-Length&quot;: &quot;14&quot;, 
-    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;, 
+    &quot;Content-Type&quot;: &quot;application&#x2F;x-www-form-urlencoded&quot;, 
     &quot;Host&quot;: &quot;httpbin.org&quot;, 
-    &quot;User-Agent&quot;: &quot;python-requests/2.22.0&quot;, 
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-5f8810f4-71311a454c6c90486810fdfe&quot;
-  &amp;#125;, 
+    &quot;User-Agent&quot;: &quot;python-requests&#x2F;2.22.0&quot;, 
+    &quot;X-Amzn-Trace-Id&quot;: &quot;Root&#x3D;1-5f8810f4-71311a454c6c90486810fdfe&quot;
+  &#125;, 
   &quot;json&quot;: null, 
   &quot;origin&quot;: &quot;223.129.4.231&quot;, 
-  &quot;url&quot;: &quot;http://httpbin.org/post&quot;
-&amp;#125;
+  &quot;url&quot;: &quot;http:&#x2F;&#x2F;httpbin.org&#x2F;post&quot;
+&#125;
 
 
 Process finished with exit code 0
 
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>可以看到我们使用form表单上传了我们的参数</p>
 <ol start="3">
 <li>响应</li>
@@ -743,25 +794,27 @@ Process finished with exit code 0
 <p><img src="/images/image-20201015171728148.png"></p>
 <p><img src="/images/image-20201015171800177.png"></p>
 <h4 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h4><p>我们可以使用requests来模拟提交文件，比如</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 
-file<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;'file':open('a.txt','rb')&amp;#125;    #上传的file的文件格式</span>
-r<span class="token operator">=</span>requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">"http://httpbin.org/post"</span><span class="token punctuation">,</span>files<span class="token operator">=</span>file<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<span class="token builtin">file</span><span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'file'</span><span class="token punctuation">:</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'a.txt'</span><span class="token punctuation">,</span><span class="token string">'rb'</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>    <span class="token comment">#上传的file的文件格式</span>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span><span class="token string">"http://httpbin.org/post"</span><span class="token punctuation">,</span>files<span class="token operator">=</span><span class="token builtin">file</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>就可以实现自动上传文件</p>
 <p>同时还有对cookie的操作</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 
-headers<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+headers<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">'Cookie'</span><span class="token punctuation">:</span><span class="token string">'_zap=fc99e39d-d13b-4839-8cf0-76ec70f3bc83; _xsrf=7XVuHOKM3FdxZfQNpIXA3R5gO884m8GN; d_c0="ALAsIZyEKRCPTjrPS9wsjOspI-w5ABEmkvA=|1570444133"; __utmv=51854390.100--|2=registration_date=20180614=1^3=entry_date=20180614=1; __utma=51854390.138991721.1572940125.1576250154.1576303660.7; _ga=GA1.2.138991721.1572940125; z_c0="2|1:0|10:1591710317|4:z_c0|92:Mi4xblNSTkNnQUFBQUFBc0N3aG5JUXBFQ1lBQUFCZ0FsVk5iT0RNWHdDbjlOVGMtTVo2bUxkSlJrZ2dyeW94ZkxkMFN3|9cab263c34306c8af64178b0d9c9330f9871c4d5e26a8a9093b293ba98bed6bd"; tst=r; q_c1=40bb646872384d60882f2072981be334|1600770724000|1572940120000; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1602345002,1602386153,1602467925,1602754438; SESSIONID=L40MZ7VrYxOQ4XYatS3x5LdGSxYLQSGAVv3KwP5QuFA; JOID=Wl0TBE7yjCkclRM2Yv28tZmR0Kd9s7sYU8IpYxGm-WVMo0ZiAHWZokyVHTRhx9EGtx0aSqDDvpjg5OZuY5JyOGU=; osd=VlkSAUr-iCgZkR8yY_i4uZ2Q1aNxt7odV84tYhSi9WFNpkJuBHScpkCRHDFly9UHshkWTqHGupTk5eNqb5ZzPWE=; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1602755346; KLBRSID=ed2ad9934af8a1f80db52dcb08d13344|1602755346|1602754433'</span><span class="token punctuation">,</span>
     <span class="token string">'User-Agent'</span><span class="token punctuation">:</span><span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
-<span class="token comment" spellcheck="true">#通过从浏览器中找到自己登陆后的cookie，复制到这里，同时修改user-agent就可以实现登陆知乎，如果没有User-Agent则会被反爬，得到400</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">#通过从浏览器中找到自己登陆后的cookie，复制到这里，同时修改user-agent就可以实现登陆知乎，如果没有User-Agent则会被反爬，得到400</span>
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"https://www.zhihu.com"</span><span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">#可以看出是字典格式</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>cookies<span class="token punctuation">)</span>    <span class="token comment">#可以看出是字典格式</span>
 <span class="token keyword">for</span> key<span class="token punctuation">,</span>value <span class="token keyword">in</span> r<span class="token punctuation">.</span>cookies<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>key<span class="token operator">+</span><span class="token string">'=='</span><span class="token operator">+</span>value<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ol start="3">
 <li>会话维持</li>
 </ol>
@@ -777,11 +830,12 @@ r<span class="token operator">=</span>requests<span class="token punctuation">.<
 <p>当发送http请求时，会检查ssl证书，requests库使用verify参数来控制是否检查该证书，比如当我们访问12306时，因为其证书没有被认证，所以会返回一个非安全警告页面：**<em>现在验证12306并无证书问题，只是做一个例子**</em></p>
 <p><img src="/images/image-20201019204917986.png"></p>
 <p>要避免这个错误只需要在get请求中加上一个verify=False即可，</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>verify<span class="token operator">=</span>false<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这样就可以输出正常状态码，但此时会有一个warning，我们可以屏蔽掉他</p>
 <p><img src="/images/image-20201019205719862.png"></p>
 <p><img src="/images/image-20201019205747410.png"></p>
@@ -790,29 +844,32 @@ r<span class="token operator">=</span>requests<span class="token punctuation">.<
 </ol>
 <p>很多时候对于我们简单的测试内容可以很轻易的爬取，但当开始大规模数据采集的时候很容易被网站反爬虫策略所阻止，对于频繁的大规模请求，可能弹出验证码，跳转登录，或者直接封ip。所以我们需要设置代理</p>
 <p>对于requests库设置代理很简单，使用proxies参数设置代理，示例如下</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
-proxies<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+proxies<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">"http"</span><span class="token punctuation">:</span><span class="token string">"http:127.0.0.1:1080"</span><span class="token punctuation">,</span>
     <span class="token string">"https"</span><span class="token punctuation">:</span><span class="token string">"http:127.0.0.1:1000"</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
+<span class="token punctuation">&#125;</span>
 url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
 r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>proxies<span class="token operator">=</span>proxies<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>status_code<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这样就设置了代理服务器，这里的设置的是本地服务器的不同端口作为代理，</p>
 <p>若代理要使用HTTP Basic Auth(http 基础认证)可以使用如下格式: <a href="http://user:password@host:port的格式如：">http://user:password@host:port的格式如：</a></p>
-<pre class=" language-python"><code class="language-python">proxies<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">proxies<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">"http"</span><span class="token punctuation">:</span><span class="token string">"http://admin:1232@127.0.0.1:1080"</span><span class="token punctuation">,</span>
     <span class="token string">"https"</span><span class="token punctuation">:</span><span class="token string">"http://admin:1232@127.0.0.1:1000"</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>requests也支持Sockts代理</p>
 <p><img src="/images/image-20201019213834845.png"></p>
 <ol start="6">
 <li>超时设置</li>
 </ol>
 <p>使用timeout参数，如果在规定时间内没有相应则报错，timeout是从发出请求开始计时，到响应返回服务器，</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
 url<span class="token operator">=</span><span class="token string">"http://www.12306.cn"</span>
-r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#timeout为1s</span></code></pre>
+r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token comment">#timeout为1s</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>默认为none，即没有超时限制</p>
 <ol start="7">
 <li>身份认证</li>
@@ -828,19 +885,20 @@ r<span class="token operator">=</span>requests<span class="token punctuation">.<
 </ol>
 <p>当我们需要传递很多歌参数时直接在请求中添加参数代码结构不雅观<del>其实我觉得没问题</del></p>
 <p>我们使用一个数据结构Prepared Request,将所有参数通过一个Request对象来表示。参考实例：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> requests <span class="token keyword">import</span> Request<span class="token punctuation">,</span>Session
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> requests <span class="token keyword">import</span> Request<span class="token punctuation">,</span>Session
 url<span class="token operator">=</span><span class="token string">"http://www.zhihu.com"</span>
-s<span class="token operator">=</span>Session<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#实例化session对象</span>
-data<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+s<span class="token operator">=</span>Session<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">#实例化session对象</span>
+data<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">"name"</span><span class="token punctuation">:</span><span class="token string">"hhh"</span><span class="token punctuation">,</span>
     <span class="token string">"age"</span><span class="token punctuation">:</span><span class="token number">12</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
-headers<span class="token operator">=</span><span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;</span>
+<span class="token punctuation">&#125;</span>
+headers<span class="token operator">=</span><span class="token punctuation">&#123;</span>
     <span class="token string">'User-Agent'</span><span class="token punctuation">:</span><span class="token string">"xxxxxxxxxxx"</span>
-<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#125;</span>
-req<span class="token operator">=</span>Request<span class="token punctuation">(</span><span class="token string">'POST'</span><span class="token punctuation">,</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#实例化Requset对象req，用于储存参数</span>
-pre<span class="token operator">=</span>s<span class="token punctuation">.</span>prepare_request<span class="token punctuation">(</span>req<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#使用session的prepare_requests方法将其转化为一个prepare request对象</span>
-r<span class="token operator">=</span>s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>pre<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#调用send，发送数据即可</span></code></pre>
+<span class="token punctuation">&#125;</span>
+req<span class="token operator">=</span>Request<span class="token punctuation">(</span><span class="token string">'POST'</span><span class="token punctuation">,</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">)</span><span class="token comment">#实例化Requset对象req，用于储存参数</span>
+pre<span class="token operator">=</span>s<span class="token punctuation">.</span>prepare_request<span class="token punctuation">(</span>req<span class="token punctuation">)</span>  <span class="token comment">#使用session的prepare_requests方法将其转化为一个prepare request对象</span>
+r<span class="token operator">=</span>s<span class="token punctuation">.</span>send<span class="token punctuation">(</span>pre<span class="token punctuation">)</span>   <span class="token comment">#调用send，发送数据即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p><img src="/images/image-20201019222233440.png"></p>
 <h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>正则表达式是用于处理字符串的一系列特定语法，在爬虫以及其他领域有着很重要的作用</p>
 <p>常用匹配规则：</p>
@@ -879,12 +937,12 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
 <li><p>要注意两个地方，当我们使用任意匹配时，有贪婪匹配和非贪婪匹配，</p>
 <ul>
 <li>贪婪:<code>.*</code>这里的.代表匹配任意字符一次，<em>代表匹配匹配前面的字符无限次，组合在一起就可以匹配任意多个字符了，这是一种贪婪匹配，意思是比如一个字符串：aaa 123a,我们想要匹配到他，使用.\</em>,^aaa/s.*(\d+)a$这里的想法是group(1)中能匹配到所有的数字，但最后发现只能匹配到一个3，就是因为是贪婪匹配，.*会尽可能多的匹配，1,2都在其中，只留了3给(\d),</li>
-<li>非贪婪匹配就是<code>.*?</code>,这样匹配对上述的字符串就能匹配到想要的123，因为只要遇见了后面所需要的\d就停止匹配</li>
+<li>非贪婪匹配就是<code>.*?</code>,这样匹配对上述的字符串就能匹配到想要的123，因为只要遇见了后面所需要的\d就停止匹配。</li>
 </ul>
 </li>
-<li></li>
 </ul>
 
+                
             </div>
             <hr/>
 
@@ -909,7 +967,7 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://119.23.18.158/2020/09/15/ji-chu-ku-de-shi-yong/">http://119.23.18.158/2020/09/15/ji-chu-ku-de-shi-yong/</a>
+                    <a href="http://0xahh.top/2020/09/15/ji-chu-ku-de-shi-yong/">http://0xahh.top/2020/09/15/ji-chu-ku-de-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1085,7 +1143,7 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
                         <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
-                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
                     </div>
                 </div>
             </div>
@@ -1108,6 +1166,271 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
     
 
     
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '9go79qnTupRR61jWEfIWVzvy-gzGzoHsz',
+        appKey: 'tVB7E05bcxLCeUKo8fmejn8O',
+        notify: 'true' === 'true',
+        verify: 'true' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
 
     
 
@@ -1249,16 +1572,9 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
 
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
+        <div class="toc-widget card" style="background-color: white;">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
             <div id="toc-content"></div>
         </div>
@@ -1359,63 +1675,12 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
     <footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        display: none;
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        display: none;
-        
-        font-size: 15px;
-        color: #42b983;
-    }
-
-    
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="2614947145"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-
-    
     <div class="container row center-align" style="margin-bottom: 0px !important;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2021</span>
+            
             <span id="year">2020</span>
             <a href="/about" target="_blank">0xahh</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1423,7 +1688,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">39.6k</span>&nbsp;字
+                class="white-color">43.7k</span>&nbsp;字
             
             
             
@@ -1473,10 +1738,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
 </div>
     </div>
 </footer>
@@ -1496,10 +1757,95 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     </div>
 </div>
 
-<script src="/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("/search.xml", 'searchInput', 'searchResult');
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
 });
 </script>
 
@@ -1547,6 +1893,7 @@ $(function () {
 
     
 
+	
     
 
     
