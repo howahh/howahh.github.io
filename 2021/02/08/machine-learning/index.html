@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-18
+                    2021-02-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    12 分
                 </div>
                 
 
@@ -716,6 +716,39 @@
 
     <span class="token keyword">return</span> <span class="token boolean">None</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>当数据中有大量无效数据，比如如下场景：10000个顾客在超市中购买的物品，超市中的物品有1000种，因为每个顾客只会购买很少的物品，所以数据中会有大量的无效数据0存在，这时候就适合用主成分分析进行降维</p>
+<h2 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h2><h3 id="机器学习常用算法"><a href="#机器学习常用算法" class="headerlink" title="机器学习常用算法"></a>机器学习常用算法</h3><p>数据类型很多时候是选择算法的依据，主要可分为两种，离散型数据，连续型数据</p>
+<ul>
+<li>离散型数据：又称统计型数据，所有的这些数据都是整数型，不可再分的，比如有多少人，多少车，不能再细化细分来提高准确度</li>
+<li>连续型数据：变量可以在一定范围内任取一数，如长度，质量等，是有小数部分的</li>
+</ul>
+<p>机器学习开发流程：</p>
+<p><img src="/images/image-20210219171016364.png"></p>
+<p>机器学习算法分类如下：</p>
+<p><img src="/images/image-20210219164329619.png"></p>
+<p>大体上分为监督学习和非监督学习，也有半监督学习的机器学习算法。（这里只列举了部分常用算法）</p>
+<h4 id="监督学习（预测）"><a href="#监督学习（预测）" class="headerlink" title="监督学习（预测）"></a>监督学习（预测）</h4><p>有特征值，有目标值</p>
+<ul>
+<li>k-近邻算法</li>
+<li>贝叶斯分类</li>
+<li>决策树与随机森林</li>
+</ul>
+<p>回归，对应连续型数值</p>
+<ul>
+<li>逻辑回归</li>
+<li>岭回归</li>
+<li>标注 隐马尔可夫模型</li>
+</ul>
+<h4 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h4><p>只有特征值</p>
+<p>聚类</p>
+<ul>
+<li>k-means</li>
+</ul>
+<h3 id="数据集的划分"><a href="#数据集的划分" class="headerlink" title="数据集的划分"></a>数据集的划分</h3><p>拿到数据后并不是将所有的数据用于模型的训练，所以数据会分为训练集和测试集，训练集用于训练模型，测试集用于评估模型，比例可以设为7:3,8:2,<strong>7.5:2.5</strong>,</p>
+<p>用于划分数据集的API：sklearn.model_selection.train_test_split，在进行数据划分前首先要进行数据的获取，也是使用到了sklearn中的api</p>
+<p><img src="/images/image-20210220113903532.png"></p>
+<p><img src="/images/image-20210220120436843.png"></p>
+<p><img src="/images/image-20210220120547900.png"></p>
 
                 
             </div>
@@ -1218,54 +1251,36 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/08/machine-learning/">
+                <a href="/2021/02/25/test1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="machine_learning记录">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="test1">
                         
-                        <span class="card-title">machine_learning记录</span>
+                        <span class="card-title">test1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对机器学习的一个记录
+                            
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-25
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    机器学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            0xahh
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">机器学习</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">深度学习</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -1469,7 +1484,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">43.7k</span>&nbsp;字
+                class="white-color">44.2k</span>&nbsp;字
             
             
             

