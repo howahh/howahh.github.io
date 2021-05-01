@@ -899,7 +899,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/howahh/howahh.github.io.git/2020/09/22/sqlinjection/">https://github.com/howahh/howahh.github.io.git/2020/09/22/sqlinjection/</a>
+                    <a href="https://howahh.github.io.git/2020/09/22/sqlinjection/">https://howahh.github.io.git/2020/09/22/sqlinjection/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1530,7 +1530,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h1, h2, h3, h4, h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1542,7 +1542,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1607,6 +1607,60 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
 
     <footer class="page-footer bg-color">
     
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="2614947145"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
     <div class="container row center-align" style="margin-bottom: 0px !important;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
@@ -1620,7 +1674,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">63.9k</span>&nbsp;字
+                class="white-color">65.9k</span>&nbsp;字
             
             
             
@@ -1641,10 +1695,6 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             <br>
             
             <br>
-            
-            <span id="icp"><img src="/medias/icp.png" style="vertical-align: text-bottom;" />
-                <a href="https://beian.miit.gov.cn" target="_blank">蜀ICP备2021003659号</a>
-            </span>
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
