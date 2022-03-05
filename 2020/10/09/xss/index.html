@@ -431,12 +431,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/CTF/">
-                                <span class="chip bg-color">CTF</span>
-                            </a>
-                        
                             <a href="/tags/web%E5%AE%89%E5%85%A8/">
                                 <span class="chip bg-color">web安全</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
                             </a>
                         
                     </div>
@@ -467,21 +467,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-18
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
 
@@ -544,9 +544,30 @@
 <p>其实很多时候反射型和dom型看似很类似，但是原理有本质上却别的，因为代码执行的地点并不相同。</p>
 <p>dom型比较多的还是存在于搜索功能框中，找dom型可以仔细看一看网页源代码，注意script中是否会有注入点。</p>
 <p><strong><em>所以需要有一定的前端代码知识</em></strong>。</p>
-<hr>
-<p><strong>在经过这段时间对于xss的学习后发现，xss漏洞的利用是需要有一定的前端代码以及PHP有一定深度的知识了解后才能更好的理解漏洞的原理，所以暂且搁置xss的学习，因为我认为对于知识的学习还是需要了解根源，才能掌握的更好，所以选择先学习前置知识，待到有一定的知识广度后再对xss进行学习，同时从这几天的学习来看xss在应用中更多的是结合xss平台，对网站通过xss泄露的信息进行处理，如beef来进行，所以对其的搭建工作等也暂且推后，后续进行学习。</strong>        </p>
-<p>—-2020/10/19</p>
+<h3 id="Electron-xss"><a href="#Electron-xss" class="headerlink" title="Electron xss"></a>Electron xss</h3><p>electron是一个开源的基于浏览器内核的框架，使用 JavaScript、HTML 和 CSS 构建跨平台桌面应用程序，可以调用一些底层的api，对其可以进行普通的xss攻击，但也有一些特殊的利用点，就是利用了其使用到node.js，可以通过输入框等实现命令执行，达到更大的影响</p>
+<h3 id="postMessage-xss"><a href="#postMessage-xss" class="headerlink" title="postMessage xss"></a>postMessage xss</h3><p>postMessage是html5引入的API,是js的一种用法。postMessage()方法允许来自不同源的脚本采用异步方式进行有效的通信,可以实现跨文本文档,多窗口,跨域消息传递.多用于窗口间数据通信,这也使它成为跨域通信的一种有效的解决方案.</p>
+<p><strong><em>\</em>window.postMessage()**</strong> 方法可以安全地实现跨源通信。通常，对于两个不同页面的脚本，只有当执行它们的页面位于具有相同的协议（通常为https），端口号（443为https的默认值），以及主机 (两个页面的模数 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/domain"><code>Document.domain</code></a>设置为相同的值) 时，这两个脚本才能相互通信。window.postMessage() 方法提供了一种受控机制来规避此限制，只要正确的使用，这种方法就很安全</p>
+<p>但通过这种方法发送到信息也可能造成xss攻击，需要开发者做相应措施来规避，下面是两个案例</p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85634">https://www.anquanke.com/post/id/85634</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.mottoin.com/94130.html">http://www.mottoin.com/94130.html</a></p>
+<h3 id="localStorage-xss"><a href="#localStorage-xss" class="headerlink" title="localStorage xss"></a>localStorage xss</h3><p>只读的<code>localStorage</code> 属性允许你访问一个<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document"><code>Document</code></a> 源（origin）的对象 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Storage"><code>Storage</code></a>；存储的数据将保存在浏览器会话中。<code>localStorage</code> 类似 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/sessionStorage"><code>sessionStorage</code></a>，但其区别在于：存储在 <code>localStorage</code> 的数据可以长期保留；而当页面会话结束——也就是说，当页面被关闭时，存储在 <code>sessionStorage</code> 的数据会被清除 。</p>
+<p>应注意，无论数据存储在 <code>localStorage</code> 还是 <code>sessionStorage</code> ，它们都特定于页面的协议</p>
+<p>一般来说如果使用来localstorage，那么有可能通过反射型xss利用localstorage来使其成为一个存储型的xss</p>
+<h3 id="xss持久控制"><a href="#xss持久控制" class="headerlink" title="xss持久控制"></a>xss持久控制</h3><p>通过一个任意的xss，注入ServiceWorker，在浏览器后端达到持久控制的目的。service worker 是一个服务器与浏览器之间的中间人角色，如果网站中注册了service worker那么它可以拦截当前网站所有的请求，进行判断（需要编写相应的判断程序），如果需要向服务器发起请求的就转给服务器，如果可以直接使用缓存的就直接返回缓存不再转给服务器。从而大大提高浏览体验。</p>
+<p>Service Worker常驻在浏览器中，即便注册它的页面已经关闭，Service Worker 也不会停止。本质上它是一个后台线程，只有你主动终结，或者浏览器回收，这个线程才会结束，serviceworker只能注册在https和localhost上</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">'serviceWorker'</span> <span class="token keyword">in</span> window<span class="token punctuation">.</span>navigator<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  navigator<span class="token punctuation">.</span>serviceWorker<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token string">'./zero.js'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> scope<span class="token operator">:</span> <span class="token string">'./'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">reg</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'success'</span><span class="token punctuation">,</span> reg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'fail'</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这是serviceworker注册的代码。其中的zero.js就是判断以及控制程序，这也是实现xss的地方，而要想实现通过同源js脚本控制serviceworker，可以通过文件上传或者jsonp跨站请求实现。</p>
+<p>利用思路：通过文件上传或者其他方法能控制文件，通过这个文件来注册servieceworker，通过serviceworker来实现xss 的持久化，可以参考：</p>
+<p><a target="_blank" rel="noopener" href="http://zerobs.top/2020/11/15/71.html">http://zerobs.top/2020/11/15/71.html</a></p>
 
                 
             </div>
@@ -611,12 +632,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/CTF/">
-                                    <span class="chip bg-color">CTF</span>
-                                </a>
-                            
                                 <a href="/tags/web%E5%AE%89%E5%85%A8/">
                                     <span class="chip bg-color">web安全</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
                                 </a>
                             
                         </div>
@@ -1087,12 +1108,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
-                    </a>
-                    
                     <a href="/tags/web%E5%AE%89%E5%85%A8/">
                         <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
                     </a>
                     
                 </div>
@@ -1140,12 +1161,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
-                    </a>
-                    
                     <a href="/tags/web%E5%AE%89%E5%85%A8/">
                         <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
                     </a>
                     
                 </div>
@@ -1339,7 +1360,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2020-2021</span>
+                <span id="year">2020-2022</span>
             
             <span id="year">2020</span>
             <a href="/about" target="_blank">0xahh</a>
@@ -1348,7 +1369,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">80.2k</span>&nbsp;字
+                class="white-color">96.1k</span>&nbsp;字
             
             
             
