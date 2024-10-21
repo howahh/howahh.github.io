@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="文件上传漏洞当文件上传点未对文件进行严格验证和过滤时容易造成任意文件上传，一些文件会导致风险，如PHP，JSP，ASP文件等，如果上传的目标目录没有限制执行权限，会导致文件上传漏洞 文件上传的必要条件：  存在上传点 可以上传动态文件（绕过） 上传文件有执行权限，并可以执行 可以访问到上传的文件  当文件上传使用前端检测的时候，我们通过抓包再修改即可以绕过大部分的限制，此处不表。 一般来说后端检测">
@@ -32,10 +32,10 @@
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201026200059746.png">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201026200924910.png">
 <meta property="article:published_time" content="2020-10-19T15:38:38.000Z">
-<meta property="article:modified_time" content="2021-07-24T02:35:08.000Z">
+<meta property="article:modified_time" content="2024-09-26T13:06:45.430Z">
 <meta property="article:author" content="0xahh">
-<meta property="article:tag" content="web安全">
 <meta property="article:tag" content="CTF">
+<meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://howahh.github.io.git/images/image-20201023102559754.png">
 
@@ -125,6 +125,16 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -188,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-24 10:35:08" itemprop="dateModified" datetime="2021-07-24T10:35:08+08:00">2021-07-24</time>
+                <time title="修改时间：2024-09-26 21:06:45" itemprop="dateModified" datetime="2024-09-26T21:06:45+08:00">2024-09-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,6 +231,8 @@
 </blockquote>
 <p>当文件上传使用前端检测的时候，我们通过抓包再修改即可以绕过大部分的限制，此处不表。</p>
 <p>一般来说后端检测一般是检测的三个点</p>
+<span id="more"></span>
+
 <ol>
 <li>文件名（扩展名）<ol>
 <li>MIME/content type（浏览器自动生成）</li>
@@ -376,11 +388,28 @@ SetHandler application&#x2F;x-httpd-php
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>0xahh
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://howahh.github.io.git/2020/10/19/wen-jian-shang-chuan-lou-dong/" title="文件上传漏洞">https://howahh.github.io.git/2020/10/19/wen-jian-shang-chuan-lou-dong/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/web%E5%AE%89%E5%85%A8/" rel="tag"># web安全</a>
               <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/web%E5%AE%89%E5%85%A8/" rel="tag"># web安全</a>
           </div>
 
         
@@ -468,22 +497,31 @@ SetHandler application&#x2F;x-httpd-php
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+          
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/howahh" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;howahh" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -512,8 +550,6 @@ SetHandler application&#x2F;x-httpd-php
   </span>
   <span class="author" itemprop="copyrightHolder">0xahh</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
 
         
 
@@ -538,7 +574,7 @@ SetHandler application&#x2F;x-httpd-php
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>

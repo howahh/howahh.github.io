@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="文件包含wp在开始前先简单回顾文件包含漏洞原理及利用 文件包含原理及基本利用在开发时一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。如果我们包含的参数没有被严格的过滤，当被包含恶意文件时，就会产生漏洞。 在php中产生文件包含漏洞的函数主要有四个 include() include_once() require() re">
+  <meta name="description" content="文件包含wp在开始前先简单回顾文件包含漏洞原理及利用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ctfshow-web入门-文件包含wp">
 <meta property="og:url" content="https://howahh.github.io.git/2021/01/29/ctfshow-web-ru-men-wen-jian-bao-han-wp/index.html">
 <meta property="og:site_name" content="0xahh的博客">
-<meta property="og:description" content="文件包含wp在开始前先简单回顾文件包含漏洞原理及利用 文件包含原理及基本利用在开发时一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。如果我们包含的参数没有被严格的过滤，当被包含恶意文件时，就会产生漏洞。 在php中产生文件包含漏洞的函数主要有四个 include() include_once() require() re">
+<meta property="og:description" content="文件包含wp在开始前先简单回顾文件包含漏洞原理及利用">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201214214256272.png">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20210114181853207.png">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20210202132233573.png">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20210202132254081.png">
 <meta property="article:published_time" content="2021-01-29T10:00:10.000Z">
-<meta property="article:modified_time" content="2021-02-18T15:11:54.000Z">
+<meta property="article:modified_time" content="2024-09-26T13:05:42.660Z">
 <meta property="article:author" content="0xahh">
 <meta property="article:tag" content="web安全">
 <meta property="article:tag" content="ctf">
@@ -138,6 +138,16 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -201,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-18 23:11:54" itemprop="dateModified" datetime="2021-02-18T23:11:54+08:00">2021-02-18</time>
+                <time title="修改时间：2024-09-26 21:05:42" itemprop="dateModified" datetime="2024-09-26T21:05:42+08:00">2024-09-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,6 +235,8 @@
 
       
         <h1 id="文件包含wp"><a href="#文件包含wp" class="headerlink" title="文件包含wp"></a>文件包含wp</h1><p>在开始前先简单回顾文件包含漏洞原理及利用</p>
+<span id="more"></span>
+
 <h2 id="文件包含原理及基本利用"><a href="#文件包含原理及基本利用" class="headerlink" title="文件包含原理及基本利用"></a>文件包含原理及基本利用</h2><p>在开发时一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。如果我们包含的参数没有被严格的过滤，当被包含恶意文件时，就会产生漏洞。</p>
 <p>在php中产生文件包含漏洞的函数主要有四个</p>
 <pre class="line-numbers language-none"><code class="language-none">include()
@@ -754,6 +766,23 @@ content&#x3D;aaPD9waHAgcGhwaW5mbygpOyA&#x2F;Pg&#x3D;&#x3D;
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>0xahh
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://howahh.github.io.git/2021/01/29/ctfshow-web-ru-men-wen-jian-bao-han-wp/" title="ctfshow-web入门-文件包含wp">https://howahh.github.io.git/2021/01/29/ctfshow-web-ru-men-wen-jian-bao-han-wp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -847,22 +876,31 @@ content&#x3D;aaPD9waHAgcGhwaW5mbygpOyA&#x2F;Pg&#x3D;&#x3D;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+          
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/howahh" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;howahh" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -891,8 +929,6 @@ content&#x3D;aaPD9waHAgcGhwaW5mbygpOyA&#x2F;Pg&#x3D;&#x3D;
   </span>
   <span class="author" itemprop="copyrightHolder">0xahh</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
 
         
 
@@ -917,7 +953,7 @@ content&#x3D;aaPD9waHAgcGhwaW5mbygpOyA&#x2F;Pg&#x3D;&#x3D;
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>

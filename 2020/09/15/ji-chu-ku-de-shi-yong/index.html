@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"howahh.github.io.git","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="爬虫基础库使用将对一些爬虫会使用到的基础库进行一定的记录 urllib用于实现请求的发送 一般有三个库被使用  request：用于发送请求 parse：用于URL的处理 error：异常处理  发送请求​    urllib.request模块提供最基本构造HTTP请求功能  urlopen  import urllib.request  response &#x3D; urllib.request.ur">
+  <meta name="description" content="爬虫基础库使用将对一些爬虫会使用到的基础库进行一定的记录 urllib用于实现请求的发送 一般有三个库被使用  request：用于发送请求  parse：用于URL的处理  error：异常处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫基础库的使用">
 <meta property="og:url" content="https://howahh.github.io.git/2020/09/15/ji-chu-ku-de-shi-yong/index.html">
 <meta property="og:site_name" content="0xahh的博客">
-<meta property="og:description" content="爬虫基础库使用将对一些爬虫会使用到的基础库进行一定的记录 urllib用于实现请求的发送 一般有三个库被使用  request：用于发送请求 parse：用于URL的处理 error：异常处理  发送请求​    urllib.request模块提供最基本构造HTTP请求功能  urlopen  import urllib.request  response &#x3D; urllib.request.ur">
+<meta property="og:description" content="爬虫基础库使用将对一些爬虫会使用到的基础库进行一定的记录 urllib用于实现请求的发送 一般有三个库被使用  request：用于发送请求  parse：用于URL的处理  error：异常处理">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201006213955870.png">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201007222340342.png">
@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201019215112039.png">
 <meta property="og:image" content="https://howahh.github.io.git/images/image-20201019222233440.png">
 <meta property="article:published_time" content="2020-09-15T15:48:16.000Z">
-<meta property="article:modified_time" content="2021-02-18T15:11:10.000Z">
+<meta property="article:modified_time" content="2024-09-26T13:06:36.372Z">
 <meta property="article:author" content="0xahh">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="爬虫">
@@ -157,6 +157,16 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -220,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-18 23:11:10" itemprop="dateModified" datetime="2021-02-18T23:11:10+08:00">2021-02-18</time>
+                <time title="修改时间：2024-09-26 21:06:36" itemprop="dateModified" datetime="2024-09-26T21:06:36+08:00">2024-09-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,9 +257,14 @@
 <h3 id="urllib"><a href="#urllib" class="headerlink" title="urllib"></a>urllib</h3><p>用于实现请求的发送</p>
 <p>一般有三个库被使用</p>
 <ul>
-<li>request：用于发送请求</li>
-<li>parse：用于URL的处理</li>
-<li>error：异常处理</li>
+<li><p>request：用于发送请求</p>
+</li>
+<li><p>parse：用于URL的处理</p>
+</li>
+<li><p>error：异常处理</p>
+<span id="more"></span>
+
+</li>
 </ul>
 <h4 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h4><p>​    urllib.request模块提供最基本构造HTTP请求功能</p>
 <ul>
@@ -686,6 +701,23 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>0xahh
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://howahh.github.io.git/2020/09/15/ji-chu-ku-de-shi-yong/" title="爬虫基础库的使用">https://howahh.github.io.git/2020/09/15/ji-chu-ku-de-shi-yong/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -778,22 +810,31 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+          
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/howahh" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;howahh" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -822,8 +863,6 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
   </span>
   <span class="author" itemprop="copyrightHolder">0xahh</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
 
         
 
@@ -848,7 +887,7 @@ r<span class="token operator">=</span>s<span class="token punctuation">.</span>s
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
